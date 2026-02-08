@@ -1,0 +1,136 @@
+{
+  "overall": {
+    "0.25m_2deg": 42.39,
+    "0.5m_5deg": 62.01,
+    "5.0m_10deg": 84.1,
+    "median_trans_m": 0.3007,
+    "median_rot_deg": 0.7871,
+    "mean_trans_m": 61035359700246.984,
+    "mean_rot_deg": 18.1344,
+    "n_images": 1906
+  },
+  "by_condition": {
+    "dawn": {
+      "0.25m_2deg": 52.61,
+      "0.5m_5deg": 69.13,
+      "5.0m_10deg": 93.48,
+      "median_trans_m": 0.2332,
+      "median_rot_deg": 0.5727,
+      "mean_trans_m": 17.0506,
+      "mean_rot_deg": 11.9056,
+      "n_images": 230
+    },
+    "dusk": {
+      "0.25m_2deg": 40.64,
+      "0.5m_5deg": 69.52,
+      "5.0m_10deg": 93.05,
+      "median_trans_m": 0.282,
+      "median_rot_deg": 0.6155,
+      "mean_trans_m": 10.536,
+      "mean_rot_deg": 12.7221,
+      "n_images": 187
+    },
+    "night": {
+      "0.25m_2deg": 9.64,
+      "0.5m_5deg": 23.86,
+      "5.0m_10deg": 42.64,
+      "median_trans_m": 50.9956,
+      "median_rot_deg": 9.9726,
+      "mean_trans_m": 590524850701811.9,
+      "mean_rot_deg": 55.9048,
+      "n_images": 197
+    },
+    "night-rain": {
+      "0.25m_2deg": 23.21,
+      "0.5m_5deg": 34.38,
+      "5.0m_10deg": 45.98,
+      "median_trans_m": 36.3132,
+      "median_rot_deg": 6.3908,
+      "mean_trans_m": 1699.7778,
+      "mean_rot_deg": 54.6102,
+      "n_images": 224
+    },
+    "overcast-summer": {
+      "0.25m_2deg": 44.55,
+      "0.5m_5deg": 67.27,
+      "5.0m_10deg": 100.0,
+      "median_trans_m": 0.3063,
+      "median_rot_deg": 0.824,
+      "mean_trans_m": 0.4136,
+      "mean_rot_deg": 1.4233,
+      "n_images": 220
+    },
+    "overcast-winter": {
+      "0.25m_2deg": 50.99,
+      "0.5m_5deg": 66.83,
+      "5.0m_10deg": 94.55,
+      "median_trans_m": 0.2449,
+      "median_rot_deg": 0.7011,
+      "mean_trans_m": 29.1067,
+      "mean_rot_deg": 6.4062,
+      "n_images": 202
+    },
+    "rain": {
+      "0.25m_2deg": 47.47,
+      "0.5m_5deg": 71.72,
+      "5.0m_10deg": 95.45,
+      "median_trans_m": 0.2647,
+      "median_rot_deg": 0.9646,
+      "mean_trans_m": 30.4214,
+      "mean_rot_deg": 4.8466,
+      "n_images": 198
+    },
+    "snow": {
+      "0.25m_2deg": 56.07,
+      "0.5m_5deg": 78.24,
+      "5.0m_10deg": 95.82,
+      "median_trans_m": 0.223,
+      "median_rot_deg": 0.615,
+      "mean_trans_m": 19.394,
+      "mean_rot_deg": 6.7482,
+      "n_images": 239
+    },
+    "sun": {
+      "0.25m_2deg": 53.11,
+      "0.5m_5deg": 75.12,
+      "5.0m_10deg": 94.74,
+      "median_trans_m": 0.2307,
+      "median_rot_deg": 0.7282,
+      "mean_trans_m": 50.4069,
+      "mean_rot_deg": 9.6718,
+      "n_images": 209
+    }
+  },
+  "by_camera": {
+    "rear": {
+      "0.25m_2deg": 42.39,
+      "0.5m_5deg": 62.01,
+      "5.0m_10deg": 84.1,
+      "median_trans_m": 0.3007,
+      "median_rot_deg": 0.7871,
+      "mean_trans_m": 61035359700246.984,
+      "mean_rot_deg": 18.1344,
+      "n_images": 1906
+    }
+  },
+  "day": {
+    "0.25m_2deg": 49.63,
+    "0.5m_5deg": 71.25,
+    "5.0m_10deg": 95.35,
+    "median_trans_m": 0.2511,
+    "median_rot_deg": 0.7372,
+    "mean_trans_m": 22.26,
+    "mean_rot_deg": 7.6218,
+    "n_images": 1485
+  },
+  "night": {
+    "0.25m_2deg": 16.86,
+    "0.5m_5deg": 29.45,
+    "5.0m_10deg": 44.42,
+    "median_trans_m": 38.7383,
+    "median_rot_deg": 6.9852,
+    "mean_trans_m": 276326355317429.22,
+    "mean_rot_deg": 55.216,
+    "n_images": 421
+  }
+}

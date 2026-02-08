@@ -1,0 +1,24 @@
+{
+  "self_test/sp_sg_netvlad": {
+    "num_localized": 7588,
+    "median_trans_m": 3.758,
+    "median_rot_deg": 0.976,
+    "mean_trans_m": 15.7349,
+    "accuracy": {
+      "0.25m/2deg": 12.4,
+      "0.5m/5deg": 17.1,
+      "5.0m/10deg": 55.0
+    }
+  },
+  "self_test/sp_sg_openibl": {
+    "num_localized": 7588,
+    "median_trans_m": 3.7911,
+    "median_rot_deg": 0.9732,
+    "mean_trans_m": 17.6788,
+    "accuracy": {
+      "0.25m/2deg": 12.3,
+      "0.5m/5deg": 17.2,
+      "5.0m/10deg": 55.0
+    }
+  }
+}

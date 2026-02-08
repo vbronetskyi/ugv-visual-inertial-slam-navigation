@@ -1,0 +1,10 @@
+# raw dataset lives at ../../data/ (not tracked)
+data/
+# auto-regenerated hloc features + SFM
+*.h5
+*.pkl
+*.npz
+**/sfm/**/*.bin
+colmap.LOG.*
+# logs
+*.log

@@ -1,0 +1,45 @@
+{
+  "status": "done",
+  "start_time": "2026-02-15T06:41:58.198353",
+  "methods": {
+    "SuperPoint+SuperGlue": {
+      "status": "done",
+      "time_s": 0.2,
+      "n_localized": 11934,
+      "used_fallback_sfm": false,
+      "accuracy_0.5m_5deg": 62.38
+    },
+    "SuperPoint+LightGlue": {
+      "status": "done",
+      "time_s": 0.2,
+      "n_localized": 11934,
+      "used_fallback_sfm": false,
+      "accuracy_0.5m_5deg": 62.01
+    },
+    "DISK+LightGlue": {
+      "status": "error",
+      "error": "index 1466 is out of bounds for axis 0 with size 1460"
+    },
+    "ALIKED+LightGlue": {
+      "status": "done",
+      "time_s": 10566.0,
+      "n_localized": 11934,
+      "used_fallback_sfm": false,
+      "accuracy_0.5m_5deg": 62.33
+    },
+    "SuperPoint+SuperGlue+OpenIBL": {
+      "status": "done",
+      "time_s": 6273.9,
+      "n_localized": 11934,
+      "used_fallback_sfm": false,
+      "accuracy_0.5m_5deg": 64.17
+    },
+    "SIFT+NN-ratio": {
+      "status": "error",
+      "error": "selected index k out of range"
+    }
+  },
+  "current_method": "6/6: SIFT+NN-ratio",
+  "last_updated": "2026-02-15T12:57:02.908843",
+  "total_time_hours": 6.25
+}

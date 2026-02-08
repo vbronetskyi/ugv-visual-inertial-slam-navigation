@@ -1,0 +1,105 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# System config
+#--------------------------------------------------------------------------------------------
+File.version: "1.0"
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters (Bumblebee XB3 wide stereo pair, pre-undistorted)
+#--------------------------------------------------------------------------------------------
+Camera.type: "PinHole"
+
+# Left camera (stereo_wide_left) - pre-undistorted, no distortion coefficients
+Camera1.fx: 983.044006
+Camera1.fy: 983.044006
+Camera1.cx: 643.646973
+Camera1.cy: 493.378998
+
+Camera1.k1: 0.0
+Camera1.k2: 0.0
+Camera1.p1: 0.0
+Camera1.p2: 0.0
+
+# Right camera (stereo_wide_right) - same intrinsics
+Camera2.fx: 983.044006
+Camera2.fy: 983.044006
+Camera2.cx: 643.646973
+Camera2.cy: 493.378998
+
+Camera2.k1: 0.0
+Camera2.k2: 0.0
+Camera2.p1: 0.0
+Camera2.p2: 0.0
+
+Camera.width: 1280
+Camera.height: 960
+
+# Bumblebee XB3 at 16 Hz
+Camera.fps: 16
+
+# Grayscale images
+Camera.RGB: 0
+
+# Stereo baseline * fx = 0.239983 * 983.044 = 235.93
+Stereo.ThDepth: 40.0
+
+# Transform from camera2 (right) to camera1 (left)
+# Pure horizontal translation of 24cm (wide baseline)
+Stereo.T_c1_c2: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [1.0, 0.0, 0.0, 0.239983,
+         0.0, 1.0, 0.0, 0.0,
+         0.0, 0.0, 1.0, 0.0,
+         0.0, 0.0, 0.0, 1.0]
+
+#--------------------------------------------------------------------------------------------
+# IMU Parameters (pseudo-IMU synthesized from INS navigation solution)
+#--------------------------------------------------------------------------------------------
+
+# Transform from camera1 (OpenCV: x-right, y-down, z-forward)
+# to body/IMU frame (NED: x-forward, y-right, z-down)
+# This is the G_camera_image rotation from the RobotCar SDK
+# Stereo camera is at body frame origin, so translation = 0
+IMU.T_b_c1: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [0.0, 0.0, 1.0, 0.0,
+         1.0, 0.0, 0.0, 0.0,
+         0.0, 1.0, 0.0, 0.0,
+         0.0, 0.0, 0.0, 1.0]
+
+# Pseudo-IMU noise (much higher than real IMU because derived from navigation solution)
+# Based on measured std from synthesis: accel ~0.5-0.8 m/s^2, gyro ~0.02-0.1 rad/s
+IMU.NoiseGyro: 0.05
+IMU.NoiseAcc: 0.5
+IMU.GyroWalk: 0.005
+IMU.AccWalk: 0.05
+IMU.Frequency: 50.0
+IMU.fastInit: 1
+
+#--------------------------------------------------------------------------------------------
+# ORB Parameters
+#--------------------------------------------------------------------------------------------
+ORBextractor.nFeatures: 1500
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 8
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7
+
+#--------------------------------------------------------------------------------------------
+# Viewer Parameters (disabled for headless)
+#--------------------------------------------------------------------------------------------
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -1.8
+Viewer.ViewpointF: 500.0

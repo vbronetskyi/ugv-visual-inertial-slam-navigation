@@ -1,0 +1,8 @@
+# raw dataset (download separately)
+data/
+recording_*/
+office_loop_*/
+# large artifacts
+*.h5
+*.pkl
+*.npz

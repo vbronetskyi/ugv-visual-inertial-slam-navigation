@@ -1,0 +1,51 @@
+ORB-SLAM3 Stereo on Oxford RobotCar Dataset
+=============================================
+Session: 2014-11-28-12-07-13 (overcast-reference)
+Date: 2026-02-15
+
+Data:
+  Camera: Bumblebee XB3 wide stereo (1280x960, 16 Hz, 24cm baseline)
+  Ground Truth: INS (NovAtel SPAN-CPT, 50 Hz)
+  Sequence: 6001 stereo pairs, 420.6 seconds
+
+Configuration:
+  Mode: Stereo (no IMU - raw IMU not released by RobotCar)
+  Camera: PinHole, fx=fy=983.044, cx=643.647, cy=493.379
+  ORB: nFeatures=2000, scaleFactor=1.2, nLevels=8, FAST 20/7
+  Config file: configs/RobotCar_Stereo.yaml
+
+Results:
+  Tracked frames:     4365 / 6001 (72.7%)
+  Tracking duration:  309.7 / 420.6 seconds (73.6%)
+  Maps created:       4 (fragmentation from tracking losses)
+  GT distance:        834.1 m (matched subset)
+
+  Sim(3) alignment:
+    Scale:  0.9658 (stereo has near-perfect metric scale)
+    ATE RMSE:   3.91 m
+    ATE Mean:   3.69 m
+    ATE Median: 3.87 m
+    ATE Max:    6.75 m
+
+  SE(3) alignment (no scale correction):
+    ATE RMSE:   5.91 m
+
+  RPE (per frame):
+    Trans RMSE: 0.4353 m
+    Rot RMSE:   0.5545 deg
+
+  RPE (~1 second, 16 frames):
+    Trans RMSE: 6.7068 m
+    Rot RMSE:   8.1029 deg
+
+Stereo-Inertial Attempt (FAILED):
+  Pseudo-IMU synthesized from differentiated INS velocities/orientations.
+  ORB-SLAM3 bugs: IMU.fastInit not read in Settings path (fixed).
+  Still fails: pseudo-IMU too smooth for init, diverges after VIBA 2 (segfault).
+  Root cause: Pseudo-IMU fundamentally incompatible with tightly-coupled VI fusion.
+
+Comparison:
+  This is the FIRST successful visual SLAM experiment in this project.
+  Previous NCLT experiments (0.2-0.5) all failed due to 5Hz fisheye camera limitations.
+  RobotCar stereo succeeds because: 16Hz rate, pre-undistorted pinhole images,
+  stereo metric scale, structured urban scenes.
