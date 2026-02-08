@@ -1,0 +1,15 @@
+{
+  "model": "OPENCV_FISHEYE",
+  "width": 808,
+  "height": 616,
+  "fx": 579.0,
+  "fy": 579.0,
+  "cx": 404.0,
+  "cy": 308.0,
+  "k1": 0.01,
+  "k2": -0.005,
+  "k3": 0.001,
+  "k4": 0.0,
+  "source": "approximate",
+  "n_registered_images": 0
+}

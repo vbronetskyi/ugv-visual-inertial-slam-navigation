@@ -1,0 +1,46 @@
+{
+  "mode": "sanity",
+  "status": "ok",
+  "total_time_s": 43.14138412475586,
+  "total_time_human": "0.0 hours",
+  "spring_session": "2012-04-29",
+  "summer_session": "2012-08-04",
+  "n_db_images": 50,
+  "n_query_images": 50,
+  "spring_subsample": 1,
+  "summer_subsample": 1,
+  "pipeline": {
+    "features": "SuperPoint (n=4096, nms=3, resize=1024)",
+    "retrieval": "NetVLAD",
+    "matcher": "LightGlue",
+    "sfm": "COLMAP (single camera)",
+    "localization": "PnP+RANSAC (thresh=12)"
+  },
+  "sfm": {
+    "n_registered": 2,
+    "n_total": 50,
+    "pct_registered": 4.0,
+    "n_3d_points": 98,
+    "mean_reproj_error": 0.43130230580819057
+  },
+  "sfm_time_s": 13.345494985580444,
+  "localization": {
+    "n_query": 50,
+    "n_localized": 50,
+    "pct_localized": 100.0,
+    "pct_0.25m_2deg": 0.0,
+    "pct_0.5m_5deg": 0.0,
+    "pct_1.0m_5deg": 0.0,
+    "pct_5.0m_10deg": 0.0,
+    "median_trans_error_m": 362.0245302849381,
+    "mean_trans_error_m": 347.2958574639098,
+    "median_rot_error_deg": 76.2499532765766,
+    "mean_rot_error_deg": 90.6554519314284,
+    "ate_rmse_sim3": 0.007492273408523121,
+    "ate_mean_sim3": 0.0064290554163845635,
+    "sim3_scale": 5.089456445983563e-06,
+    "ate_rmse_raw": 351.1338237918453,
+    "status": "ok"
+  },
+  "loc_time_s": 25.14466643333435
+}

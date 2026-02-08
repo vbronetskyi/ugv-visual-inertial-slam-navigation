@@ -1,0 +1,90 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# ROVER T265 Stereo Configuration for ORB-SLAM3
+# Camera: Intel RealSense T265 (stereo fisheye, KannalaBrandt8)
+# Resolution: 848x800, Baseline: ~6.35cm
+#--------------------------------------------------------------------------------------------
+File.version: "1.0"
+
+Camera.type: "KannalaBrandt8"
+
+# left cam (T265 cam_left) -- equidistant/fisheye
+Camera1.fx: 280.4362476646957
+Camera1.fy: 279.5757903173993
+Camera1.cx: 434.5911290024899
+Camera1.cy: 395.3741210501516
+
+# Kannala-Brandt distortion (from equidistant coeffs)
+Camera1.k1: -0.011532772136434897
+Camera1.k2: 0.0501515488043061
+Camera1.k3: -0.05041450901368907
+Camera1.k4: 0.012741893876582578
+
+# right cam (T265 cam_right) -- equidistant/fisheye
+Camera2.fx: 280.311263999059
+Camera2.fy: 279.5434630904508
+Camera2.cx: 431.35302371548494
+Camera2.cy: 388.5071222043099
+
+Camera2.k1: -0.011950967309164085
+Camera2.k2: 0.0530642563172375
+Camera2.k3: -0.049469178559530994
+Camera2.k4: 0.011573768486635416
+
+# transform right cam -> left cam (CamRight-To-CamLeft)
+Stereo.T_c1_c2: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [ 0.9999623927470926, -0.006993186493286595, -0.005129174804764724, -0.0634742552400177,
+          0.00697956885915097, 0.9999720831772309, -0.002668048861633343, 0.0004049468479554859,
+          0.005147689777763354, 0.0026321490949045585, 0.9999832864008741, -0.0009053657267858989,
+          0.0, 0.0, 0.0, 1.0]
+
+# lapping area (full overlap for wide-angle fisheye)
+Camera1.overlappingBegin: 0
+Camera1.overlappingEnd: 847
+
+Camera2.overlappingBegin: 0
+Camera2.overlappingEnd: 847
+
+# camera resolution
+Camera.width: 848
+Camera.height: 800
+
+# camera fps
+Camera.fps: 30
+
+# color order (0: BGR, 1: RGB, ignored for grayscale)
+Camera.RGB: 1
+
+# Close/Far threshold. Baseline times
+# reduced from 40 to 20 for small baseline (6.35cm)
+Stereo.ThDepth: 20.0
+
+#--------------------------------------------------------------------------------------------
+# ORB params
+#--------------------------------------------------------------------------------------------
+
+ORBextractor.nFeatures: 1500
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 8
+
+# lower FAST thresholds for low-contrast outdoor images
+ORBextractor.iniThFAST: 15
+ORBextractor.minThFAST: 5
+
+#--------------------------------------------------------------------------------------------
+# Viewer params
+#--------------------------------------------------------------------------------------------
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -3.5
+Viewer.ViewpointF: 500.0

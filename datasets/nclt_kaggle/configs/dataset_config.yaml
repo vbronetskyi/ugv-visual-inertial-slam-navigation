@@ -1,0 +1,116 @@
+nclt:
+  # Kaggle dataset path (will be symlinked)
+  kaggle_path: "/kaggle/input/nclt-iprofi-hack-23/NCLT_preprocessed"
+  # Local sample path
+  local_path: "./data/NCLT_preprocessed"
+
+  # Sensors addon dataset (Kaggle)
+  sensors_kaggle_path: "/kaggle/input/nclt-sensors-addon"
+  sensors_local_path: "./data/nclt_sensors_addon"
+
+  # Available sessions (present in both datasets)
+  sessions:
+    - "2012-01-08"
+    - "2012-01-22"
+    - "2012-02-12"
+    - "2012-02-18"
+    - "2012-03-31"
+    - "2012-05-26"
+    - "2012-08-04"
+    - "2012-10-28"
+    - "2012-11-04"
+    - "2012-12-01"
+
+  # Sessions with sensor addon data
+  sensor_sessions:
+    - "2012-01-08"
+    - "2012-01-22"
+    - "2012-02-12"
+    - "2012-03-31"
+    - "2012-05-26"
+
+  # Train/Val/Test split
+  train_sessions: ["2012-01-08", "2012-01-22", "2012-02-12", "2012-02-18"]
+  val_sessions: ["2012-03-31", "2012-05-26"]
+  test_sessions: ["2012-08-04", "2012-10-28", "2012-11-04", "2012-12-01"]
+
+  # Place recognition parameters
+  positive_threshold: 10.0  # meters
+  negative_threshold: 25.0  # meters
+
+  # Point cloud preprocessing
+  point_cloud:
+    max_points: 50000
+    voxel_size: 0.1  # meters
+    remove_ground: true
+    ground_threshold: -1.5
+
+  # Sensor data configuration
+  sensors:
+    # IMU (Microstrain MS25)
+    imu:
+      filename: "ms25.csv"
+      rate_hz: 100
+      columns:
+        - "utime"          # microseconds
+        - "mag_x"
+        - "mag_y"
+        - "mag_z"
+        - "accel_x"        # m/s^2
+        - "accel_y"
+        - "accel_z"
+        - "rot_x"          # rad/s
+        - "rot_y"
+        - "rot_z"
+
+    # GPS (Trimble); Kaggle addon uses gps_rtk.csv
+    gps:
+      filename: "gps_rtk.csv"
+      rate_hz: 1
+      columns:
+        - "utime"
+        - "mode"
+        - "num_satell"
+        - "latitude"        # degrees
+        - "longitude"       # degrees
+        - "altitude"        # meters
+        - "track"           # heading degrees
+        - "speed"           # m/s
+
+    # Wheel odometry (Segway RMP)
+    odometry:
+      filename: "odometry_mu_100hz.csv"
+      rate_hz: 100
+      columns:
+        - "utime"
+        - "x"               # meters
+        - "y"
+        - "z"
+        - "roll"            # radians
+        - "pitch"
+        - "yaw"
+
+    # Fiber optic gyro
+    kvh:
+      filename: "kvh.csv"
+      rate_hz: 100
+      columns:
+        - "utime"
+        - "heading"         # radians
+
+    # Ground truth (from GPS-INS + post-processing)
+    ground_truth:
+      filename: "groundtruth.csv"
+      columns:
+        - "utime"
+        - "x"               # meters
+        - "y"
+        - "z"
+        - "roll"            # radians
+        - "pitch"
+        - "yaw"
+
+    # Synchronization settings
+    sync:
+      window_ms: 50         # max time delta for sensor matching
+      interpolate: true     # interpolate between nearest samples

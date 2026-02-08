@@ -1,0 +1,41 @@
+[
+  {
+    "cam_id": 5,
+    "success": true,
+    "n_keyframes": 58,
+    "n_frames": 1000,
+    "tracking_rate": 5.800000000000001,
+    "runtime_s": 209.01246905326843,
+    "clahe": {
+      "success": true,
+      "n_keyframes": 697,
+      "tracking_rate": 69.69999999999999
+    }
+  },
+  {
+    "cam_id": 4,
+    "success": true,
+    "n_keyframes": 192,
+    "n_frames": 1000,
+    "tracking_rate": 19.2,
+    "runtime_s": 208.7898588180542,
+    "clahe": {
+      "success": true,
+      "n_keyframes": 186,
+      "tracking_rate": 18.6
+    }
+  },
+  {
+    "cam_id": 3,
+    "success": true,
+    "n_keyframes": 616,
+    "n_frames": 1000,
+    "tracking_rate": 61.6,
+    "runtime_s": 207.68981051445007,
+    "clahe": {
+      "success": true,
+      "n_keyframes": 303,
+      "tracking_rate": 30.3
+    }
+  }
+]

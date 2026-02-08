@@ -1,0 +1,25 @@
+{
+  "recording": "garden_large_night-light_2024-05-30_2",
+  "mode": "rgbd",
+  "num_estimated": 11987,
+  "num_gt": 705,
+  "num_matched": 11948,
+  "tracking_rate_pct": 100.0,
+  "sim3_scale": 0.959259,
+  "ate_sim3": {
+    "rmse": 0.4803,
+    "mean": 0.4383,
+    "median": 0.3963,
+    "std": 0.1966,
+    "max": 2.0842
+  },
+  "ate_se3": {
+    "rmse": 0.5623,
+    "mean": 0.4977,
+    "median": 0.499
+  },
+  "rpe": {
+    "rmse": 0.0643,
+    "mean": 0.0252
+  }
+}

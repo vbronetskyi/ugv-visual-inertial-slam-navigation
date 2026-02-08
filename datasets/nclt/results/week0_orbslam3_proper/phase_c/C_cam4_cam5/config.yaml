@@ -1,0 +1,75 @@
+%YAML:1.0
+
+File.version: "1.0"
+
+Camera.type: "KannalaBrandt8"
+
+Camera1.fx: 290.000000
+Camera1.fy: 290.000000
+Camera1.cx: 404.000000
+Camera1.cy: 308.000000
+
+Camera1.k1: 0.0000000000
+Camera1.k2: 0.0000000000
+Camera1.k3: 0.0000000000
+Camera1.k4: 0.0000000000
+
+Camera2.fx: 290.000000
+Camera2.fy: 290.000000
+Camera2.cx: 404.000000
+Camera2.cy: 308.000000
+
+Camera2.k1: 0.0000000000
+Camera2.k2: 0.0000000000
+Camera2.k3: 0.0000000000
+Camera2.k4: 0.0000000000
+
+Stereo.T_c1_c2: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [0.3090169944, 0.0000000000, 0.9510565163, 0.0760845213, 0.0000000000, 1.0000000000, 0.0000000000, 0.0000000000, -0.9510565163, 0.0000000000, 0.3090169944, -0.0552786405, 0.0000000000, 0.0000000000, 0.0000000000, 1.0000000000]
+
+Camera1.overlappingBegin: 0
+Camera1.overlappingEnd: 807
+
+Camera2.overlappingBegin: 0
+Camera2.overlappingEnd: 807
+
+Camera.width: 808
+Camera.height: 616
+
+Camera.fps: 5
+
+Camera.RGB: 0
+
+Stereo.ThDepth: 200.0
+
+IMU.T_b_c1: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: f
+   data: [0.9510565163, 0.0000000000, 0.3090169944, 0.0597213595, 0.3090169944, 0.0000000000, -0.9510565163, -0.0740845213, 0.0000000000, 1.0000000000, 0.0000000000, -1.2300000000, 0.0000000000, 0.0000000000, 0.0000000000, 1.0000000000]
+
+IMU.NoiseGyro: 0.00972492
+IMU.NoiseAcc: 0.02855310
+IMU.GyroWalk: 0.00097249
+IMU.AccWalk: 0.00285531
+IMU.Frequency: 47.0
+
+ORBextractor.nFeatures: 3000
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 10
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7
+
+Viewer.KeyFrameSize: 0.6
+Viewer.KeyFrameLineWidth: 2.0
+Viewer.GraphLineWidth: 1.0
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.7
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -100.0
+Viewer.ViewpointZ: -0.1
+Viewer.ViewpointF: 2000.0

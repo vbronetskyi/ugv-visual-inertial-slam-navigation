@@ -1,0 +1,10 @@
+{
+  "method": "DPV-SLAM",
+  "runtime_s": 1349.0916755199432,
+  "n_images": 21510,
+  "n_poses": 1780,
+  "tracking_rate": 0.08275220827522083,
+  "fps": 15.944061022917507,
+  "gpu_memory_peak_gb": 3.558685184,
+  "stride": 1
+}

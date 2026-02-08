@@ -1,0 +1,24 @@
+{
+  "success": true,
+  "traj_path": "/workspace/slam_pipeline/results/week0_orbslam3_proper/phase_b/B006_cam5_pinhole/f_nclt.txt",
+  "n_keyframes": 79,
+  "n_frames": 3000,
+  "tracking_rate": 2.6333333333333333,
+  "runtime_s": 80.53772950172424,
+  "mode": "mono_inertial",
+  "label": "B006_cam5_pinhole",
+  "stdout_tail": "LM: End reseting Local Mapping...\nLM: Reset free the mutex\nLM: Active map reset, Done!!!\nmnFirstFrameId = 2892\nmnInitialFrameId = 2890\n2770 Frames set to lost\nFirst KF:1408; Map init KF:1394\nNew Map created with 582 points\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 1 maps in the atlas\n  Map 0 has 40 KFs\n\nEnd of saving trajectory to f_nclt.txt ...\n\nSaving keyframe trajectory to kf_nclt.txt ...\nQObject::killTimer: Timers cannot be stopped from another thread\nQObject::~QObject: Timers cannot be stopped from another thread\nSegmentation fault",
+  "imu_initialized": true,
+  "config": {
+    "cam_id": 5,
+    "imu_ver": "v1",
+    "cam_model": "pinhole",
+    "preprocess": "none",
+    "n_features": 3000
+  },
+  "eval": {
+    "status": "too_few_matches",
+    "n_poses": 79,
+    "n_matched": 0
+  }
+}

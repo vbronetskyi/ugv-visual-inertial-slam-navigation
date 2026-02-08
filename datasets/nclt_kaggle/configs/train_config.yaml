@@ -1,0 +1,49 @@
+# Training configuration for place recognition model
+training:
+  # Model
+  model: "minkloc3d"
+  backbone: "MinkFPN"
+  feature_dim: 256
+
+  # Data
+  batch_size: 32
+  num_workers: 4
+  pin_memory: true
+
+  # Optimizer
+  optimizer: "adam"
+  learning_rate: 1.0e-3
+  weight_decay: 1.0e-4
+  scheduler: "cosine"
+  warmup_epochs: 5
+
+  # Training loop
+  epochs: 80
+  val_every: 5
+  save_every: 10
+
+  # Loss
+  loss: "triplet"
+  margin: 0.2
+  mining: "hard"
+
+  # Augmentation
+  augmentation:
+    random_rotation: true
+    rotation_range: 180.0  # degrees
+    random_flip: true
+    jitter: 0.01  # meters
+
+  # Logging
+  log_dir: "./logs"
+  checkpoint_dir: "./checkpoints"
+  wandb:
+    enabled: false
+    project: "nclt-slam"
+    entity: null
+
+# Quantization-aware training for edge deployment
+quantization:
+  enabled: false
+  backend: "qnnpack"  # for ARM targets
+  calibration_batches: 100

@@ -1,0 +1,11 @@
+{
+  "cam_id": 1,
+  "preprocess": "clahe",
+  "clahe_clip": 3.0,
+  "n_frames": 3000,
+  "n_keyframes": 227,
+  "tracking_rate": 7.566666666666666,
+  "runtime_s": 621.4665920734406,
+  "ate_rmse": 3771.3275836732246,
+  "scale": 1814.5517707141912
+}

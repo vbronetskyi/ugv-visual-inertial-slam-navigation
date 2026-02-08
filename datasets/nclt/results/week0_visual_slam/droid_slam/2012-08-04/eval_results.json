@@ -1,0 +1,15 @@
+{
+  "method": "DROID-SLAM",
+  "session": "summer",
+  "status": "success",
+  "n_poses_total": 933,
+  "n_poses_synced": 933,
+  "ate_rmse": 142.31274762127805,
+  "ate_mean": 127.2874388396102,
+  "ate_median": 117.77397216317762,
+  "scale": 1.4644697562976468,
+  "est_path_length_m": 2289.839868078602,
+  "gt_synced_length_m": 2973.772669286445,
+  "gt_full_length_m": 5496.608979886754,
+  "coverage_pct": 54.10195049653529
+}

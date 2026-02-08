@@ -1,0 +1,25 @@
+{
+  "recording": "garden_large_day_2024-05-29_1",
+  "mode": "rgbd",
+  "num_estimated": 11789,
+  "num_gt": 1099,
+  "num_matched": 11761,
+  "tracking_rate_pct": 100.0,
+  "sim3_scale": 0.976665,
+  "ate_sim3": {
+    "rmse": 0.3983,
+    "mean": 0.3607,
+    "median": 0.3208,
+    "std": 0.1689,
+    "max": 0.9979
+  },
+  "ate_se3": {
+    "rmse": 0.4302,
+    "mean": 0.3837,
+    "median": 0.3584
+  },
+  "rpe": {
+    "rmse": 0.0459,
+    "mean": 0.0245
+  }
+}

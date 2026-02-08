@@ -1,0 +1,15 @@
+{
+  "method": "DPV-SLAM",
+  "session": "summer",
+  "status": "success",
+  "n_poses_total": 21858,
+  "n_poses_synced": 21858,
+  "ate_rmse": 193.5585163614808,
+  "ate_mean": 169.3230898099659,
+  "ate_median": 149.7492030356912,
+  "scale": 0.2626827869183314,
+  "est_path_length_m": 9424.677306001882,
+  "gt_synced_length_m": 5028.846967125048,
+  "gt_full_length_m": 5496.608979886754,
+  "coverage_pct": 91.48998929206451
+}

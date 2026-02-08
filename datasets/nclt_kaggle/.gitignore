@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Data files
+data/nclt_sample/
+data/NCLT_preprocessed/
+data/*.bin
+data/*.csv
+data/*.pcd
+data/*.ply
+*.h5
+*.hdf5
+
+# Model checkpoints
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+*.onnx
+
+# Logs
+logs/
+runs/
+wandb/
+*.log
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Kaggle
+/kaggle/
+
+# Misc
+*.zip
+*.tar.gz
+*.tar

@@ -1,0 +1,19 @@
+======================================================================
+VISUAL SLAM BENCHMARK - NCLT DATASET
+Date: 2026-02-12 15:41
+Camera: Ladybug3 Cam0, f=221, 808x616
+======================================================================
+
+Method         Session       Poses   ATE RMSE   Scale   Coverage    Runtime     GPU
+----------------------------------------------------------------------
+DROID-SLAM     spring          705     110.0m    3.27      60.4%      13min  10.3GB
+DROID-SLAM     summer          933     142.3m    1.46      54.1%      20min  10.1GB
+DPVO           spring        12986     142.0m    0.33     100.0%      11min   0.6GB
+DPVO           summer        21238     183.4m    0.36      89.5%      10min   0.6GB
+DPV-SLAM       spring          726     166.2m    0.12      97.3%      22min   3.6GB
+DPV-SLAM       summer        21858     193.6m    0.26      91.5%      28min   3.9GB
+----------------------------------------------------------------------
+
+Reference LiDAR ICP results:
+  Spring: 174.0m ATE (100% coverage)
+  Summer: 188.2m ATE (100% coverage)

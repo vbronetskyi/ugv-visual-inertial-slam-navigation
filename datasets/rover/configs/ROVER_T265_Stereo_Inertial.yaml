@@ -1,0 +1,103 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# ROVER T265 Stereo-Inertial Configuration for ORB-SLAM3
+# Camera: Intel RealSense T265 (stereo fisheye, KannalaBrandt8)
+# IMU: T265 built-in IMU @ 264 Hz
+# Resolution: 848x800, Baseline: ~6.35cm
+#--------------------------------------------------------------------------------------------
+File.version: "1.0"
+
+Camera.type: "KannalaBrandt8"
+
+# left cam (T265 cam_left) -- equidistant/fisheye
+Camera1.fx: 280.4362476646957
+Camera1.fy: 279.5757903173993
+Camera1.cx: 434.5911290024899
+Camera1.cy: 395.3741210501516
+
+Camera1.k1: -0.011532772136434897
+Camera1.k2: 0.0501515488043061
+Camera1.k3: -0.05041450901368907
+Camera1.k4: 0.012741893876582578
+
+# right cam (T265 cam_right) -- equidistant/fisheye
+Camera2.fx: 280.311263999059
+Camera2.fy: 279.5434630904508
+Camera2.cx: 431.35302371548494
+Camera2.cy: 388.5071222043099
+
+Camera2.k1: -0.011950967309164085
+Camera2.k2: 0.0530642563172375
+Camera2.k3: -0.049469178559530994
+Camera2.k4: 0.011573768486635416
+
+# transform right cam -> left cam
+Stereo.T_c1_c2: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [ 0.9999623927470926, -0.006993186493286595, -0.005129174804764724, -0.0634742552400177,
+          0.00697956885915097, 0.9999720831772309, -0.002668048861633343, 0.0004049468479554859,
+          0.005147689777763354, 0.0026321490949045585, 0.9999832864008741, -0.0009053657267858989,
+          0.0, 0.0, 0.0, 1.0]
+
+# lapping area
+Camera1.overlappingBegin: 0
+Camera1.overlappingEnd: 847
+
+Camera2.overlappingBegin: 0
+Camera2.overlappingEnd: 847
+
+# camera resolution
+Camera.width: 848
+Camera.height: 800
+
+Camera.fps: 30
+Camera.RGB: 1
+Stereo.ThDepth: 20.0
+
+#--------------------------------------------------------------------------------------------
+# IMU params (T265 built-in)
+#--------------------------------------------------------------------------------------------
+
+# IMU-To-CamLeft from calib_t265.yaml
+IMU.T_b_c1: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: f
+   data: [-0.9999790195296183, -0.0012594392809634862, -0.006354078476344758, 0.008476502835657655,
+          0.0011286433084974046, -0.9997882648566203, 0.02054632860813456, 0.0035762499334610494,
+          -0.006378609947956183, 0.02053872604834172, 0.999768710286257, -0.0014819593587566723,
+          0.0, 0.0, 0.0, 1.0]
+
+# IMU noise params (from calib_t265.yaml)
+IMU.NoiseGyro: 0.003235643391462107
+IMU.NoiseAcc: 0.017406273886926244
+IMU.GyroWalk: 7.056778665898092e-05
+IMU.AccWalk: 0.012393508837042726
+IMU.Frequency: 264.0
+
+#--------------------------------------------------------------------------------------------
+# ORB params
+#--------------------------------------------------------------------------------------------
+
+ORBextractor.nFeatures: 1500
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 8
+ORBextractor.iniThFAST: 15
+ORBextractor.minThFAST: 5
+
+#--------------------------------------------------------------------------------------------
+# Viewer params
+#--------------------------------------------------------------------------------------------
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -3.5
+Viewer.ViewpointF: 500.0

@@ -1,0 +1,47 @@
+# build artifacts
+build/
+install/
+log/
+__pycache__/
+*.pyc
+
+# large data
+data/
+bags/
+**/orb_slam3_data/
+**/recordings/
+*.db
+*.mcap
+
+# large result files (hloc features, pickles, numpy)
+*.h5
+*.pkl
+*.npz
+**/sfm/*.bin
+**/ground_truth/*.tum
+**/imu_data/*.csv
+**/sfm/colmap.LOG.*
+
+# caches and local config
+.hf_home/
+.venv-backups/
+.claude/
+.local/
+
+# third party (clone separately)
+third_party/
+
+# OS/editor
+.DS_Store
+*.swp
+*~
+.vscode/
+.idea/
+
+# logs
+*.log
+
+# simulation loose artifacts
+**/world_scene.glb
+**/map_routes.png
+**/worlds_backup/

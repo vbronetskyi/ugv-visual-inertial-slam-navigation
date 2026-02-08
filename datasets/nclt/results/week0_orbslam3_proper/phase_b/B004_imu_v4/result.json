@@ -1,0 +1,24 @@
+{
+  "success": true,
+  "traj_path": "/workspace/slam_pipeline/results/week0_orbslam3_proper/phase_b/B004_imu_v4/f_nclt.txt",
+  "n_keyframes": 2390,
+  "n_frames": 3000,
+  "tracking_rate": 79.66666666666666,
+  "runtime_s": 619.1610152721405,
+  "mode": "mono_inertial",
+  "label": "B004_imu_v4",
+  "stdout_tail": "Fail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nCreation of new map with id: 1\nStored map with ID: 0\nCreation of new map with last KF id: 1943\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 2 maps in the atlas\n  Map 0 has 1746 KFs\n  Map 1 has 0 KFs\n\nEnd of saving trajectory to f_nclt.txt ...\n\nSaving keyframe trajectory to kf_nclt.txt ...",
+  "imu_initialized": true,
+  "config": {
+    "cam_id": 5,
+    "imu_ver": "v4",
+    "cam_model": "fisheye",
+    "preprocess": "none",
+    "n_features": 3000
+  },
+  "eval": {
+    "status": "too_few_matches",
+    "n_poses": 2390,
+    "n_matched": 0
+  }
+}

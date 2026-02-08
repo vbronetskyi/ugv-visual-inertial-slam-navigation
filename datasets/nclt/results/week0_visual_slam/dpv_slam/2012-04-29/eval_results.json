@@ -1,0 +1,15 @@
+{
+  "method": "DPV-SLAM",
+  "session": "spring",
+  "status": "success",
+  "n_poses_total": 1780,
+  "n_poses_synced": 726,
+  "ate_rmse": 166.2249629439351,
+  "ate_mean": 133.1743982948796,
+  "ate_median": 101.7850603316467,
+  "scale": 0.11887047649393416,
+  "est_path_length_m": 1078.98590115344,
+  "gt_synced_length_m": 3098.6174385325053,
+  "gt_full_length_m": 3186.047441405986,
+  "coverage_pct": 97.25584742595991
+}

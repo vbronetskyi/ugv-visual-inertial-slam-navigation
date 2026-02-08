@@ -1,0 +1,10 @@
+{
+  "method": "DPVO",
+  "runtime_s": 632.9767789840698,
+  "n_images": 21510,
+  "n_poses": 21510,
+  "tracking_rate": 1.0,
+  "fps": 33.982289262686116,
+  "gpu_memory_peak_gb": 0.633183744,
+  "stride": 1
+}

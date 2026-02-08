@@ -1,0 +1,98 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# Camera params Undistorted T265 fisheye -> PinHole 640x480, 110° hFoV
+#--------------------------------------------------------------------------------------------
+
+File.version: "1.0"
+
+Camera.type: "PinHole"
+
+# Left camera (cam0)
+Camera1.fx: 224.07
+Camera1.fy: 224.07
+Camera1.cx: 320.00
+Camera1.cy: 240.00
+
+Camera1.k1: 0.0
+Camera1.k2: 0.0
+Camera1.p1: 0.0
+Camera1.p2: 0.0
+
+# Right camera (cam1)
+Camera2.fx: 224.07
+Camera2.fy: 224.07
+Camera2.cx: 320.00
+Camera2.cy: 240.00
+
+Camera2.k1: 0.0
+Camera2.k2: 0.0
+Camera2.p1: 0.0
+Camera2.p2: 0.0
+
+Camera.width: 640
+Camera.height: 480
+Camera.fps: 30
+
+Camera.RGB: 0
+
+# stereo extrinsics: CamRight-To-CamLeft
+Stereo.T_c1_c2: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [ 0.9999623927, -0.006993186493, -0.005129174805, -0.06347425524,
+          0.006979568859,  0.9999720832,  -0.002668048862,  0.0004049468480,
+          0.005147689778,  0.002632149095,  0.9999832864, -0.0009053657268,
+          0.0, 0.0, 0.0, 1.0 ]
+
+Stereo.ThDepth: 30.0
+Stereo.b: 0.0635
+
+#--------------------------------------------------------------------------------------------
+# IMU params (T265 built-in)
+#--------------------------------------------------------------------------------------------
+
+# IMU-To-CamLeft from calib_t265.yaml
+IMU.T_b_c1: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [-0.9999790195, -0.001259439281, -0.006354078476,  0.008476502836,
+          0.001128643308, -0.9997882649,   0.02054632861,   0.003576249933,
+         -0.006378609948,  0.02053872605,   0.999768710286, -0.001481959359,
+          0.0, 0.0, 0.0, 1.0]
+
+IMU.Frequency: 264.0
+IMU.NoiseGyro:  0.003235643391462107
+IMU.NoiseAcc:   0.017406273886926244
+IMU.GyroWalk:   7.056778665898092e-05
+IMU.AccWalk:    0.012393508837042726
+
+IMU.fastInit: 1
+IMU.insertKFsWhenLost: 1
+
+#--------------------------------------------------------------------------------------------
+# ORB params
+#--------------------------------------------------------------------------------------------
+
+ORBextractor.nFeatures: 2000
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 8
+ORBextractor.iniThFAST: 15
+ORBextractor.minThFAST: 5
+
+#--------------------------------------------------------------------------------------------
+# Viewer params
+#--------------------------------------------------------------------------------------------
+
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -1.8
+Viewer.ViewpointF: 500.0

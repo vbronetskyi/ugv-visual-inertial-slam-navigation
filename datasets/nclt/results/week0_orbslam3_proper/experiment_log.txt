@@ -1,0 +1,193 @@
+[08:07:10] [0h00m] [INFO] ======================================================================
+[08:07:10] [0h00m] [INFO] EXPERIMENT 0.6: DEFINITIVE ORB-SLAM3 EVALUATION ON NCLT
+[08:07:10] [0h00m] [INFO] Started: 2026-02-13 08:07:10
+[08:07:10] [0h00m] [INFO] ======================================================================
+[08:07:10] [0h00m] [INFO] ======================================================================
+[08:07:10] [0h00m] [INFO] PHASE A: CALIBRATION AND DATA PREPARATION
+[08:07:10] [0h00m] [INFO] ======================================================================
+[08:07:10] [0h00m] [INFO] A0: Patching ORB-SLAM3 to remove usleep...
+[08:07:10] [0h00m] [INFO]   Patched: mono_inertial_euroc.cc
+[08:07:10] [0h00m] [INFO]   Patched: stereo_inertial_euroc.cc
+[08:07:17] [0h00m] [ERROR]   Rebuild failed: ial_euroc.dir/Examples/Monocular-Inertial/mono_inertial_euroc.cc.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:382: CMakeFiles/mono_inertial_euroc.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+make[2]: *** [CMakeFiles/stereo_inertial_euroc.dir/build.make:76: CMakeFiles/stereo_inertial_euroc.dir/Examples/Stereo-Inertial/stereo_inertial_euroc.cc.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:434: CMakeFiles/stereo_inertial_euroc.dir/all] Error 2
+make: *** [Makefile:91: all] Error 2
+
+[08:07:17] [0h00m] [INFO] 
+A1: COLMAP fisheye calibration
+[08:07:17] [0h00m] [INFO] 
+--- Cam5 ---
+[08:07:17] [0h00m] [INFO]   COLMAP calibration for Cam5 (120 images)...
+[08:07:19] [0h00m] [INFO]     Prepared 120 images
+[08:07:20] [0h00m] [WARN]     COLMAP failed: Command '['colmap', 'feature_extractor', '--database_path', '/tmp/colmap_calib_cam5/database.db', '--image_path', '/tmp/colmap_calib_cam5/images', '--ImageReader.camera_model', 'OPENCV_FISHEYE', '--ImageReader.single_camera', '1', '--SiftExtraction.max_num_features', '5000']' died with <Signals.SIGABRT: 6>.
+[08:07:20] [0h00m] [INFO]   Cam5: Using default calibration (COLMAP failed)
+[08:07:20] [0h00m] [INFO] 
+--- Cam4 ---
+[08:07:20] [0h00m] [INFO]   COLMAP calibration for Cam4 (120 images)...
+[08:07:22] [0h00m] [INFO]     Prepared 120 images
+[08:07:22] [0h00m] [WARN]     COLMAP failed: Command '['colmap', 'feature_extractor', '--database_path', '/tmp/colmap_calib_cam4/database.db', '--image_path', '/tmp/colmap_calib_cam4/images', '--ImageReader.camera_model', 'OPENCV_FISHEYE', '--ImageReader.single_camera', '1', '--SiftExtraction.max_num_features', '5000']' died with <Signals.SIGABRT: 6>.
+[08:07:22] [0h00m] [INFO]   Cam4: Using default calibration (COLMAP failed)
+[08:07:22] [0h00m] [INFO] 
+--- Cam1 ---
+[08:07:22] [0h00m] [INFO]   COLMAP calibration for Cam1 (120 images)...
+[08:07:23] [0h00m] [INFO]     Prepared 120 images
+[08:07:23] [0h00m] [WARN]     COLMAP failed: Command '['colmap', 'feature_extractor', '--database_path', '/tmp/colmap_calib_cam1/database.db', '--image_path', '/tmp/colmap_calib_cam1/images', '--ImageReader.camera_model', 'OPENCV_FISHEYE', '--ImageReader.single_camera', '1', '--SiftExtraction.max_num_features', '5000']' died with <Signals.SIGABRT: 6>.
+[08:07:23] [0h00m] [INFO]   Cam1: Using default calibration (COLMAP failed)
+[08:07:23] [0h00m] [INFO] 
+A2: Computing body-to-camera transforms (Tbc)
+[08:07:23] [0h00m] [INFO]   Cam1 (θ=+73°): t=[0.058, 0.079, -1.230]
+[08:07:23] [0h00m] [INFO]   Cam4 (θ=-72°): t=[0.060, -0.074, -1.230]
+[08:07:23] [0h00m] [INFO]   Cam5 (θ=+0°): t=[0.115, 0.002, -1.230]
+[08:07:23] [0h00m] [INFO] 
+A3: IMU noise characterization
+[08:07:23] [0h00m] [INFO]   Characterizing IMU noise from static segments...
+[08:07:24] [0h00m] [INFO]     Found 1379 static IMU samples (28.7s)
+[08:07:24] [0h00m] [INFO]     IMU rate: 48.1 Hz
+[08:07:24] [0h00m] [INFO]     Gyro noise: 0.009725 rad/s/√Hz, Accel noise: 0.028553 m/s²/√Hz
+[08:07:24] [0h00m] [INFO]     Gyro walk: 0.000972, Accel walk: 0.002855
+[08:07:24] [0h00m] [INFO] 
+A4: Preparing IMU data (5 versions)
+[08:07:24] [0h00m] [INFO]   Image time range: 1335704167.7s - 1335709656.4s
+[08:07:24] [0h00m] [INFO]   v1 (MS25 raw ~47Hz): 121914 samples
+[08:07:25] [0h00m] [INFO]   v2 (MS25 interpolated 100Hz): 256112 samples
+[08:07:26] [0h00m] [INFO]   v3 (MS25 interpolated 200Hz): 512224 samples
+[08:07:26] [0h00m] [INFO]   v4 (Hybrid (MS25+KVH) 100Hz): 256112 samples
+[08:07:27] [0h00m] [INFO]   v5 (Hybrid (MS25+KVH) 200Hz): 512224 samples
+[08:07:27] [0h00m] [INFO] 
+Phase A complete
+[08:07:27] [0h00m] [INFO] 
+======================================================================
+[08:07:27] [0h00m] [INFO] PHASE B: MONO-INERTIAL SWEEP (3000 frames)
+[08:07:27] [0h00m] [INFO] ======================================================================
+[08:07:28] [0h00m] [INFO] 
+=== B1: IMU Rate Sweep (Cam5 fisheye) ===
+[08:07:28] [0h00m] [INFO] 
+--- Run 1: B001_imu_v1 ---
+[08:07:28] [0h00m] [INFO]   Preparing 3000 frames from Cam5 as cam0...
+[08:08:08] [0h00m] [INFO]     [3000/3000] 75 img/s
+[08:08:08] [0h00m] [INFO]     Prepared 3000 frames in 40s
+[08:08:08] [0h00m] [INFO]   Running mono_inertial [B001_imu_v1] (3000 frames, timeout=900s)...
+[08:18:27] [0h11m] [INFO]     OK: 2706 poses / 3000 frames (90.2%) in 619s IMU_init=Y
+[08:18:27] [0h11m] [INFO] 
+--- Run 2: B002_imu_v2 ---
+[08:18:27] [0h11m] [INFO]   EuRoC dir already prepared: 3000 frames at /tmp/nclt_euroc_2012-04-29_cam5_n3000
+[08:18:27] [0h11m] [INFO]   Running mono_inertial [B002_imu_v2] (3000 frames, timeout=900s)...
+[08:28:46] [0h21m] [INFO]     OK: 2706 poses / 3000 frames (90.2%) in 619s IMU_init=Y
+[08:28:47] [0h21m] [INFO] 
+--- Run 3: B003_imu_v3 ---
+[08:28:47] [0h21m] [INFO]   EuRoC dir already prepared: 3000 frames at /tmp/nclt_euroc_2012-04-29_cam5_n3000
+[08:28:47] [0h21m] [INFO]   Running mono_inertial [B003_imu_v3] (3000 frames, timeout=900s)...
+[08:39:05] [0h31m] [INFO]     OK: 2706 poses / 3000 frames (90.2%) in 618s IMU_init=Y
+[08:39:06] [0h31m] [INFO] 
+--- Run 4: B004_imu_v4 ---
+[08:39:06] [0h31m] [INFO]   EuRoC dir already prepared: 3000 frames at /tmp/nclt_euroc_2012-04-29_cam5_n3000
+[08:39:06] [0h31m] [INFO]   Running mono_inertial [B004_imu_v4] (3000 frames, timeout=900s)...
+[08:49:25] [0h42m] [INFO]     OK: 2390 poses / 3000 frames (79.7%) in 619s IMU_init=Y
+[08:49:25] [0h42m] [INFO] 
+--- Run 5: B005_imu_v5 ---
+[08:49:25] [0h42m] [INFO]   EuRoC dir already prepared: 3000 frames at /tmp/nclt_euroc_2012-04-29_cam5_n3000
+[08:49:25] [0h42m] [INFO]   Running mono_inertial [B005_imu_v5] (3000 frames, timeout=900s)...
+[08:51:24] [0h44m] [INFO]     FAIL: No trajectory (rc=139)
+[08:51:24] [0h44m] [INFO] 
+  Best IMU: v1 (90.2% tracking)
+[08:51:24] [0h44m] [INFO] 
+=== B2: Camera Model Comparison ===
+[08:51:24] [0h44m] [INFO] 
+--- Run 6: B006_cam5_pinhole ---
+[08:51:24] [0h44m] [INFO]   EuRoC dir already prepared: 3000 frames at /tmp/nclt_euroc_2012-04-29_cam5_n3000
+[08:51:24] [0h44m] [INFO]   Running mono_inertial [B006_cam5_pinhole] (3000 frames, timeout=900s)...
+[08:52:44] [0h45m] [INFO]     OK: 79 poses / 3000 frames (2.6%) in 81s IMU_init=Y
+[08:52:44] [0h45m] [INFO] 
+=== B3: Camera Comparison ===
+[08:52:44] [0h45m] [INFO] 
+--- Run 7: B007_cam4_fisheye ---
+[08:52:44] [0h45m] [INFO]   Preparing 3000 frames from Cam4 as cam0...
+[08:53:25] [0h46m] [INFO]     [3000/3000] 74 img/s
+[08:53:25] [0h46m] [INFO]     Prepared 3000 frames in 40s
+[08:53:25] [0h46m] [INFO]   Running mono_inertial [B007_cam4_fisheye] (3000 frames, timeout=900s)...
+[08:55:21] [0h48m] [INFO]     FAIL: No trajectory (rc=139)
+[08:55:21] [0h48m] [INFO] 
+--- Run 8: B008_cam1_fisheye ---
+[08:55:21] [0h48m] [INFO]   Preparing 3000 frames from Cam1 as cam0...
+[08:56:02] [0h48m] [INFO]     [3000/3000] 73 img/s
+[08:56:02] [0h48m] [INFO]     Prepared 3000 frames in 41s
+[08:56:02] [0h48m] [INFO]   Running mono_inertial [B008_cam1_fisheye] (3000 frames, timeout=900s)...
+[08:58:08] [0h50m] [INFO]     FAIL: No trajectory (rc=139)
+[08:58:08] [0h50m] [INFO] 
+=== B4: CLAHE and nFeatures Sweep ===
+[08:58:08] [0h50m] [INFO] 
+--- Run 9: B009_cam5_clahe ---
+[08:58:08] [0h50m] [INFO]   Preparing 3000 frames from Cam5 as cam0...
+[08:58:48] [0h51m] [INFO]     [3000/3000] 75 img/s
+[08:58:48] [0h51m] [INFO]     Prepared 3000 frames in 40s
+[08:58:48] [0h51m] [INFO]   Running mono_inertial [B009_cam5_clahe] (3000 frames, timeout=900s)...
+[09:01:17] [0h54m] [INFO]     FAIL: No trajectory (rc=139)
+[09:01:17] [0h54m] [INFO] 
+--- Run 10: B010_cam5_nfeat5000 ---
+[09:01:17] [0h54m] [INFO]   EuRoC dir already prepared: 3000 frames at /tmp/nclt_euroc_2012-04-29_cam5_n3000
+[09:01:17] [0h54m] [INFO]   Running mono_inertial [B010_cam5_nfeat5000] (3000 frames, timeout=900s)...
+[09:04:04] [0h56m] [INFO]     FAIL: No trajectory (rc=139)
+[09:04:04] [0h56m] [INFO] 
+=== Phase B Summary ===
+[09:04:04] [0h56m] [INFO] Run                                  Track%    KF      ATE   Scale  IMU   Time
+[09:04:04] [0h56m] [INFO] --------------------------------------------------------------------------------
+[09:04:04] [0h56m] [INFO] B001_imu_v1                           90.2%  2706      N/A     N/A    Y   619s
+[09:04:04] [0h56m] [INFO] B002_imu_v2                           90.2%  2706      N/A     N/A    Y   619s
+[09:04:04] [0h56m] [INFO] B003_imu_v3                           90.2%  2706      N/A     N/A    Y   618s
+[09:04:04] [0h56m] [INFO] B004_imu_v4                           79.7%  2390      N/A     N/A    Y   619s
+[09:04:04] [0h56m] [INFO] B005_imu_v5                            0.0%     0      N/A     N/A    Y   118s
+[09:04:04] [0h56m] [INFO] B006_cam5_pinhole                      2.6%    79      N/A     N/A    Y    81s
+[09:04:04] [0h56m] [INFO] B007_cam4_fisheye                      0.0%     0      N/A     N/A    Y   116s
+[09:04:04] [0h56m] [INFO] B008_cam1_fisheye                      0.0%     0      N/A     N/A    Y   126s
+[09:04:04] [0h56m] [INFO] B009_cam5_clahe                        0.0%     0      N/A     N/A    Y   148s
+[09:04:04] [0h56m] [INFO] B010_cam5_nfeat5000                    0.0%     0      N/A     N/A    Y   167s
+[09:04:04] [0h56m] [INFO] 
+Best: B001_imu_v1 (90.2% tracking)
+[09:04:04] [0h56m] [INFO] 
+======================================================================
+[09:04:04] [0h56m] [INFO] PHASE C: STEREO-INERTIAL (3000 frames)
+[09:04:04] [0h56m] [INFO] ======================================================================
+[09:04:04] [0h56m] [INFO] 
+--- Stereo: Cam4 + Cam5 ---
+[09:04:04] [0h56m] [INFO]   Preparing 3000 frames from Cam4 as cam0...
+[09:04:44] [0h57m] [INFO]     [3000/3000] 75 img/s
+[09:04:44] [0h57m] [INFO]     Prepared 3000 frames in 40s
+[09:04:44] [0h57m] [INFO]   Preparing 3000 frames from Cam5 as cam1...
+[09:05:24] [0h58m] [INFO]     [3000/3000] 76 img/s
+[09:05:24] [0h58m] [INFO]     Prepared 3000 frames in 39s
+[09:05:24] [0h58m] [INFO]   Baseline: 9.4 cm
+[09:05:24] [0h58m] [INFO]   Running stereo_inertial [C_cam4_cam5] (3000 frames, timeout=900s)...
+[09:08:25] [1h01m] [INFO]     OK: 1 poses / 3000 frames (0.0%) in 181s IMU_init=Y
+[09:08:25] [1h01m] [INFO] 
+--- Stereo: Cam5 + Cam1 ---
+[09:08:25] [1h01m] [INFO]   Preparing 3000 frames from Cam5 as cam0...
+[09:09:04] [1h01m] [INFO]     [3000/3000] 76 img/s
+[09:09:04] [1h01m] [INFO]     Prepared 3000 frames in 39s
+[09:09:04] [1h01m] [INFO]   Preparing 3000 frames from Cam1 as cam1...
+[09:09:44] [1h02m] [INFO]     [3000/3000] 75 img/s
+[09:09:44] [1h02m] [INFO]     Prepared 3000 frames in 40s
+[09:09:44] [1h02m] [INFO]   Baseline: 9.5 cm
+[09:09:44] [1h02m] [INFO]   Running stereo_inertial [C_cam5_cam1] (3000 frames, timeout=900s)...
+[09:12:44] [1h05m] [INFO]     OK: 1 poses / 3000 frames (0.0%) in 180s IMU_init=Y
+[09:12:44] [1h05m] [INFO] 
+=== Phase C Summary ===
+[09:12:44] [1h05m] [INFO]   C_cam4_cam5: 0.0% tracking, ATE=infm
+[09:12:44] [1h05m] [INFO]   C_cam5_cam1: 0.0% tracking, ATE=infm
+[09:12:44] [1h05m] [INFO] 
+======================================================================
+[09:12:44] [1h05m] [INFO] PHASE D: FULL SPRING SESSION
+[09:12:44] [1h05m] [INFO] ======================================================================
+[09:12:45] [1h05m] [INFO] 
+--- D1_full_fisheye_cam5_v1 ---
+[09:12:45] [1h05m] [INFO]   Preparing 21310 frames from Cam5 as cam0...
+[09:13:24] [1h06m] [INFO]     [3000/21310] 76 img/s
+[09:14:03] [1h06m] [INFO]     [6000/21310] 76 img/s
+[09:14:44] [1h07m] [INFO]     [9000/21310] 75 img/s
+[09:15:26] [1h08m] [INFO]     [12000/21310] 74 img/s
+[09:16:08] [1h08m] [INFO]     [15000/21310] 74 img/s
+[09:16:48] [1h09m] [INFO]     [18000/21310] 74 img/s
+[09:17:28] [1h10m] [INFO]     [21000/21310] 74 img/s
+[09:17:32] [1h10m] [INFO]     Prepared 21310 frames in 288s
+[09:17:32] [1h10m] [INFO]   Running mono_inertial [D1_full_fisheye_cam5_v1] (21310 frames, timeout=5400s)...

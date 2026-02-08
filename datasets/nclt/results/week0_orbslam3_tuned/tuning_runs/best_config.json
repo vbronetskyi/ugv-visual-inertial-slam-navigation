@@ -1,0 +1,24 @@
+{
+  "cam_id": 4,
+  "preprocess": "none",
+  "clahe_clip": 0,
+  "resolution": "half",
+  "params": {
+    "fx": 221.0,
+    "fy": 221.0,
+    "cx": 404.0,
+    "cy": 308.0,
+    "k1": 0.0,
+    "k2": 0.0,
+    "p1": 0.0,
+    "p2": 0.0,
+    "width": 808,
+    "height": 616,
+    "fps": 5,
+    "nFeatures": 1000,
+    "scaleFactor": 1.2,
+    "nLevels": 10,
+    "iniThFAST": 20,
+    "minThFAST": 7
+  }
+}

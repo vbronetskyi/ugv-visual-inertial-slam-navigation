@@ -1,0 +1,15 @@
+{
+  "method": "DPVO",
+  "session": "spring",
+  "status": "success",
+  "n_poses_total": 21510,
+  "n_poses_synced": 12986,
+  "ate_rmse": 141.96758309266912,
+  "ate_mean": 131.81026194283547,
+  "ate_median": 130.58317467422168,
+  "scale": 0.3346529780637935,
+  "est_path_length_m": 12207.992927800495,
+  "gt_synced_length_m": 3185.5408783566895,
+  "gt_full_length_m": 3186.047441405986,
+  "coverage_pct": 99.9841005804649
+}

@@ -1,0 +1,44 @@
+{
+  "mode": "full",
+  "status": "ok",
+  "camera_model": "OPENCV_FISHEYE",
+  "total_time_s": 29577.99935722351,
+  "spring_session": "2012-04-29",
+  "summer_session": "2012-08-04",
+  "n_db_images": 7170,
+  "n_query_images": 4828,
+  "pipeline": {
+    "features": "SuperPoint (n=4096, nms=3, resize=1024)",
+    "retrieval": "NetVLAD",
+    "matcher": "LightGlue",
+    "sfm": "COLMAP (OPENCV_FISHEYE, single camera)",
+    "localization": "PnP+RANSAC (thresh=12)"
+  },
+  "sfm": {
+    "n_registered": 5797,
+    "n_total": 7170,
+    "pct_registered": 80.85076708507671,
+    "n_3d_points": 213197,
+    "mean_reproj_error": 1.1491870237215278,
+    "sfm_ate_rmse": 7.41337729710316e-12,
+    "sfm_sim3_scale": 4.233195887188742e-28
+  },
+  "localization": {
+    "n_query": 4828,
+    "n_localized": 4674,
+    "pct_localized": 96.8102734051367,
+    "pct_0.25m_2deg": 0.0,
+    "pct_0.5m_5deg": 0.0,
+    "pct_1.0m_5deg": 0.0,
+    "pct_5.0m_10deg": 0.0,
+    "median_trans_error_m": 447.39675942669635,
+    "mean_trans_error_m": 5439415911.862001,
+    "median_rot_error_deg": 108.37138645100458,
+    "mean_rot_error_deg": 105.88266573387642,
+    "ate_rmse_sim3": 246.22882673764562,
+    "ate_mean_sim3": 220.53794954547308,
+    "sim3_scale": 4.262311666423218e-12,
+    "ate_rmse_raw": 371871875603.0734,
+    "status": "ok"
+  }
+}

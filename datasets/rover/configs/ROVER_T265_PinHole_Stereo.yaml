@@ -1,0 +1,77 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# Camera params Undistorted T265 fisheye -> PinHole 640x480, 110° hFoV
+#--------------------------------------------------------------------------------------------
+
+File.version: "1.0"
+
+Camera.type: "PinHole"
+
+# Left camera (cam0)
+Camera1.fx: 224.07
+Camera1.fy: 224.07
+Camera1.cx: 320.00
+Camera1.cy: 240.00
+
+# zero distortion (already undistorted)
+Camera1.k1: 0.0
+Camera1.k2: 0.0
+Camera1.p1: 0.0
+Camera1.p2: 0.0
+
+# right cam (cam1) -- same intrinsics after undistortion
+Camera2.fx: 224.07
+Camera2.fy: 224.07
+Camera2.cx: 320.00
+Camera2.cy: 240.00
+
+Camera2.k1: 0.0
+Camera2.k2: 0.0
+Camera2.p1: 0.0
+Camera2.p2: 0.0
+
+Camera.width: 640
+Camera.height: 480
+Camera.fps: 30
+
+Camera.RGB: 0
+
+# stereo extrinsics: CamRight-To-CamLeft from calib_t265.yaml
+Stereo.T_c1_c2: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [ 0.9999623927, -0.006993186493, -0.005129174805, -0.06347425524,
+          0.006979568859,  0.9999720832,  -0.002668048862,  0.0004049468480,
+          0.005147689778,  0.002632149095,  0.9999832864, -0.0009053657268,
+          0.0, 0.0, 0.0, 1.0 ]
+
+# stereo baseline * fx: 0.0635 * 224.07 = 14.22
+Stereo.ThDepth: 30.0
+Stereo.b: 0.0635
+
+#--------------------------------------------------------------------------------------------
+# ORB params
+#--------------------------------------------------------------------------------------------
+
+ORBextractor.nFeatures: 2000
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 8
+ORBextractor.iniThFAST: 15
+ORBextractor.minThFAST: 5
+
+#--------------------------------------------------------------------------------------------
+# Viewer params (not used headless)
+#--------------------------------------------------------------------------------------------
+
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -1.8
+Viewer.ViewpointF: 500.0

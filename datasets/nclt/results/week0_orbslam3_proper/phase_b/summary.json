@@ -1,0 +1,236 @@
+{
+  "runs": [
+    {
+      "success": true,
+      "traj_path": "/workspace/slam_pipeline/results/week0_orbslam3_proper/phase_b/B001_imu_v1/f_nclt.txt",
+      "n_keyframes": 2706,
+      "n_frames": 3000,
+      "tracking_rate": 90.2,
+      "runtime_s": 618.8755042552948,
+      "mode": "mono_inertial",
+      "label": "B001_imu_v1",
+      "stdout_tail": "Fail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 1 maps in the atlas\n  Map 0 has 2020 KFs\n\nEnd of saving trajectory to f_nclt.txt ...\n\nSaving keyframe trajectory to kf_nclt.txt ...",
+      "imu_initialized": true,
+      "config": {
+        "cam_id": 5,
+        "imu_ver": "v1",
+        "cam_model": "fisheye",
+        "preprocess": "none",
+        "n_features": 3000
+      },
+      "eval": {
+        "status": "too_few_matches",
+        "n_poses": 2706,
+        "n_matched": 0
+      }
+    },
+    {
+      "success": true,
+      "traj_path": "/workspace/slam_pipeline/results/week0_orbslam3_proper/phase_b/B002_imu_v2/f_nclt.txt",
+      "n_keyframes": 2706,
+      "n_frames": 3000,
+      "tracking_rate": 90.2,
+      "runtime_s": 618.5463101863861,
+      "mode": "mono_inertial",
+      "label": "B002_imu_v2",
+      "stdout_tail": "Fail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 1 maps in the atlas\n  Map 0 has 2009 KFs\n\nEnd of saving trajectory to f_nclt.txt ...\n\nSaving keyframe trajectory to kf_nclt.txt ...",
+      "imu_initialized": true,
+      "config": {
+        "cam_id": 5,
+        "imu_ver": "v2",
+        "cam_model": "fisheye",
+        "preprocess": "none",
+        "n_features": 3000
+      },
+      "eval": {
+        "status": "too_few_matches",
+        "n_poses": 2706,
+        "n_matched": 0
+      }
+    },
+    {
+      "success": true,
+      "traj_path": "/workspace/slam_pipeline/results/week0_orbslam3_proper/phase_b/B003_imu_v3/f_nclt.txt",
+      "n_keyframes": 2706,
+      "n_frames": 3000,
+      "tracking_rate": 90.2,
+      "runtime_s": 618.282054901123,
+      "mode": "mono_inertial",
+      "label": "B003_imu_v3",
+      "stdout_tail": "Fail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 1 maps in the atlas\n  Map 0 has 1929 KFs\n\nEnd of saving trajectory to f_nclt.txt ...\n\nSaving keyframe trajectory to kf_nclt.txt ...",
+      "imu_initialized": true,
+      "config": {
+        "cam_id": 5,
+        "imu_ver": "v3",
+        "cam_model": "fisheye",
+        "preprocess": "none",
+        "n_features": 3000
+      },
+      "eval": {
+        "status": "too_few_matches",
+        "n_poses": 2706,
+        "n_matched": 0
+      }
+    },
+    {
+      "success": true,
+      "traj_path": "/workspace/slam_pipeline/results/week0_orbslam3_proper/phase_b/B004_imu_v4/f_nclt.txt",
+      "n_keyframes": 2390,
+      "n_frames": 3000,
+      "tracking_rate": 79.66666666666666,
+      "runtime_s": 619.1610152721405,
+      "mode": "mono_inertial",
+      "label": "B004_imu_v4",
+      "stdout_tail": "Fail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nFail to track local map!\nCreation of new map with id: 1\nStored map with ID: 0\nCreation of new map with last KF id: 1943\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 2 maps in the atlas\n  Map 0 has 1746 KFs\n  Map 1 has 0 KFs\n\nEnd of saving trajectory to f_nclt.txt ...\n\nSaving keyframe trajectory to kf_nclt.txt ...",
+      "imu_initialized": true,
+      "config": {
+        "cam_id": 5,
+        "imu_ver": "v4",
+        "cam_model": "fisheye",
+        "preprocess": "none",
+        "n_features": 3000
+      },
+      "eval": {
+        "status": "too_few_matches",
+        "n_poses": 2390,
+        "n_matched": 0
+      }
+    },
+    {
+      "success": false,
+      "traj_path": null,
+      "n_keyframes": 0,
+      "n_frames": 0,
+      "tracking_rate": 0,
+      "runtime_s": 118.1467673778534,
+      "mode": "mono_inertial",
+      "label": "B005_imu_v5",
+      "stdout_tail": "First KF:378; Map init KF:279\nNew Map created with 490 points\nFail to track local map!\nIMU recently initialized but BA2 not done. Reseting active map...\nSYSTEM-> Reseting active map in monocular case\nLM: Active map reset recieved\nLM: Active map reset, waiting...\nLM: Reseting current map in Local Mapping...\nLM: End reseting Local Mapping...\nLM: Reset free the mutex\nLM: Active map reset, Done!!!\nmnFirstFrameId = 2757\nmnInitialFrameId = 2192\n756 Frames set to lost\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 1 maps in the atlas\n  Map 0 has 0 KFs\nSegmentation fault",
+      "imu_initialized": true,
+      "config": {
+        "cam_id": 5,
+        "imu_ver": "v5",
+        "cam_model": "fisheye",
+        "preprocess": "none",
+        "n_features": 3000
+      },
+      "eval": {
+        "status": "no_trajectory"
+      }
+    },
+    {
+      "success": true,
+      "traj_path": "/workspace/slam_pipeline/results/week0_orbslam3_proper/phase_b/B006_cam5_pinhole/f_nclt.txt",
+      "n_keyframes": 79,
+      "n_frames": 3000,
+      "tracking_rate": 2.6333333333333333,
+      "runtime_s": 80.53772950172424,
+      "mode": "mono_inertial",
+      "label": "B006_cam5_pinhole",
+      "stdout_tail": "LM: End reseting Local Mapping...\nLM: Reset free the mutex\nLM: Active map reset, Done!!!\nmnFirstFrameId = 2892\nmnInitialFrameId = 2890\n2770 Frames set to lost\nFirst KF:1408; Map init KF:1394\nNew Map created with 582 points\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 1 maps in the atlas\n  Map 0 has 40 KFs\n\nEnd of saving trajectory to f_nclt.txt ...\n\nSaving keyframe trajectory to kf_nclt.txt ...\nQObject::killTimer: Timers cannot be stopped from another thread\nQObject::~QObject: Timers cannot be stopped from another thread\nSegmentation fault",
+      "imu_initialized": true,
+      "config": {
+        "cam_id": 5,
+        "imu_ver": "v1",
+        "cam_model": "pinhole",
+        "preprocess": "none",
+        "n_features": 3000
+      },
+      "eval": {
+        "status": "too_few_matches",
+        "n_poses": 79,
+        "n_matched": 0
+      }
+    },
+    {
+      "success": false,
+      "traj_path": null,
+      "n_keyframes": 0,
+      "n_frames": 0,
+      "tracking_rate": 0,
+      "runtime_s": 116.27967119216919,
+      "mode": "mono_inertial",
+      "label": "B007_cam4_fisheye",
+      "stdout_tail": "Fail to track local map!\nTrack lost before IMU initialisation, reseting...\nSYSTEM-> Reseting active map in monocular case\nLM: Active map reset recieved\nLM: Active map reset, waiting...\nstart VIBA 1\nend VIBA 1\nLM: Reseting current map in Local Mapping...\nLM: End reseting Local Mapping...\nLM: Reset free the mutex\nLM: Active map reset, Done!!!\nmnFirstFrameId = 2779\nmnInitialFrameId = 2369\n548 Frames set to lost\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 1 maps in the atlas\n  Map 0 has 0 KFs\nSegmentation fault",
+      "imu_initialized": true,
+      "config": {
+        "cam_id": 4,
+        "imu_ver": "v1",
+        "cam_model": "fisheye",
+        "preprocess": "none",
+        "n_features": 3000
+      },
+      "eval": {
+        "status": "no_trajectory"
+      }
+    },
+    {
+      "success": false,
+      "traj_path": null,
+      "n_keyframes": 0,
+      "n_frames": 0,
+      "tracking_rate": 0,
+      "runtime_s": 126.18947100639343,
+      "mode": "mono_inertial",
+      "label": "B008_cam1_fisheye",
+      "stdout_tail": "Fail to track local map!\nFail to track local map!\nTrack lost before IMU initialisation, reseting...\nSYSTEM-> Reseting active map in monocular case\nscale too small\nLM: Active map reset recieved\nLM: Active map reset, waiting...\nLM: Reseting current map in Local Mapping...\nLM: End reseting Local Mapping...\nLM: Reset free the mutex\nLM: Active map reset, Done!!!\nmnFirstFrameId = 2289\nmnInitialFrameId = 2099\n313 Frames set to lost\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 1 maps in the atlas\n  Map 0 has 0 KFs\nSegmentation fault",
+      "imu_initialized": true,
+      "config": {
+        "cam_id": 1,
+        "imu_ver": "v1",
+        "cam_model": "fisheye",
+        "preprocess": "none",
+        "n_features": 3000
+      },
+      "eval": {
+        "status": "no_trajectory"
+      }
+    },
+    {
+      "success": false,
+      "traj_path": null,
+      "n_keyframes": 0,
+      "n_frames": 0,
+      "tracking_rate": 0,
+      "runtime_s": 148.41655850410461,
+      "mode": "mono_inertial",
+      "label": "B009_cam5_clahe",
+      "stdout_tail": "\nInitialization of Atlas from scratch \nCreation of new map with id: 0\nCreation of new map with last KF id: 0\nSeq. Name: \nThere are 1 cameras in the atlas\nCamera 0 is fisheye\nerror: XDG_RUNTIME_DIR is invalid or not set in the environment.\nlibEGL warning: DRI3 error: Could not get DRI3 device\nlibEGL warning: Ensure your X server supports DRI3 to get accelerated rendering\nQStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'\nThis plugin does not support propagateSizeHints()\nStarting the Viewer\nThis plugin does not support propagateSizeHints()\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 1 maps in the atlas\n  Map 0 has 0 KFs\nSegmentation fault",
+      "imu_initialized": true,
+      "config": {
+        "cam_id": 5,
+        "imu_ver": "v1",
+        "cam_model": "fisheye",
+        "preprocess": "clahe",
+        "n_features": 3000
+      },
+      "eval": {
+        "status": "no_trajectory"
+      }
+    },
+    {
+      "success": false,
+      "traj_path": null,
+      "n_keyframes": 0,
+      "n_frames": 0,
+      "tracking_rate": 0,
+      "runtime_s": 167.41142654418945,
+      "mode": "mono_inertial",
+      "label": "B010_cam5_nfeat5000",
+      "stdout_tail": "Fail to track local map!\nTrack lost before IMU initialisation, reseting...\nSYSTEM-> Reseting active map in monocular case\nLM: Active map reset recieved\nLM: Active map reset, waiting...\nstart VIBA 1\nend VIBA 1\nLM: Reseting current map in Local Mapping...\nLM: End reseting Local Mapping...\nLM: Reset free the mutex\nLM: Active map reset, Done!!!\nmnFirstFrameId = 2757\nmnInitialFrameId = 2242\n1241 Frames set to lost\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 1 maps in the atlas\n  Map 0 has 0 KFs\nSegmentation fault",
+      "imu_initialized": true,
+      "config": {
+        "cam_id": 5,
+        "imu_ver": "v1",
+        "cam_model": "fisheye",
+        "preprocess": "none",
+        "n_features": 5000
+      },
+      "eval": {
+        "status": "no_trajectory"
+      }
+    }
+  ],
+  "best_imu": "v1",
+  "best_label": "B001_imu_v1"
+}

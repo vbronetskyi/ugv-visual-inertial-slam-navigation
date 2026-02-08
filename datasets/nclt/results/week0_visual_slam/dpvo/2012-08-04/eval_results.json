@@ -1,0 +1,15 @@
+{
+  "method": "DPVO",
+  "session": "summer",
+  "status": "success",
+  "n_poses_total": 21238,
+  "n_poses_synced": 21238,
+  "ate_rmse": 183.35641354793546,
+  "ate_mean": 167.7320592611758,
+  "ate_median": 162.9422166158381,
+  "scale": 0.3649722685224711,
+  "est_path_length_m": 16053.263265073823,
+  "gt_synced_length_m": 4918.438690825378,
+  "gt_full_length_m": 5496.608979886754,
+  "coverage_pct": 89.48132764806407
+}

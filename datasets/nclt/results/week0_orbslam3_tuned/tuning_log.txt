@@ -1,0 +1,205 @@
+ORB-SLAM3 Tuning Log - Started 2026-02-12 22:35:43.743988
+[22:35:43] [INFO] Starting ORB-SLAM3 systematic parameter tuning
+[22:35:43] [INFO] Session: 2012-04-29
+[22:35:43] [INFO] Results dir: /workspace/slam_pipeline/results/week0_orbslam3_tuned
+[22:35:43] [INFO] ======================================================================
+[22:35:43] [INFO] PHASE 0: Camera Investigation
+[22:35:43] [INFO] ======================================================================
+[22:35:44] [INFO]   Cam0: bright=94 contrast=74 ORB=851 corners=179 orient=side (sky on top)
+[22:35:44] [INFO]   Cam1: bright=34 contrast=17 ORB=1632 corners=2061 orient=side (mixed)
+[22:35:44] [INFO]   Cam2: bright=44 contrast=29 ORB=2170 corners=342 orient=side (mixed)
+[22:35:44] [INFO]   Cam3: bright=50 contrast=37 ORB=2193 corners=208 orient=side (mixed)
+[22:35:44] [INFO]   Cam4: bright=74 contrast=75 ORB=1143 corners=202 orient=side (mixed)
+[22:35:44] [INFO]   Cam5: bright=83 contrast=72 ORB=2349 corners=389 orient=side (sky on top)
+[22:35:44] [INFO] 
+  Camera Investigation Summary:
+[22:35:44] [INFO]    Cam  Bright  Contrast   ORB  Corners Orientation         
+[22:35:44] [INFO]   ---- ------- --------- ----- -------- --------------------
+[22:35:44] [INFO]      0      94      73.6   851      179 side (sky on top)   
+[22:35:44] [INFO]      1      34      17.5  1632     2061 side (mixed)        
+[22:35:44] [INFO]      2      44      28.9  2170      342 side (mixed)        
+[22:35:44] [INFO]      3      50      36.9  2193      208 side (mixed)        
+[22:35:44] [INFO]      4      74      75.1  1143      202 side (mixed)        
+[22:35:44] [INFO]      5      83      72.0  2349      389 side (sky on top)   
+[22:35:44] [INFO] 
+  Selected cameras (ranked): [5, 4, 3]
+[22:35:44] [INFO] ======================================================================
+[22:35:44] [INFO] PHASE 1: Quick Validation (1000 frames)
+[22:35:44] [INFO] ======================================================================
+[22:35:44] [INFO] 
+--- Quick test: Cam5 ---
+[22:35:44] [INFO]   Dataset already prepared: 1000 frames in /tmp/nclt_tum_2012-04-29_cam5_half_n1000
+[22:35:44] [INFO]   Running ORB-SLAM3 [Cam5_baseline] on nclt_tum_2012-04-29_cam5_half_n1000 (timeout=300s)...
+[22:39:13] [INFO]     OK: 58 keyframes from 1000 frames (5.8%) in 209.0s
+[22:39:13] [INFO]   Cam5: Testing CLAHE preprocessing...
+[22:39:13] [INFO]   Dataset already prepared: 1000 frames in /tmp/nclt_tum_2012-04-29_cam5_half_clahe3.0_n1000
+[22:39:13] [INFO]   Running ORB-SLAM3 [Cam5_CLAHE] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n1000 (timeout=300s)...
+[22:42:42] [INFO]     OK: 697 keyframes from 1000 frames (69.7%) in 208.5s
+[22:42:42] [INFO] 
+--- Quick test: Cam4 ---
+[22:42:42] [INFO]   Dataset already prepared: 1000 frames in /tmp/nclt_tum_2012-04-29_cam4_half_n1000
+[22:42:42] [INFO]   Running ORB-SLAM3 [Cam4_baseline] on nclt_tum_2012-04-29_cam4_half_n1000 (timeout=300s)...
+[22:46:11] [INFO]     OK: 192 keyframes from 1000 frames (19.2%) in 208.8s
+[22:46:11] [INFO]   Cam4: Testing CLAHE preprocessing...
+[22:46:11] [INFO]   Dataset already prepared: 1000 frames in /tmp/nclt_tum_2012-04-29_cam4_half_clahe3.0_n1000
+[22:46:11] [INFO]   Running ORB-SLAM3 [Cam4_CLAHE] on nclt_tum_2012-04-29_cam4_half_clahe3.0_n1000 (timeout=300s)...
+[22:49:41] [INFO]     OK: 186 keyframes from 1000 frames (18.6%) in 209.7s
+[22:49:41] [INFO] 
+--- Quick test: Cam3 ---
+[22:49:41] [INFO]   Dataset already prepared: 1000 frames in /tmp/nclt_tum_2012-04-29_cam3_half_n1000
+[22:49:41] [INFO]   Running ORB-SLAM3 [Cam3_baseline] on nclt_tum_2012-04-29_cam3_half_n1000 (timeout=300s)...
+[22:53:08] [INFO]     OK: 616 keyframes from 1000 frames (61.6%) in 207.7s
+[22:53:08] [INFO]   Cam3: Testing CLAHE preprocessing...
+[22:53:08] [INFO]   Dataset already prepared: 1000 frames in /tmp/nclt_tum_2012-04-29_cam3_half_clahe3.0_n1000
+[22:53:08] [INFO]   Running ORB-SLAM3 [Cam3_CLAHE] on nclt_tum_2012-04-29_cam3_half_clahe3.0_n1000 (timeout=300s)...
+[22:56:37] [INFO]     OK: 303 keyframes from 1000 frames (30.3%) in 208.7s
+[22:56:37] [INFO] 
+  Phase 1 Summary:
+[22:56:37] [INFO]    Cam    KF  Track%  CLAHE_KF  CLAHE_%  Aggr_KF
+[22:56:37] [INFO]   ---- ----- ------- --------- -------- --------
+[22:56:37] [INFO]      5    58     5.8       697     69.7        -
+[22:56:37] [INFO]      4   192    19.2       186     18.6        -
+[22:56:37] [INFO]      3   616    61.6       303     30.3        -
+[22:56:37] [INFO] 
+  Best camera: Cam5 (clahe, 69.7%)
+[22:56:37] [INFO] ======================================================================
+[22:56:37] [INFO] PHASE 2: Systematic Parameter Tuning (Cam5, preprocess=clahe)
+[22:56:37] [INFO] ======================================================================
+[22:56:37] [INFO]   Preparing 3000 frames from Cam5 (808x616, preprocess=clahe)...
+[22:57:06] [INFO]     [2000/3000] 69 img/s, ETA 14s
+[22:57:21] [INFO]   Prepared 3000 frames in 43s
+[22:57:21] [INFO] 
+--- Step 1: nFeatures sweep ---
+[22:57:21] [INFO]   Running ORB-SLAM3 [run001_nfeat_1000] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[23:07:44] [INFO]     OK: 284 keyframes from 3000 frames (9.5%) in 623.6s
+[23:07:44] [INFO]     ATE=3595.46m scale=2225.009 matched=284
+[23:07:44] [INFO]   Running ORB-SLAM3 [run002_nfeat_2000] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[23:18:05] [INFO]     OK: 87 keyframes from 3000 frames (2.9%) in 620.3s
+[23:18:05] [INFO]     ATE=573.64m scale=16115.325 matched=87
+[23:18:05] [INFO]   Running ORB-SLAM3 [run003_nfeat_3000] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[23:28:24] [INFO]     OK: 172 keyframes from 3000 frames (5.7%) in 618.9s
+[23:28:24] [INFO]     ATE=2014.00m scale=994.654 matched=172
+[23:28:24] [INFO]   Running ORB-SLAM3 [run004_nfeat_5000] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[23:38:40] [INFO]     OK: 26 keyframes from 3000 frames (0.9%) in 616.7s
+[23:38:40] [INFO]     ATE=67.55m scale=6076.034 matched=26
+[23:38:40] [INFO]   Running ORB-SLAM3 [run005_nfeat_8000] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[23:48:59] [INFO]     OK: 96 keyframes from 3000 frames (3.2%) in 618.5s
+[23:48:59] [INFO]     ATE=1007.18m scale=497.840 matched=96
+[23:48:59] [INFO]   Best nFeatures: 1000 (tracking=9.5%, ATE=3595.46m)
+[23:48:59] [INFO] 
+--- Step 2: FAST threshold sweep ---
+[23:48:59] [INFO]   Running ORB-SLAM3 [run006_fast_20_7] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[23:59:24] [INFO]     OK: 779 keyframes from 3000 frames (26.0%) in 625.3s
+[23:59:24] [INFO]     ATE=21494.28m scale=590977.189 matched=779
+[23:59:24] [INFO]   Running ORB-SLAM3 [run007_fast_15_5] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[00:09:51] [INFO]     OK: 282 keyframes from 3000 frames (9.4%) in 626.3s
+[00:09:51] [INFO]     ATE=3684.69m scale=1723.384 matched=282
+[00:09:51] [INFO]   Running ORB-SLAM3 [run008_fast_10_3] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[00:20:16] [INFO]     OK: 282 keyframes from 3000 frames (9.4%) in 625.4s
+[00:20:16] [INFO]     ATE=3720.19m scale=1613.707 matched=282
+[00:20:16] [INFO]   Running ORB-SLAM3 [run009_fast_7_3] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[00:30:41] [INFO]     OK: 280 keyframes from 3000 frames (9.3%) in 625.0s
+[00:30:41] [INFO]     ATE=3820.03m scale=1585.191 matched=280
+[00:30:41] [INFO]   Running ORB-SLAM3 [run010_fast_5_2] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[00:41:07] [INFO]     OK: 261 keyframes from 3000 frames (8.7%) in 625.6s
+[00:41:07] [INFO]     ATE=3493.54m scale=1263.480 matched=261
+[00:41:07] [INFO]   Best FAST: ini=20 min=7 (tracking=26.0%, ATE=21494.28m)
+[00:41:07] [INFO] 
+--- Step 3: Scale factor and pyramid levels sweep ---
+[00:41:07] [INFO]   Running ORB-SLAM3 [run011_scale_1.1_10] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[00:51:33] [INFO]     OK: 182 keyframes from 3000 frames (6.1%) in 625.7s
+[00:51:33] [INFO]     ATE=2705.39m scale=7557.090 matched=182
+[00:51:33] [INFO]   Running ORB-SLAM3 [run012_scale_1.1_12] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[01:01:58] [INFO]     OK: 240 keyframes from 3000 frames (8.0%) in 625.6s
+[01:01:58] [INFO]     ATE=3034.29m scale=2055.015 matched=240
+[01:01:58] [INFO]   Running ORB-SLAM3 [run013_scale_1.2_8] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[01:12:24] [INFO]     OK: 268 keyframes from 3000 frames (8.9%) in 625.6s
+[01:12:24] [INFO]     ATE=3362.35m scale=1572.461 matched=268
+[01:12:24] [INFO]   Running ORB-SLAM3 [run014_scale_1.2_10] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[01:22:49] [INFO]     OK: 426 keyframes from 3000 frames (14.2%) in 624.9s
+[01:22:49] [INFO]     ATE=9646.41m scale=6000763.238 matched=426
+[01:22:49] [INFO]   Running ORB-SLAM3 [run015_scale_1.3_8] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[01:33:13] [INFO]     OK: 263 keyframes from 3000 frames (8.8%) in 624.2s
+[01:33:13] [INFO]     ATE=3436.65m scale=1726.615 matched=263
+[01:33:13] [INFO]   Running ORB-SLAM3 [run016_scale_1.15_10] on nclt_tum_2012-04-29_cam5_half_clahe3.0_n3000 (timeout=900s)...
+[01:43:39] [INFO]     OK: 157 keyframes from 3000 frames (5.2%) in 625.6s
+[01:43:39] [INFO]     ATE=1887.54m scale=9513.831 matched=157
+[01:43:39] [INFO]   Best scale: factor=1.2 levels=10 (tracking=14.2%, ATE=9646.41m)
+[01:43:39] [INFO] 
+--- Step 4: Preprocessing sweep ---
+[01:43:39] [INFO]   Preparing 3000 frames from Cam5 (808x616, preprocess=none)...
+[01:44:06] [INFO]     [2000/3000] 76 img/s, ETA 13s
+[01:44:18] [INFO]   Prepared 3000 frames in 39s
+[01:44:18] [INFO]   Running ORB-SLAM3 [prep_none_clip0] on nclt_tum_2012-04-29_cam5_half_n3000 (timeout=900s)...
+[01:54:42] [INFO]     OK: 272 keyframes from 3000 frames (9.1%) in 623.7s
+[01:54:42] [INFO]     ATE=3616.88m scale=1762.886
+[01:54:42] [INFO]   Preparing 3000 frames from Cam5 (808x616, preprocess=clahe)...
+[01:55:09] [INFO]     [2000/3000] 75 img/s, ETA 13s
+[01:55:22] [INFO]   Prepared 3000 frames in 40s
+[01:55:22] [INFO]   Running ORB-SLAM3 [prep_clahe_clip2.0] on nclt_tum_2012-04-29_cam5_half_clahe2.0_n3000 (timeout=900s)...
+[02:05:46] [INFO]     OK: 266 keyframes from 3000 frames (8.9%) in 624.4s
+[02:05:47] [INFO]     ATE=3391.45m scale=1673.873
+[02:05:47] [INFO]   Preparing 3000 frames from Cam5 (808x616, preprocess=clahe)...
+[02:06:14] [INFO]     [2000/3000] 74 img/s, ETA 13s
+[02:06:27] [INFO]   Prepared 3000 frames in 40s
+[02:06:27] [INFO]   Running ORB-SLAM3 [prep_clahe_clip4.0] on nclt_tum_2012-04-29_cam5_half_clahe4.0_n3000 (timeout=900s)...
+[02:16:52] [INFO]     OK: 269 keyframes from 3000 frames (9.0%) in 624.9s
+[02:16:52] [INFO]     ATE=3560.99m scale=2041.733
+[02:16:52] [INFO]   Best preprocessing: none (clip=0) (tracking=9.1%, ATE=3616.88m)
+[02:16:52] [INFO] 
+--- Step 5: Multi-camera comparison ---
+[02:16:52] [INFO]   Preparing 3000 frames from Cam4 (808x616, preprocess=none)...
+[02:17:20] [INFO]     [2000/3000] 72 img/s, ETA 14s
+[02:17:34] [INFO]   Prepared 3000 frames in 42s
+[02:17:34] [INFO]   Running ORB-SLAM3 [multicam_Cam4] on nclt_tum_2012-04-29_cam4_half_n3000 (timeout=900s)...
+[02:27:58] [INFO]     OK: 838 keyframes from 3000 frames (27.9%) in 624.2s
+[02:27:58] [INFO]     Cam4: ATE=33944.17m tracking=27.9%
+[02:27:58] [INFO]   Dataset already prepared: 3000 frames in /tmp/nclt_tum_2012-04-29_cam3_half_n3000
+[02:27:58] [INFO]   Running ORB-SLAM3 [multicam_Cam3] on nclt_tum_2012-04-29_cam3_half_n3000 (timeout=900s)...
+[02:38:21] [INFO]     OK: 158 keyframes from 3000 frames (5.3%) in 622.7s
+[02:38:21] [INFO]     Cam3: ATE=1846.45m tracking=5.3%
+[02:38:21] [INFO]   Cam4 is significantly better, switching!
+[02:38:21] [INFO] 
+--- Step 6: Resolution sweep ---
+[02:38:21] [INFO]   Dataset already prepared: 3000 frames in /tmp/nclt_tum_2012-04-29_cam4_half_n3000
+[02:38:21] [INFO]   Running ORB-SLAM3 [res_half] on nclt_tum_2012-04-29_cam4_half_n3000 (timeout=900s)...
+[02:48:45] [INFO]     OK: 230 keyframes from 3000 frames (7.7%) in 623.7s
+[02:48:45] [INFO]     half: ATE=3653.50m tracking=7.7%
+[02:48:45] [INFO]   Preparing 3000 frames from Cam4 (1212x924, preprocess=none)...
+[02:49:22] [INFO]     [2000/3000] 54 img/s, ETA 18s
+[02:49:40] [INFO]   Prepared 3000 frames in 55s
+[02:49:40] [INFO]   Running ORB-SLAM3 [res_3quarter] on nclt_tum_2012-04-29_cam4_3quarter_n3000 (timeout=900s)...
+[03:00:18] [INFO]     OK: 35 keyframes from 3000 frames (1.2%) in 638.5s
+[03:00:18] [INFO]     3quarter: ATE=96.09m tracking=1.2%
+[03:00:18] [INFO]   Best resolution: half (808x616) (tracking=7.7%, ATE=3653.50m)
+[03:00:18] [INFO] 
+  Final best config: Cam4, half, preprocess=none
+[03:00:18] [INFO]   Params: nFeatures=1000 FAST=20/7 scale=1.2x10
+[03:00:18] [INFO] ======================================================================
+[03:00:18] [INFO] PHASE 3: Full Session Run
+[03:00:18] [INFO] ======================================================================
+[03:00:18] [INFO] Preparing full dataset (this may take a while)...
+[03:00:18] [INFO]   Preparing 21510 frames from Cam4 (808x616, preprocess=none)...
+[03:00:45] [INFO]     [2000/21510] 74 img/s, ETA 263s
+[03:01:13] [INFO]     [4000/21510] 74 img/s, ETA 238s
+[03:01:38] [INFO]     [6000/21510] 75 img/s, ETA 206s
+[03:02:06] [INFO]     [8000/21510] 75 img/s, ETA 181s
+[03:02:35] [INFO]     [10000/21510] 73 img/s, ETA 157s
+[03:03:02] [INFO]     [12000/21510] 73 img/s, ETA 129s
+[03:03:30] [INFO]     [14000/21510] 73 img/s, ETA 103s
+[03:03:55] [INFO]     [16000/21510] 74 img/s, ETA 75s
+[03:04:22] [INFO]     [18000/21510] 74 img/s, ETA 48s
+[03:04:49] [INFO]     [20000/21510] 74 img/s, ETA 20s
+[03:05:09] [INFO]   Prepared 21510 frames in 291s
+[03:05:09] [INFO]   Running ORB-SLAM3 [FULL_SESSION] on nclt_tum_2012-04-29_cam4_half (timeout=2700s)...
+[03:50:09] [INFO]     TIMEOUT after 2700s
+[03:50:09] [ERROR] Full session run FAILED
+[03:50:09] [INFO] ======================================================================
+[03:50:09] [INFO] PHASE 4: Generating Plots and Report
+[03:50:09] [INFO] ======================================================================
+[03:50:10] [INFO]   Saved parameter_sweep.png
+[03:50:10] [INFO]   Saved camera_comparison.png
+[03:50:10] [INFO]   Saved SUMMARY.md
+[03:50:10] [INFO] 
+Total runtime: 5.2 hours
+[03:50:10] [INFO] DONE!

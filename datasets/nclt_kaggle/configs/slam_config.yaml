@@ -1,0 +1,42 @@
+# SLAM pipeline configuration
+slam:
+  # LiDAR odometry
+  odometry:
+    method: "icp"  # icp, gicp, ndt
+    max_iterations: 50
+    convergence_threshold: 1.0e-6
+    max_correspondence_distance: 1.0  # meters
+
+    # Voxel downsampling before registration
+    voxel_size: 0.2
+
+    # Keyframe selection
+    keyframe_distance: 2.0   # meters
+    keyframe_rotation: 15.0  # degrees
+
+  # Loop closure / place recognition
+  loop_closure:
+    enabled: true
+    model_path: "./checkpoints/best_model.pth"
+    # Search parameters
+    search_radius: 50.0  # meters - spatial constraint
+    min_time_diff: 30.0  # seconds - temporal constraint
+    similarity_threshold: 0.7
+    # Verification
+    icp_verification: true
+    fitness_threshold: 0.3
+
+  # Pose graph optimization
+  pose_graph:
+    optimizer: "levenberg_marquardt"
+    max_iterations: 100
+    # Information matrices (inverse covariance)
+    odometry_information_scale: 1.0
+    loop_information_scale: 0.5
+
+  # Output
+  output:
+    save_trajectory: true
+    save_map: false  # full map can be large
+    trajectory_format: "tum"  # tum, kitti
+    output_dir: "./results"

@@ -1,0 +1,13 @@
+{
+  "method": "DROID-SLAM",
+  "runtime_total_s": 1185.565592288971,
+  "runtime_tracking_s": 1182.3315510749817,
+  "runtime_optim_s": 3.234009027481079,
+  "n_images": 24138,
+  "n_poses": 933,
+  "tracking_rate": 0.03865274670643798,
+  "fps": 20.41559322176052,
+  "gpu_memory_peak_gb": 10.135174656,
+  "stride": 1,
+  "buffer": 2048
+}

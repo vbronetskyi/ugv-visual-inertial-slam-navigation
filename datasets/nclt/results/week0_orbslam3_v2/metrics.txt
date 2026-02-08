@@ -1,0 +1,24 @@
+ORB-SLAM3 Monocular Evaluation Results (v2) - REAL ASSESSMENT
+=================================================================
+
+Method: Pure Monocular (mono-inertial failed, see CHANGELOG.md)
+Config: PinHole f=221 (COLMAP-calibrated), 3000 features, FAST 10/3
+Alignment: Sim(3) Umeyama (rotation + translation + scale)
+
+IMPORTANT CAVEATS:
+- Multi-map trajectories (35/8 maps) have poses in DIFFERENT coordinate
+  frames. Global Sim(3) alignment on such data is unreliable.
+- Only the Spring 3k result (1 map) has a reliable ATE measurement.
+- Comparison with LiDAR ICP is NOT valid: different trajectory lengths,
+  different coverage, and monocular scale is unknown.
+
+Run                                 Poses   Track%     GT covered   Maps   ATE(m)
+--------------------------------------------------------------------------------
+Spring 3k (best segment)      2981/3000      99.4%    791m/3186m      1    45.6m
+Spring full (21k images)      5038/21010     24.0%   1305m/3186m     35   100.3m *
+Summer 5k                      959/5000      19.2%    221m/5497m      8    54.8m *
+
+LiDAR ICP (Spring)                   6486   100.0%    3184m/3184m    ---   174.0m
+LiDAR ICP (Summer)                    ---   100.0%    5493m/5493m    ---   188.2m
+
+* Unreliable: multi-map alignment

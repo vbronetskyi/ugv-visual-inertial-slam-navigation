@@ -1,0 +1,74 @@
+{
+  "droid_slam_2012-04-29": {
+    "method": "DROID-SLAM",
+    "runtime_total_s": 786.4951524734497,
+    "runtime_tracking_s": 778.961820602417,
+    "runtime_optim_s": 7.533324241638184,
+    "n_images": 21510,
+    "n_poses": 1847,
+    "tracking_rate": 0.08586703858670386,
+    "fps": 27.61367685949621,
+    "gpu_memory_peak_gb": 10.320579072,
+    "stride": 1,
+    "buffer": 2048,
+    "success": true
+  },
+  "droid_slam_2012-08-04": {
+    "method": "DROID-SLAM",
+    "runtime_total_s": 1185.565592288971,
+    "runtime_tracking_s": 1182.3315510749817,
+    "runtime_optim_s": 3.234009027481079,
+    "n_images": 24138,
+    "n_poses": 933,
+    "tracking_rate": 0.03865274670643798,
+    "fps": 20.41559322176052,
+    "gpu_memory_peak_gb": 10.135174656,
+    "stride": 1,
+    "buffer": 2048,
+    "success": true
+  },
+  "dpvo_2012-04-29": {
+    "method": "DPVO",
+    "runtime_s": 632.9767789840698,
+    "n_images": 21510,
+    "n_poses": 21510,
+    "tracking_rate": 1.0,
+    "fps": 33.982289262686116,
+    "gpu_memory_peak_gb": 0.633183744,
+    "stride": 1,
+    "success": true
+  },
+  "dpvo_2012-08-04": {
+    "method": "DPVO",
+    "runtime_s": 628.0972263813019,
+    "n_images": 24138,
+    "n_poses": 21238,
+    "tracking_rate": 0.8798574861214682,
+    "fps": 38.43035598018456,
+    "gpu_memory_peak_gb": 0.627265536,
+    "stride": 1,
+    "success": true
+  },
+  "dpv_slam_2012-04-29": {
+    "method": "DPV-SLAM",
+    "runtime_s": 1349.0916755199432,
+    "n_images": 21510,
+    "n_poses": 1780,
+    "tracking_rate": 0.08275220827522083,
+    "fps": 15.944061022917507,
+    "gpu_memory_peak_gb": 3.558685184,
+    "stride": 1,
+    "success": true
+  },
+  "dpv_slam_2012-08-04": {
+    "method": "DPV-SLAM",
+    "runtime_s": 1669.0857162475586,
+    "n_images": 24138,
+    "n_poses": 21858,
+    "tracking_rate": 0.9055431270196371,
+    "fps": 14.461809699184949,
+    "gpu_memory_peak_gb": 3.929110016,
+    "stride": 1,
+    "success": true
+  }
+}

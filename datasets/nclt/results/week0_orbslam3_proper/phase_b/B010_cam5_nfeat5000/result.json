@@ -1,0 +1,22 @@
+{
+  "success": false,
+  "traj_path": null,
+  "n_keyframes": 0,
+  "n_frames": 0,
+  "tracking_rate": 0,
+  "runtime_s": 167.41142654418945,
+  "mode": "mono_inertial",
+  "label": "B010_cam5_nfeat5000",
+  "stdout_tail": "Fail to track local map!\nTrack lost before IMU initialisation, reseting...\nSYSTEM-> Reseting active map in monocular case\nLM: Active map reset recieved\nLM: Active map reset, waiting...\nstart VIBA 1\nend VIBA 1\nLM: Reseting current map in Local Mapping...\nLM: End reseting Local Mapping...\nLM: Reset free the mutex\nLM: Active map reset, Done!!!\nmnFirstFrameId = 2757\nmnInitialFrameId = 2242\n1241 Frames set to lost\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 1 maps in the atlas\n  Map 0 has 0 KFs\nSegmentation fault",
+  "imu_initialized": true,
+  "config": {
+    "cam_id": 5,
+    "imu_ver": "v1",
+    "cam_model": "fisheye",
+    "preprocess": "none",
+    "n_features": 5000
+  },
+  "eval": {
+    "status": "no_trajectory"
+  }
+}

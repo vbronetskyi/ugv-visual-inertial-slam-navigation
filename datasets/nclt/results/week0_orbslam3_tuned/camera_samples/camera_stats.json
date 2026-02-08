@@ -1,0 +1,69 @@
+{
+  "cameras": [
+    {
+      "cam_id": 0,
+      "brightness": 93.79526166902404,
+      "contrast": 73.641451211198,
+      "n_orb": 851,
+      "n_corners": 179,
+      "top_brightness": 121.28325109296644,
+      "bot_brightness": 66.30727224508165,
+      "orientation": "side (sky on top)"
+    },
+    {
+      "cam_id": 1,
+      "brightness": 34.498187765205095,
+      "contrast": 17.463219787679808,
+      "n_orb": 1632,
+      "n_corners": 2061,
+      "top_brightness": 34.75069114054263,
+      "bot_brightness": 34.245684389867556,
+      "orientation": "side (mixed)"
+    },
+    {
+      "cam_id": 2,
+      "brightness": 44.374397261154684,
+      "contrast": 28.912636154525384,
+      "n_orb": 2170,
+      "n_corners": 342,
+      "top_brightness": 36.96197521537868,
+      "bot_brightness": 51.786819306930695,
+      "orientation": "side (mixed)"
+    },
+    {
+      "cam_id": 3,
+      "brightness": 49.92606604410441,
+      "contrast": 36.909110691954155,
+      "n_orb": 2193,
+      "n_corners": 208,
+      "top_brightness": 52.2786260768934,
+      "bot_brightness": 47.573506011315416,
+      "orientation": "side (mixed)"
+    },
+    {
+      "cam_id": 4,
+      "brightness": 73.72480953452488,
+      "contrast": 75.0867980547316,
+      "n_orb": 1143,
+      "n_corners": 202,
+      "top_brightness": 49.075844638035235,
+      "bot_brightness": 98.37377443101452,
+      "orientation": "side (mixed)"
+    },
+    {
+      "cam_id": 5,
+      "brightness": 83.45743458274399,
+      "contrast": 71.98202190946685,
+      "n_orb": 2349,
+      "n_corners": 389,
+      "top_brightness": 116.26284637392311,
+      "bot_brightness": 50.65202279156487,
+      "orientation": "side (sky on top)"
+    }
+  ],
+  "selected": [
+    5,
+    4,
+    3
+  ]
+}

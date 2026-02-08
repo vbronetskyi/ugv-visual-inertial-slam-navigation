@@ -1,0 +1,51 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters (Ladybug3 Camera 0 - NCLT dataset)
+# Approximate parameters based on Ladybug3 sensor spec (1616x1232 resolution)
+#--------------------------------------------------------------------------------------------
+
+File.version: "1.0"
+
+Camera.type: "PinHole"
+
+# Camera intrinsics (approximate for Ladybug3 at 1616x1232)
+Camera1.fx: 400.0
+Camera1.fy: 400.0
+Camera1.cx: 808.0
+Camera1.cy: 616.0
+
+# Distortion parameters (approximate - Ladybug3 has fisheye but central region is roughly pinhole)
+Camera1.k1: 0.0
+Camera1.k2: 0.0
+Camera1.p1: 0.0
+Camera1.p2: 0.0
+
+# Camera resolution
+Camera.width: 1616
+Camera.height: 1232
+
+# Camera frames per second
+Camera.fps: 5
+
+# Color order of the images (0: BGR, 1: RGB)
+Camera.RGB: 1
+
+# ORB Parameters
+ORBextractor.nFeatures: 2000
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 8
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7
+
+# Viewer Parameters
+Viewer.KeyFrameSize: 0.6
+Viewer.KeyFrameLineWidth: 2.0
+Viewer.GraphLineWidth: 1.0
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.7
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -100.0
+Viewer.ViewpointZ: -0.1
+Viewer.ViewpointF: 2000.0

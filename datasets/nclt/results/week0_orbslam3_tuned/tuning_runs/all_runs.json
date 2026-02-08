@@ -1,0 +1,460 @@
+[
+  {
+    "run_id": "run001_nfeat_1000",
+    "label": "nfeat_1000",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 1000,
+      "scaleFactor": 1.2,
+      "nLevels": 8,
+      "iniThFAST": 15,
+      "minThFAST": 5
+    },
+    "success": true,
+    "n_keyframes": 284,
+    "tracking_rate": 9.466666666666667,
+    "runtime_s": 623.6151885986328,
+    "ate_rmse": 3595.4561573607334,
+    "scale_factor": 2225.0089828533355,
+    "n_matched": 284,
+    "coverage_pct": 2.533692843504344
+  },
+  {
+    "run_id": "run002_nfeat_2000",
+    "label": "nfeat_2000",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 2000,
+      "scaleFactor": 1.2,
+      "nLevels": 8,
+      "iniThFAST": 15,
+      "minThFAST": 5
+    },
+    "success": true,
+    "n_keyframes": 87,
+    "tracking_rate": 2.9000000000000004,
+    "runtime_s": 620.325795173645,
+    "ate_rmse": 573.6394940250135,
+    "scale_factor": 16115.325402039907,
+    "n_matched": 87,
+    "coverage_pct": 0.7547170969048751
+  },
+  {
+    "run_id": "run003_nfeat_3000",
+    "label": "nfeat_3000",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 3000,
+      "scaleFactor": 1.2,
+      "nLevels": 8,
+      "iniThFAST": 15,
+      "minThFAST": 5
+    },
+    "success": true,
+    "n_keyframes": 172,
+    "tracking_rate": 5.733333333333333,
+    "runtime_s": 618.9316647052765,
+    "ate_rmse": 2013.9994626025084,
+    "scale_factor": 994.6538273982148,
+    "n_matched": 172,
+    "coverage_pct": 2.4566807181710826
+  },
+  {
+    "run_id": "run004_nfeat_5000",
+    "label": "nfeat_5000",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 5000,
+      "scaleFactor": 1.2,
+      "nLevels": 8,
+      "iniThFAST": 15,
+      "minThFAST": 5
+    },
+    "success": true,
+    "n_keyframes": 26,
+    "tracking_rate": 0.8666666666666666,
+    "runtime_s": 616.7414700984955,
+    "ate_rmse": 67.5543546652204,
+    "scale_factor": 6076.034366195566,
+    "n_matched": 26,
+    "coverage_pct": 0.3003469647432699
+  },
+  {
+    "run_id": "run005_nfeat_8000",
+    "label": "nfeat_8000",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 8000,
+      "scaleFactor": 1.2,
+      "nLevels": 8,
+      "iniThFAST": 15,
+      "minThFAST": 5
+    },
+    "success": true,
+    "n_keyframes": 96,
+    "tracking_rate": 3.2,
+    "runtime_s": 618.4788537025452,
+    "ate_rmse": 1007.177338091059,
+    "scale_factor": 497.84011205351356,
+    "n_matched": 96,
+    "coverage_pct": 2.4720833966076503
+  },
+  {
+    "run_id": "run006_fast_20_7",
+    "label": "fast_20_7",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 1000,
+      "scaleFactor": 1.2,
+      "nLevels": 8,
+      "iniThFAST": 20,
+      "minThFAST": 7
+    },
+    "success": true,
+    "n_keyframes": 779,
+    "tracking_rate": 25.966666666666665,
+    "runtime_s": 625.2830636501312,
+    "ate_rmse": 21494.27844068266,
+    "scale_factor": 590977.1894606624,
+    "n_matched": 779,
+    "coverage_pct": 6.98498304255839
+  },
+  {
+    "run_id": "run007_fast_15_5",
+    "label": "fast_15_5",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 1000,
+      "scaleFactor": 1.2,
+      "nLevels": 8,
+      "iniThFAST": 15,
+      "minThFAST": 5
+    },
+    "success": true,
+    "n_keyframes": 282,
+    "tracking_rate": 9.4,
+    "runtime_s": 626.3014552593231,
+    "ate_rmse": 3684.6884967661485,
+    "scale_factor": 1723.3842404115667,
+    "n_matched": 282,
+    "coverage_pct": 2.5799000709679403
+  },
+  {
+    "run_id": "run008_fast_10_3",
+    "label": "fast_10_3",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 1000,
+      "scaleFactor": 1.2,
+      "nLevels": 8,
+      "iniThFAST": 10,
+      "minThFAST": 3
+    },
+    "success": true,
+    "n_keyframes": 282,
+    "tracking_rate": 9.4,
+    "runtime_s": 625.4355301856995,
+    "ate_rmse": 3720.19232286912,
+    "scale_factor": 1613.7067566486974,
+    "n_matched": 282,
+    "coverage_pct": 2.633808017995136
+  },
+  {
+    "run_id": "run009_fast_7_3",
+    "label": "fast_7_3",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 1000,
+      "scaleFactor": 1.2,
+      "nLevels": 8,
+      "iniThFAST": 7,
+      "minThFAST": 3
+    },
+    "success": true,
+    "n_keyframes": 280,
+    "tracking_rate": 9.333333333333334,
+    "runtime_s": 625.0096070766449,
+    "ate_rmse": 3820.0278137945265,
+    "scale_factor": 1585.190949427889,
+    "n_matched": 280,
+    "coverage_pct": 2.672314222952842
+  },
+  {
+    "run_id": "run010_fast_5_2",
+    "label": "fast_5_2",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 1000,
+      "scaleFactor": 1.2,
+      "nLevels": 8,
+      "iniThFAST": 5,
+      "minThFAST": 2
+    },
+    "success": true,
+    "n_keyframes": 261,
+    "tracking_rate": 8.7,
+    "runtime_s": 625.5918233394623,
+    "ate_rmse": 3493.5407181243445,
+    "scale_factor": 1263.4799367037763,
+    "n_matched": 261,
+    "coverage_pct": 2.5721991586228827
+  },
+  {
+    "run_id": "run011_scale_1.1_10",
+    "label": "scale_1.1_10",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 1000,
+      "scaleFactor": 1.1,
+      "nLevels": 10,
+      "iniThFAST": 20,
+      "minThFAST": 7
+    },
+    "success": true,
+    "n_keyframes": 182,
+    "tracking_rate": 6.066666666666666,
+    "runtime_s": 625.7084369659424,
+    "ate_rmse": 2705.388679071341,
+    "scale_factor": 7557.089811949846,
+    "n_matched": 182,
+    "coverage_pct": 1.67886007638493
+  },
+  {
+    "run_id": "run012_scale_1.1_12",
+    "label": "scale_1.1_12",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 1000,
+      "scaleFactor": 1.1,
+      "nLevels": 12,
+      "iniThFAST": 20,
+      "minThFAST": 7
+    },
+    "success": true,
+    "n_keyframes": 240,
+    "tracking_rate": 8.0,
+    "runtime_s": 625.6133134365082,
+    "ate_rmse": 3034.291440752981,
+    "scale_factor": 2055.014723741513,
+    "n_matched": 240,
+    "coverage_pct": 2.4258761324237765
+  },
+  {
+    "run_id": "run013_scale_1.2_8",
+    "label": "scale_1.2_8",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 1000,
+      "scaleFactor": 1.2,
+      "nLevels": 8,
+      "iniThFAST": 20,
+      "minThFAST": 7
+    },
+    "success": true,
+    "n_keyframes": 268,
+    "tracking_rate": 8.933333333333334,
+    "runtime_s": 625.6070537567139,
+    "ate_rmse": 3362.35431193081,
+    "scale_factor": 1572.4605892478965,
+    "n_matched": 268,
+    "coverage_pct": 2.472082249098977
+  },
+  {
+    "run_id": "run014_scale_1.2_10",
+    "label": "scale_1.2_10",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 1000,
+      "scaleFactor": 1.2,
+      "nLevels": 10,
+      "iniThFAST": 20,
+      "minThFAST": 7
+    },
+    "success": true,
+    "n_keyframes": 426,
+    "tracking_rate": 14.2,
+    "runtime_s": 624.8861484527588,
+    "ate_rmse": 9646.405753567575,
+    "scale_factor": 6000763.238131486,
+    "n_matched": 426,
+    "coverage_pct": 4.189449549429315
+  },
+  {
+    "run_id": "run015_scale_1.3_8",
+    "label": "scale_1.3_8",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 1000,
+      "scaleFactor": 1.3,
+      "nLevels": 8,
+      "iniThFAST": 20,
+      "minThFAST": 7
+    },
+    "success": true,
+    "n_keyframes": 263,
+    "tracking_rate": 8.766666666666667,
+    "runtime_s": 624.2360987663269,
+    "ate_rmse": 3436.6539184618414,
+    "scale_factor": 1726.6147559624858,
+    "n_matched": 263,
+    "coverage_pct": 2.456680947672817
+  },
+  {
+    "run_id": "run016_scale_1.15_10",
+    "label": "scale_1.15_10",
+    "params": {
+      "fx": 221.0,
+      "fy": 221.0,
+      "width": 808,
+      "height": 616,
+      "nFeatures": 1000,
+      "scaleFactor": 1.15,
+      "nLevels": 10,
+      "iniThFAST": 20,
+      "minThFAST": 7
+    },
+    "success": true,
+    "n_keyframes": 157,
+    "tracking_rate": 5.233333333333333,
+    "runtime_s": 625.6477961540222,
+    "ate_rmse": 1887.5378210492445,
+    "scale_factor": 9513.830957227165,
+    "n_matched": 157,
+    "coverage_pct": 1.417019041197285
+  },
+  {
+    "run_id": "prep_none_0",
+    "label": "prep_none_clip0",
+    "params": {
+      "preprocess": "none",
+      "clahe_clip": 0
+    },
+    "success": true,
+    "n_keyframes": 272,
+    "tracking_rate": 9.066666666666666,
+    "runtime_s": 623.7016699314117,
+    "ate_rmse": 3616.876657414325,
+    "scale_factor": 1762.8860646091848
+  },
+  {
+    "run_id": "prep_clahe_2.0",
+    "label": "prep_clahe_clip2.0",
+    "params": {
+      "preprocess": "clahe",
+      "clahe_clip": 2.0
+    },
+    "success": true,
+    "n_keyframes": 266,
+    "tracking_rate": 8.866666666666667,
+    "runtime_s": 624.4148495197296,
+    "ate_rmse": 3391.4504665937984,
+    "scale_factor": 1673.8725752380979
+  },
+  {
+    "run_id": "prep_clahe_4.0",
+    "label": "prep_clahe_clip4.0",
+    "params": {
+      "preprocess": "clahe",
+      "clahe_clip": 4.0
+    },
+    "success": true,
+    "n_keyframes": 269,
+    "tracking_rate": 8.966666666666667,
+    "runtime_s": 624.8513822555542,
+    "ate_rmse": 3560.987787200206,
+    "scale_factor": 2041.7330427520596
+  },
+  {
+    "run_id": "multicam_4",
+    "label": "Cam4",
+    "cam_id": 4,
+    "success": true,
+    "n_keyframes": 838,
+    "tracking_rate": 27.933333333333334,
+    "runtime_s": 624.2093691825867,
+    "ate_rmse": 33944.17109677717
+  },
+  {
+    "run_id": "multicam_3",
+    "label": "Cam3",
+    "cam_id": 3,
+    "success": true,
+    "n_keyframes": 158,
+    "tracking_rate": 5.266666666666667,
+    "runtime_s": 622.6843137741089,
+    "ate_rmse": 1846.4458848030617
+  },
+  {
+    "run_id": "res_half",
+    "label": "resolution_half",
+    "params": {
+      "resolution": "half",
+      "width": 808,
+      "height": 616
+    },
+    "success": true,
+    "n_keyframes": 230,
+    "tracking_rate": 7.666666666666666,
+    "runtime_s": 623.6611065864563,
+    "ate_rmse": 3653.5028064685343
+  },
+  {
+    "run_id": "res_3quarter",
+    "label": "resolution_3quarter",
+    "params": {
+      "resolution": "3quarter",
+      "width": 1212,
+      "height": 924
+    },
+    "success": true,
+    "n_keyframes": 35,
+    "tracking_rate": 1.1666666666666667,
+    "runtime_s": 638.4871785640717,
+    "ate_rmse": 96.08797862980634
+  }
+]

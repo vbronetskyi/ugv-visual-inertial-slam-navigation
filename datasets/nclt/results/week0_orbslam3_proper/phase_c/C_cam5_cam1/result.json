@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "traj_path": "/workspace/slam_pipeline/results/week0_orbslam3_proper/phase_c/C_cam5_cam1/f_nclt.txt",
+  "n_keyframes": 1,
+  "n_frames": 3000,
+  "tracking_rate": 0.03333333333333333,
+  "runtime_s": 179.98752856254578,
+  "mode": "stereo_inertial",
+  "label": "C_cam5_cam1",
+  "stdout_tail": "LM: Active map reset, waiting...\nLM: Reseting current map in Local Mapping...\nLM: End reseting Local Mapping...\nLM: Reset free the mutex\nLM: Active map reset, Done!!!\nmnFirstFrameId = 2996\nmnInitialFrameId = 2994\n985 Frames set to lost\nnot IMU meas\nFirst KF:985; Map init KF:984\nNew Map created with 0 points\nShutdown\n\nSaving trajectory to f_nclt.txt ...\nThere are 1 maps in the atlas\n  Map 0 has 1 KFs\n\nEnd of saving trajectory to f_nclt.txt ...\n\nSaving keyframe trajectory to kf_nclt.txt ...",
+  "imu_initialized": true,
+  "config": {
+    "left": 5,
+    "right": 1,
+    "imu_ver": "v1",
+    "baseline_m": 0.0951716458802146
+  },
+  "eval": {
+    "status": "too_few_poses",
+    "n_poses": 1
+  },
+  "eval_sim3": {
+    "status": "too_few_poses",
+    "n_poses": 1
+  }
+}
