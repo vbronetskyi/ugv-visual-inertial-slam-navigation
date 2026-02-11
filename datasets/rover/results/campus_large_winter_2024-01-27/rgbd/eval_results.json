@@ -1,0 +1,25 @@
+{
+  "recording": "campus_large_winter_2024-01-27",
+  "mode": "rgbd",
+  "num_estimated": 22685,
+  "num_gt": 1871,
+  "num_matched": 22668,
+  "tracking_rate_pct": 100.0,
+  "sim3_scale": 0.990187,
+  "ate_sim3": {
+    "rmse": 0.4829,
+    "mean": 0.4519,
+    "median": 0.4341,
+    "std": 0.1703,
+    "max": 0.9727
+  },
+  "ate_se3": {
+    "rmse": 0.4974,
+    "mean": 0.4599,
+    "median": 0.4462
+  },
+  "rpe": {
+    "rmse": 0.0483,
+    "mean": 0.0247
+  }
+}

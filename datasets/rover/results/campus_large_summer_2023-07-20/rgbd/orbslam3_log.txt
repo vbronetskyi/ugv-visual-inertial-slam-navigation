@@ -1,0 +1,83 @@
+CMD: /workspace/third_party/ORB_SLAM3/Examples/RGB-D/rgbd_tum /workspace/third_party/ORB_SLAM3/Vocabulary/ORBvoc.txt /workspace/rover_pipeline/configs/ROVER_D435i_RGBD.yaml /workspace/data/rover/campus_large_summer_2023-07-20_rgbd /workspace/data/rover/campus_large_summer_2023-07-20_rgbd/associations.txt
+ELAPSED: 1398.4s
+RETURN_CODE: 0
+
+=== STDOUT (last 5000 chars) ===
+
+ORB-SLAM3 Copyright (C) 2017-2020 Carlos Campos, Richard Elvira, Juan J. Gómez, José M.M. Montiel and Juan D. Tardós, University of Zaragoza.
+ORB-SLAM2 Copyright (C) 2014-2016 Raúl Mur-Artal, José M.M. Montiel and Juan D. Tardós, University of Zaragoza.
+This program comes with ABSOLUTELY NO WARRANTY;
+This is free software, and you are welcome to redistribute it
+under certain conditions. See LICENSE.txt.
+
+Input sensor was set to: RGB-D
+Loading settings from /workspace/rover_pipeline/configs/ROVER_D435i_RGBD.yaml
+	-Loaded camera 1
+	-Loaded image info
+	-Loaded RGB-D calibration
+	-Loaded ORB settings
+	-Loaded viewer settings
+	-Loaded Atlas settings
+	-Loaded misc parameters
+----------------------------------
+SLAM settings: 
+	-Camera 1 parameters (Pinhole): [ 596.195 593.141 327.046 245.161 ]
+	-Camera 1 distortion parameters: [  0.0756161 -0.208873 -0.00233474 0.00401036 ]
+	-Original image size: [ 640 , 480 ]
+	-Current image size: [ 640 , 480 ]
+	-Sequence FPS: 30
+	-RGB-D depth map factor: 1000
+	-Features per image: 1500
+	-ORB scale factor: 1.2
+	-ORB number of scales: 8
+	-Initial FAST threshold: 20
+	-Min FAST threshold: 7
+
+
+Loading ORB Vocabulary. This could take a while...
+Vocabulary loaded!
+
+Initialization of Atlas from scratch 
+Creation of new map with id: 0
+Creation of new map with last KF id: 0
+Seq. Name: 
+There are 1 cameras in the atlas
+Camera 0 is pinhole
+
+-------
+Start processing sequence ...
+Images in the sequence: 30921
+
+First KF:0; Map init KF:0
+New Map created with 1490 points
+Starting the Viewer
+*Loop detected
+Local Mapping STOP
+Local Mapping RELEASE
+Local Mapping STOP
+Local Mapping RELEASE
+*Loop detected
+Local Mapping STOP
+Local Mapping RELEASE
+Shutdown
+-------
+
+median tracking time: 0.0192834
+mean tracking time: 0.0240004
+
+Saving camera trajectory to CameraTrajectory.txt ...
+
+Saving keyframe trajectory to KeyFrameTrajectory.txt ...
+
+=== STDERR (last 5000 chars) ===
+Camera1.k3 optional parameter does not exist...
+Camera.newHeight optional parameter does not exist...
+Camera.newWidth optional parameter does not exist...
+Viewer.imageViewScale optional parameter does not exist...
+System.LoadAtlasFromFile optional parameter does not exist...
+System.SaveAtlasToFile optional parameter does not exist...
+System.thFarPoints optional parameter does not exist...
+error: XDG_RUNTIME_DIR is invalid or not set in the environment.
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'

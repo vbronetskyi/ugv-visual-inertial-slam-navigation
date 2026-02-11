@@ -1,0 +1,25 @@
+{
+  "recording": "campus_large_summer_2023-07-20",
+  "mode": "rgbd",
+  "num_estimated": 30921,
+  "num_gt": 4522,
+  "num_matched": 30902,
+  "tracking_rate_pct": 100.0,
+  "sim3_scale": 1.01234,
+  "ate_sim3": {
+    "rmse": 0.6064,
+    "mean": 0.5294,
+    "median": 0.4819,
+    "std": 0.2957,
+    "max": 1.6672
+  },
+  "ate_se3": {
+    "rmse": 0.6357,
+    "mean": 0.5506,
+    "median": 0.4774
+  },
+  "rpe": {
+    "rmse": 0.0382,
+    "mean": 0.0228
+  }
+}
