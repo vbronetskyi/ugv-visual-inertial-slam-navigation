@@ -123,6 +123,7 @@ def run_orbslam3(session, data_dir, output_name, config_path, timeout=600):
 
 
 def evaluate_trajectory(traj_file, session, results_dir):
+    # XXX: hardcoded path, move to config
     """evaluate ORB-SLAM3 trajectory against NCLT ground truth"""
     # load SLAM trajectory
     slam_data = np.loadtxt(str(traj_file))

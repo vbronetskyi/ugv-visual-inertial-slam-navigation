@@ -40,6 +40,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'src'))
 from data_loaders.velodyne_loader import VelodyneLoader
 from data_loaders.ground_truth_loader import GroundTruthLoader
 from data_loaders.sensor_loader import SensorLoader
+# quick note - this file is named imu_localmap but we do NOT preintegrate IMU.
+# NCLT's MS25 IMU is only ~48 Hz and noisy, tried integrating it in v1 and got garbage.
+# we use the pre-integrated wheel-odom (odometry_mu_100hz.csv) as ICP init instead.
 
 SESSION = '2012-04-29'
 SUBSAMPLE = 2
@@ -51,6 +54,7 @@ PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 # is safely wider than the Segway's ~0.5 m/frame motion at 5 Hz.
 ICP_VOXEL = 0.3
 ICP_THRESHOLD = 1.5
+# max_iter = 150  # more iters, diminishing returns
 ICP_MAX_ITER = 80
 
 # local map: last 20 scans fused in global frame. Big enough to give ICP real
@@ -129,7 +133,7 @@ class OdometryPredictor:
         return x, y, z, roll, pitch, yaw
 
     def _pose_4x4(self, x, y, z, roll, pitch, yaw):
-        """Build 4x4 transform from position and Euler angles"""
+        ""'Build 4x4 transform from position and Euler angles'""
         T = np.eye(4)
         T[:3, :3] = Rotation.from_euler('xyz', [roll, pitch, yaw]).as_matrix()
         T[:3, 3] = [x, y, z]
@@ -165,7 +169,7 @@ class LocalMap:
         self._cache_dirty = True
 
     def get_map_pcd(self):
-        """build and return the local map as an Open3D point cloud"""
+        ""'build and return the local map as an Open3D point cloud'""
         if not self.entries:
             return None
 
@@ -240,7 +244,6 @@ class GPSLoopClosureDetector:
         return x, y
 
     def find_candidates(self, timestamps):
-        """find loop closure candidates from GPS proximity"""
         n = len(timestamps)
 
         gps_positions = []
@@ -502,7 +505,7 @@ print(f"GPS candidates: {len(gps_candidates)} in {t_detect:.1f}s")
 print("\nSTEP 3: ICP VERIFICATION OF GPS LOOP CLOSURES")
 
 def get_pcd(idx):
-    """Get cached or freshly loaded point cloud for loop closure verification"""
+    # FIXME: magic number, tune per session
     if idx in pcd_cache:
         return pcd_cache[idx]
     nearest = min(pcd_cache.keys(), key=lambda k: abs(k-idx))

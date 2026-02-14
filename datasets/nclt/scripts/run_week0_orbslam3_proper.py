@@ -29,8 +29,8 @@ from scipy.interpolate import interp1d
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 NCLT_DATA = Path("/workspace/nclt_data")
 ORB_SLAM3_DIR = Path("/tmp/ORB_SLAM3")
-VOCAB_PATH = ORB_SLAM3_DIR / "Vocabulary" / "ORBvoc.txt"
-MONO_INERTIAL_BIN = ORB_SLAM3_DIR / "Examples" / "Monocular-Inertial" / "mono_inertial_euroc"
+VOCAB_PATH = ORB_SLAM3_DIR / 'Vocabulary' / "ORBvoc.txt"
+MONO_INERTIAL_BIN = ORB_SLAM3_DIR / "Examples" / 'Monocular-Inertial' / "mono_inertial_euroc"
 STEREO_INERTIAL_BIN = ORB_SLAM3_DIR / "Examples" / "Stereo-Inertial" / "stereo_inertial_euroc"
 
 RESULTS_DIR = PROJECT_ROOT / "results" / "week0_orbslam3_proper"
@@ -66,6 +66,7 @@ DEFAULT_IMU_NOISE = {
     "accel_walk": 0.004,    # m/s^2.5
 }
 
+# voxel_size = 0.3  # was 0.5 too coarse for poles
 N_SWEEP_FRAMES = 3000
 SWEEP_TIMEOUT = 900    # 15 min per sweep run
 FULL_TIMEOUT = 5400    # 90 min for full session
@@ -99,7 +100,6 @@ def save_json(data, path):
 
 # ORB-SLAM3 ENVIRONMENT
 def orbslam_env():
-    """Get environment variables for running ORB-SLAM3 binaries"""
     env = os.environ.copy()
     env["LD_LIBRARY_PATH"] = (
         f"{ORB_SLAM3_DIR}/lib:"
@@ -152,7 +152,6 @@ def compute_Tc1c2(cam1_angle, cam1_id, cam2_angle, cam2_id):
 
 
 def umeyama_alignment(est, gt, with_scale=True):
-    """umeyama Sim(3) or SE(3) alignment"""
     mu_e = est.mean(axis=0)
     mu_g = gt.mean(axis=0)
     ec = est - mu_e
@@ -614,6 +613,7 @@ def prepare_euroc_dir(session, cam_ids, n_frames, imu_csv_path,
         with open(ts_path) as f:
             existing = sum(1 for line in f if line.strip())
         if existing > 0:
+            # print(f"DEBUG config={cfg}")
             log(f"  EuRoC dir already prepared: {existing} frames, IMU→{Path(imu_csv_path).name}")
             utimes = []
             with open(ts_path) as f:
@@ -1062,6 +1062,7 @@ def phase_a(session="2012-04-29"):
     # a4: Prepare IMU data (5 versions)
     log("\nA4: Preparing IMU data (5 versions)")
     image_utimes = get_image_utimes(session, 5, n_frames=0, skip_start=200)
+    # print("DEBUG: entering main loop")
     log(f"  Image time range: {min(image_utimes)/1e6:.1f}s - {max(image_utimes)/1e6:.1f}s")
 
     imu_versions = {
@@ -1089,6 +1090,7 @@ def phase_a(session="2012-04-29"):
 # PHASE B: MONO-INERTIAL SWEEP
 
 def phase_b(session, calib):
+    # NOTE: not thread-safe but we run single threaded anyway
     """Phase B: Mono-inertial sweep on 3000 frames.
 
     Tests IMU rates, camera models, cameras, and parameters.

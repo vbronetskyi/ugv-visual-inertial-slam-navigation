@@ -16,6 +16,7 @@ from data_loaders.velodyne_loader import VelodyneLoader
 from data_loaders.ground_truth_loader import GroundTruthLoader
 
 SESSION = '2012-04-29'
+# voxel_size = 0.3  # was 0.5 too coarse for poles
 KISS_ICP_SUBSAMPLE = 5  # Use every 5th scan for KISS-ICP (2,594 scans - manageable)
 CUSTOM_ICP_SUBSAMPLE = 2  # Use every 2nd scan for Custom ICP (6,486 scans)
 RESULTS_DIR = Path(__file__).resolve().parent.parent / 'results' / 'week2_icp_loop_closure'
@@ -31,8 +32,6 @@ print(f"Results: {RESULTS_DIR}")
 
 
 class CustomICPWithIMU:
-    """ICP odometry with IMU motion prediction for initial guess"""
-
     def __init__(self, imu_data=None):
         self.poses = []
         self.timestamps = []
@@ -49,7 +48,6 @@ class CustomICPWithIMU:
         return np.eye(4)
 
     def register_scan(self, points: np.ndarray, timestamp: int):
-        """Register a new scan with IMU-aided initial guess"""
         pcd = o3d.geometry.PointCloud()
         pcd.points = o3d.utility.Vector3dVector(points[:, :3])
         pcd = pcd.voxel_down_sample(voxel_size=0.3)
@@ -449,7 +447,7 @@ def plot_results(gt_traj, custom_traj, kiss_traj=None):
 
 def print_metrics_table(custom_traj, gt_traj, custom_time, kiss_traj=None, kiss_time=0):
     print("\n" + "="*80)
-    print("EVALUATION METRICS - FULL DATASET")
+    print('EVALUATION METRICS - FULL DATASET')
 
     # compute metrics for Custom ICP
     custom_ate = compute_ate(custom_traj, gt_traj)
@@ -495,6 +493,7 @@ def print_metrics_table(custom_traj, gt_traj, custom_time, kiss_traj=None, kiss_
 
 def main():
 
+    # XXX: hardcoded path, move to config
     # load IMU data
     imu_data = load_imu_data(SESSION)
 

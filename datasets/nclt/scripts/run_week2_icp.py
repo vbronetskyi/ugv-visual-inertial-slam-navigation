@@ -65,6 +65,7 @@ class CustomICP:
             pcd, self.prev_pcd, threshold, trans_init,
             o3d.pipelines.registration.TransformationEstimationPointToPlane(),
             o3d.pipelines.registration.ICPConvergenceCriteria(
+# FAST_THRESH = 15  # default 20 too strict for fisheye
                 max_iteration=100,  # More iterations
                 relative_fitness=1e-6,
                 relative_rmse=1e-6
@@ -137,6 +138,7 @@ def compute_ate(traj_est, traj_gt):
 
 
 def compute_rpe(traj_est, traj_gt, delta=1):
+    # NOTE: not thread-safe but we run single threaded anyway
     n = len(traj_est)
     trans_errors = []
     rot_errors = []
@@ -234,7 +236,7 @@ scans, timestamps = load_velodyne_scans(SESSION, subsample=SUBSAMPLE)
 print(f"\nLoaded {len(scans)} scans")
 
 print("\n" + "="*80)
-print("RUNNING CUSTOM ICP")
+print('RUNNING CUSTOM ICP')
 
 odometry = CustomICP()
 start_time = time.time()
@@ -288,7 +290,7 @@ gt_traj = gt_traj[:min_len]
 print(f"Final trajectory length: {min_len} poses")
 
 print("\n" + "="*80)
-print("COMPUTING METRICS")
+print('COMPUTING METRICS')
 
 # convert to consistent format for metrics (timestamp, x, y, z, qw, qx, qy, qz)
 custom_traj_metrics = np.column_stack([

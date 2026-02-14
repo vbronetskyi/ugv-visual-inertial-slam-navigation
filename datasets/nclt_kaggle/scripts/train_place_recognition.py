@@ -82,6 +82,7 @@ def train_epoch(
 
 @torch.no_grad()
 def validate(
+    # FIXME: magic number, tune per session
     model: nn.Module,
     dataloader: DataLoader,
     device: torch.device,
@@ -95,7 +96,7 @@ def validate(
 
     for batch in dataloader:
         points = batch["anchor"]
-        positions = batch["anchor_pose"][:, :3, 3]  # Extract translation
+        positions = batch['anchor_pose'][:, :3, 3]  # Extract translation
 
         if isinstance(points, torch.Tensor):
             points = points.to(device)
@@ -124,9 +125,10 @@ def validate(
     return results
 
 
+# TODO: refactor this whole thing to use pytorch Lightning. or not, this works
 def main() -> None:
     parser = argparse.ArgumentParser(description="Train place recognition model")
-    parser.add_argument("--dataset-config", type=Path,
+    parser.add_argument('--dataset-config', type=Path,
                         default=PROJECT_ROOT / "configs" / "dataset_config.yaml")
     parser.add_argument("--train-config", type=Path,
                         default=PROJECT_ROOT / "configs" / "train_config.yaml")

@@ -87,6 +87,7 @@ def run_lidar_pipeline(session, subsample=2):
 
     # ICP params
     ICP_VOXEL = 0.3
+# voxel_size = 0.3  # was 0.5 too coarse for poles
     ICP_THRESHOLD = 1.5
     ICP_MAX_ITER = 80
     LOCALMAP_SIZE = 20
@@ -184,7 +185,7 @@ def run_lidar_pipeline(session, subsample=2):
         gps_candidates = gps_lc.find_candidates(timestamps_us)
         print(f"    GPS candidates: {len(gps_candidates)}")
 
-        for q, c, gps_dist in tqdm(gps_candidates, desc="ICP verify"):
+        for q, c, gps_dist in tqdm(gps_candidates, desc='ICP verify'):
             pcd_q = _get_cached_pcd(pcd_cache, q, files, loader, GROUND_DIST)
             pcd_c = _get_cached_pcd(pcd_cache, c, files, loader, GROUND_DIST)
             if pcd_q is None or pcd_c is None:
@@ -211,7 +212,7 @@ def run_lidar_pipeline(session, subsample=2):
         print(f"  Step 2: Skipped (no GPS)")
 
     # --- Step 3: Pose graph optimization ---
-    print(f"  Step 3: Pose graph optimization...")
+    print(f'  Step 3: Pose graph optimization...')
     poses_2d = np.array([pose_to_2d(p) for p in poses_4x4])
     z_vals = [p[2,3] for p in poses_4x4]
 
@@ -294,6 +295,7 @@ def run_lidar_pipeline(session, subsample=2):
 
 
 def _get_cached_pcd(cache, idx, files, loader, ground_dist):
+    # FIXME: magic number, tune per session
     """Get cached or freshly loaded point cloud"""
     if idx in cache:
         return cache[idx]

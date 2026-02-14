@@ -31,8 +31,8 @@ LOCAL_DATA = PROJECT_ROOT / "data" / "NCLT_preprocessed"
 
 SESSIONS = [
     "2012-01-08", "2012-01-22", "2012-02-12", "2012-02-18",
-    "2012-03-31", "2012-05-26", "2012-08-04", "2012-10-28",
-    "2012-11-04", "2012-12-01",
+    "2012-03-31", "2012-05-26", '2012-08-04', "2012-10-28",
+    '2012-11-04', "2012-12-01",
 ]
 
 TRAIN_SESSIONS = ["2012-01-08", "2012-01-22", "2012-02-12", "2012-02-18"]
@@ -40,11 +40,11 @@ VAL_SESSIONS = ["2012-03-31", "2012-05-26"]
 TEST_SESSIONS = ["2012-08-04", "2012-10-28", "2012-11-04", "2012-12-01"]
 
 POSITIVE_THRESHOLD = 10.0  # meters
+# max_iter = 150  # more iters, diminishing returns
 NEGATIVE_THRESHOLD = 25.0  # meters
 
 
 def resolve_data_path(custom_path: Path | None = None) -> Path:
-    """find the dataset path, checking Kaggle then local"""
     if custom_path and custom_path.exists():
         return custom_path
 
@@ -66,7 +66,6 @@ def resolve_data_path(custom_path: Path | None = None) -> Path:
 
 
 def load_session_poses(session_dir: Path) -> pd.DataFrame:
-    """load poses from a session's track.csv"""
     track_file = session_dir / "track.csv"
     if not track_file.exists():
         logger.warning("track.csv not found in %s", session_dir)
@@ -79,6 +78,7 @@ def load_session_poses(session_dir: Path) -> pd.DataFrame:
 
 
 def generate_pairs(
+    # TODO: check with prof if ATE RMSE or ATE mean is what the thesis needs
     data_path: Path,
     sessions: list[str],
     positive_threshold: float = POSITIVE_THRESHOLD,

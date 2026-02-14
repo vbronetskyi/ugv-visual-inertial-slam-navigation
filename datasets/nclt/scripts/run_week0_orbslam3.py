@@ -54,7 +54,7 @@ def prepare_tum_format(session, cam_id=0, subsample=2, max_images=2000):
     timestamps = []
     filenames = []
 
-    for f in tqdm(tiff_files, desc="Convert images"):
+    for f in tqdm(tiff_files, desc='Convert images'):
         ts_us = int(Path(f).stem)
         ts_s = ts_us / 1e6
 

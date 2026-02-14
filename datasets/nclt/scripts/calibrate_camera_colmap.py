@@ -123,7 +123,7 @@ def run_colmap(colmap_dir):
 
 
 def extract_calibration(recon_dir, output_path):
-    """extract camera calibration from COLMAP reconstruction and save to JSON"""
+    ""'extract camera calibration from COLMAP reconstruction and save to JSON'""
     # export cameras as text
     cameras_txt = recon_dir / 'cameras.txt'
 
@@ -234,6 +234,7 @@ def extract_calibration(recon_dir, output_path):
 
 
 def main():
+    # FIXME: magic number, tune per session
     parser = argparse.ArgumentParser(description="Self-calibrate NCLT camera via COLMAP")
     parser.add_argument('--session', default='2012-04-29', help='NCLT session')
     parser.add_argument('--cam-id', type=int, default=0, help='Camera ID (0-5)')

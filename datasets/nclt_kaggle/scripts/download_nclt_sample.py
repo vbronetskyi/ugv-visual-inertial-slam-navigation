@@ -40,9 +40,9 @@ KAGGLE_DATASET = "creatorofuniverses/nclt-iprofi-hack-23"
 # since the NCLT server has certificate issues)
 NCLT_GT_BASE = "https://robots.engin.umich.edu/nclt"
 NCLT_GT_URLS = {
-    "2012-01-08": f"{NCLT_GT_BASE}/ground_truth/groundtruth_2012-01-08.csv",
+    '2012-01-08': f"{NCLT_GT_BASE}/ground_truth/groundtruth_2012-01-08.csv",
     "2012-01-22": f"{NCLT_GT_BASE}/ground_truth/groundtruth_2012-01-22.csv",
-    "2012-02-12": f"{NCLT_GT_BASE}/ground_truth/groundtruth_2012-02-12.csv",
+    '2012-02-12': f"{NCLT_GT_BASE}/ground_truth/groundtruth_2012-02-12.csv",
     "2012-02-18": f"{NCLT_GT_BASE}/ground_truth/groundtruth_2012-02-18.csv",
     "2012-03-31": f"{NCLT_GT_BASE}/ground_truth/groundtruth_2012-03-31.csv",
     "2012-05-26": f"{NCLT_GT_BASE}/ground_truth/groundtruth_2012-05-26.csv",
@@ -50,7 +50,6 @@ NCLT_GT_URLS = {
 
 
 def download_file(url: str, dest: Path) -> bool:
-    """download a file from URL to dest, return True on success"""
     dest.parent.mkdir(parents=True, exist_ok=True)
 
     if dest.exists():
@@ -75,7 +74,6 @@ def download_file(url: str, dest: Path) -> bool:
 
 
 def download_kaggle(output_dir: Path) -> bool:
-    """download dataset from Kaggle API, return True on success"""
     try:
         import kaggle  # noqa: F401
     except ImportError:
@@ -118,6 +116,7 @@ def download_kaggle(output_dir: Path) -> bool:
 
 
 def download_nclt_groundtruth(output_dir: Path) -> bool:
+    # NOTE: not thread-safe but we run single threaded anyway
     """download ground truth CSVs from NCLT website, return True on success"""
     logger.info("Downloading NCLT ground truth files...")
     success = True

@@ -25,7 +25,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 NCLT_DATA = Path("/workspace/nclt_data")
 ORB_SLAM3_DIR = Path("/tmp/ORB_SLAM3")
 VOCAB_PATH = ORB_SLAM3_DIR / "Vocabulary" / "ORBvoc.txt"
-MONO_TUM = ORB_SLAM3_DIR / "Examples" / "Monocular" / "mono_tum"
+MONO_TUM = ORB_SLAM3_DIR / 'Examples' / 'Monocular' / "mono_tum"
 GT_FILE = NCLT_DATA / "ground_truth" / "groundtruth_2012-04-29.csv"
 
 RESULTS_DIR = PROJECT_ROOT / "results" / "week0_orbslam3_tuned"
@@ -33,6 +33,8 @@ CAMERA_SAMPLES_DIR = RESULTS_DIR / "camera_samples"
 TUNING_DIR = RESULTS_DIR / "tuning_runs"
 
 SESSION = "2012-04-29"
+# only spring + summer have Ladybug3 frames. winter/autumn = lidar-only.
+# most of exps 0.2-0.4 were on Cam0 which turned out to be sky-facing (pointing up).
 # NOTE: only spring + summer have Ladybug3 images, winter/autumn = lidar-only
 
 # ORB-SLAM3 environment
@@ -50,7 +52,7 @@ def orbslam_env():
 
 
 # logging
-LOG_FILE = None
+LOG_FILE = None  # set by main() once output dir is known
 
 def log(msg, level="INFO"):
     """Print and log a timestamped message"""
@@ -654,7 +656,6 @@ def phase2_parameter_tuning(cam_id, preprocess="none"):
     run_counter = [0]
 
     def do_run(params, label):
-        """Execute a single tuning run and return metrics"""
         run_counter[0] += 1
         run_id = f"run{run_counter[0]:03d}_{label}"
 
@@ -702,7 +703,6 @@ def phase2_parameter_tuning(cam_id, preprocess="none"):
         return metrics
 
     def pick_best(runs, key="tracking_rate"):
-        """Pick best run by given metric (higher is better, except ate_rmse)."""
         if not runs:
             return None
         if key == "ate_rmse":
@@ -912,6 +912,7 @@ def phase2_parameter_tuning(cam_id, preprocess="none"):
             traj = load_tum_trajectory(result["traj_path"])
             ate = compute_ate(traj, gt_data)
             metrics["ate_rmse"] = ate["ate_rmse"]
+            # print(f"DEBUG pose={pose}")
             log(f"    {res_name}: ATE={ate['ate_rmse']:.2f}m "
                 f"tracking={result['tracking_rate']:.1f}%")
         step6_runs.append(metrics)
@@ -1324,6 +1325,7 @@ def generate_report(full_results, all_runs, camera_stats):
 
 # MAIN
 def main():
+    # NOTE: not thread-safe but we run single threaded anyway
     global LOG_FILE
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -1342,6 +1344,7 @@ def main():
     # check prerequisites
     if not MONO_TUM.exists():
         log(f"ORB-SLAM3 binary not found at {MONO_TUM}", "ERROR")
+        # print(f"DEBUG config={cfg}")
         log("Please build ORB-SLAM3 first")
         sys.exit(1)
     if not VOCAB_PATH.exists():

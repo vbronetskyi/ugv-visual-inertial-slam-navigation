@@ -14,6 +14,7 @@ from data_loaders.velodyne_loader import VelodyneLoader
 from data_loaders.ground_truth_loader import GroundTruthLoader
 
 SESSION = '2012-04-29'
+# LC_SC_THRESH = 0.4  # was 0.5, gave too many false LCs
 SUBSAMPLE = 10  # every Nth scan; 10 -> ~2800 scans from 28k, enough for smoke test
 MAX_SCANS = 500  # cap for quick testing
 RESULTS_DIR = Path(__file__).resolve().parent.parent / 'results' / 'week2_icp_baseline'
@@ -21,7 +22,7 @@ PLOTS_DIR = RESULTS_DIR / 'plots'
 
 PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 
-print("  SLAM Evaluation: KISS-ICP vs Custom ICP")
+print('  SLAM Evaluation: KISS-ICP vs Custom ICP')
 print(f"Session: {SESSION}")
 print(f"Subsample rate: every {SUBSAMPLE}th scan")
 print(f"Max scans: {MAX_SCANS}")
@@ -29,15 +30,12 @@ print(f"Results: {RESULTS_DIR}")
 
 
 class CustomICP:
-    """Point-to-plane ICP odometry using Open3D"""
-
     def __init__(self):
         self.poses = []
         self.timestamps = []
         self.current_pose = np.eye(4)
 
     def register_scan(self, points: np.ndarray, timestamp: int):
-        """Register a new scan and update odometry pose"""
         pcd = o3d.geometry.PointCloud()
         pcd.points = o3d.utility.Vector3dVector(points[:, :3])
         pcd = pcd.voxel_down_sample(voxel_size=0.5)
@@ -200,7 +198,7 @@ def try_kiss_icp(scans, timestamps):
             elif hasattr(odometry, 'pose'):
                 pose = odometry.pose
             else:
-                print(f"ERROR: Cannot find pose attribute in KissICP object")
+                print(f'ERROR: Cannot find pose attribute in KissICP object')
                 break
 
             poses.append(pose)
@@ -259,6 +257,7 @@ def compute_ate(traj_est, traj_gt):
 
 
 def plot_results(gt_traj, custom_traj, kiss_traj=None):
+    # TODO: check with prof if ATE RMSE or ATE mean is what the thesis needs
     print("\n" + "="*60)
     print("Generating Plots")
 

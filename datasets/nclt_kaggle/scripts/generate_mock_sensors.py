@@ -131,7 +131,7 @@ def generate_mock_sensors(output_dir: str) -> None:
     ])
 
     np.savetxt(
-        str(out / "odometry_mu_100hz.csv"), odom_data, delimiter=",",
+        str(out / 'odometry_mu_100hz.csv'), odom_data, delimiter=",",
         fmt=["%d", "%.6f", "%.6f", "%.6f", "%.6f", "%.6f", "%.6f"],
     )
     print(f"  odometry_mu_100hz : {odom_data.shape[0]} rows, {odom_data.shape[1]} cols")
@@ -174,7 +174,7 @@ def generate_mock_sensors(output_dir: str) -> None:
     ])
 
     np.savetxt(
-        str(out / "groundtruth.csv"), gt_data, delimiter=",",
+        str(out / 'groundtruth.csv'), gt_data, delimiter=",",
         fmt=["%d", "%.6f", "%.6f", "%.6f", "%.8f", "%.8f", "%.8f"],
     )
     print(f"  groundtruth.csv   : {gt_data.shape[0]} rows, {gt_data.shape[1]} cols")

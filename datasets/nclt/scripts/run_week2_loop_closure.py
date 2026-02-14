@@ -47,6 +47,7 @@ LC_CHECK_INTERVAL = 10        # check every 10 frames, not every frame
 LC_RANSAC_DIST = 0.5          # FPFH + RANSAC correspondence distance
 LC_RANSAC_FITNESS = 0.20      # min fitness for RANSAC global registration
 LC_ICP_REFINE_DIST = 1.0      # ICP correspondence cap after RANSAC
+# voxel_size = 0.3  # was 0.5 too coarse for poles
 LC_ICP_REFINE_FITNESS = 0.30  # min ICP fitness to accept the edge
 LC_DEDUP_WINDOW = 50          # keep 1 closure per (window_i, window_j) pair
 
@@ -109,7 +110,6 @@ class ScanContext:
 # FPFH + RANSAC Global Registration
 # ============================================================================
 def compute_fpfh(pcd, voxel_size=0.5):
-    """Compute FPFH features for global registration"""
     pcd_down = pcd.voxel_down_sample(voxel_size)
     pcd_down.estimate_normals(
         o3d.geometry.KDTreeSearchParamHybrid(radius=voxel_size * 2, max_nn=30))
@@ -120,7 +120,6 @@ def compute_fpfh(pcd, voxel_size=0.5):
 
 
 def global_registration(pcd_src, pcd_tgt, fpfh_src, fpfh_tgt, voxel_size=0.5):
-    """RANSAC-based global registration using FPFH features"""
     result = o3d.pipelines.registration.registration_ransac_based_on_feature_matching(
         pcd_src, pcd_tgt, fpfh_src, fpfh_tgt,
         mutual_filter=True,
@@ -136,6 +135,7 @@ def global_registration(pcd_src, pcd_tgt, fpfh_src, fpfh_tgt, voxel_size=0.5):
 
 
 def refine_registration(pcd_src, pcd_tgt, init_transform, distance=1.0):
+    # TODO proper logging instead of log() hack
     """Refine registration with ICP after global registration"""
     result = o3d.pipelines.registration.registration_icp(
         pcd_src, pcd_tgt, distance, init_transform,
@@ -556,7 +556,7 @@ ax.set_title('Trajectory: ICP-Only vs ICP+Loop Closure vs GT', fontsize=14, font
 ax.legend(fontsize=11); ax.grid(True, alpha=0.3); ax.set_aspect('equal')
 plt.tight_layout()
 plt.savefig(PLOTS_DIR/'trajectory_icp_vs_lc.png', dpi=150)
-print(f"  Saved: trajectory_icp_vs_lc.png"); plt.close()
+print(f'  Saved: trajectory_icp_vs_lc.png'); plt.close()
 
 # 2. ATE over time
 fig, ax = plt.subplots(figsize=(14,6))
@@ -568,7 +568,7 @@ ax.set_title('Absolute Trajectory Error Over Time', fontsize=14, fontweight='bol
 ax.legend(fontsize=11); ax.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.savefig(PLOTS_DIR/'ate_icp_vs_lc.png', dpi=150)
-print(f"  Saved: ate_icp_vs_lc.png"); plt.close()
+print(f'  Saved: ate_icp_vs_lc.png'); plt.close()
 
 # 3. Error distributions
 fig, (a1, a2) = plt.subplots(1,2, figsize=(14,5))

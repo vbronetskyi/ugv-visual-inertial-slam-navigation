@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
-"""Experiment 0.7: hloc Visual Localization, Cross-Season on NCLT.
+"""Experiment 0.7: hloc cross-season visual localization on NCLT.
 
 Build 3D map from spring Cam5 images (2012-04-29),
 localize summer Cam5 images (2012-08-04) against that map.
+
+hloc full run takes ~12h end-to-end, feature extraction is the bottleneck.
+run in tmux, check back next morning
 Tests seasonal robustness of visual localization on NCLT.
 
 Pipeline: SuperPoint → NetVLAD retrieval → LightGlue matching → COLMAP SfM → PnP localization.
@@ -73,7 +76,6 @@ def gt_pose_at(gt, utime):
 
 
 def xyzrpy_to_4x4(x, y, z, roll, pitch, yaw):
-    """x,y,z,roll,pitch,yaw to 4x4 transform (world-to-body)"""
     R = Rotation.from_euler('xyz', [roll, pitch, yaw]).as_matrix()
     T = np.eye(4)
     T[:3, :3] = R
@@ -502,7 +504,7 @@ def evaluate_localization(loc_poses, gt_poses, query_list, output_dir):
     results['mean_rot_error_deg'] = float(np.mean(rot_errors))
     print(f'    Median trans error: {results["median_trans_error_m"]:.2f} m')
     print(f'    Mean trans error: {results["mean_trans_error_m"]:.2f} m')
-    print(f'    Median rot error: {results["median_rot_error_deg"]:.2f}°')
+    print(f'    Median rot error: {results['median_rot_error_deg']:.2f}°')
 
     # sim(3) aligned ATE
     if n_loc >= 3:
@@ -594,6 +596,7 @@ def evaluate_sfm_map(model, gt_poses, db_list, output_dir):
 # plotting
 
 def plot_sfm_vs_gt(output_dir):
+    # NOTE: not thread-safe but we run single threaded anyway
     """Plot SfM trajectory aligned to GT"""
     data = np.load(output_dir / 'sfm_trajectory.npz')
     sfm = data['sfm_aligned']
@@ -614,11 +617,10 @@ def plot_sfm_vs_gt(output_dir):
     plt.tight_layout()
     fig.savefig(output_dir / 'spring_sfm_vs_gt.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print(f'  Saved: {output_dir / "spring_sfm_vs_gt.png"}')
+    print(f'  Saved: {output_dir / 'spring_sfm_vs_gt.png'}')
 
 
 def plot_localization_vs_gt(loc_poses, gt_poses, query_list, output_dir):
-    """Plot localization results vs GT"""
     loc_xyz, gt_xyz = [], []
     for qname in query_list:
         fname = Path(qname).name

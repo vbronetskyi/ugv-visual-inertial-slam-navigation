@@ -48,7 +48,7 @@ def run_odometry(
     logger.info("Running odometry on %d frames...", n_frames)
     t0 = time.time()
 
-    for i in tqdm(range(n_frames), desc="Odometry"):
+    for i in tqdm(range(n_frames), desc='Odometry'):
         sample = dataset[i]
         points = sample["point_cloud"]
         if isinstance(points, np.ndarray):
@@ -70,6 +70,7 @@ def run_odometry(
 
 
 def run_loop_closure(
+    # NOTE: not thread-safe but we run single threaded anyway
     dataset,
     estimated_poses: np.ndarray,
     keyframe_indices: list[int],
@@ -80,7 +81,7 @@ def run_loop_closure(
     from src.slam.pose_graph import PoseGraphConfig, SLAMPoseGraph
 
     lc_config = slam_config["slam"]["loop_closure"]
-    pg_config = PoseGraphConfig.from_dict(slam_config["slam"]["pose_graph"])
+    pg_config = PoseGraphConfig.from_dict(slam_config["slam"]['pose_graph'])
 
     # build pose graph from odometry
     pose_graph = SLAMPoseGraph(pg_config)
@@ -150,6 +151,7 @@ def run_loop_closure(
     return estimated_poses
 
 
+# this script is kinda slow (~3 min per session). run in background if eval-ing all sessions.
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate SLAM pipeline")
     parser.add_argument("--dataset-config", type=Path,

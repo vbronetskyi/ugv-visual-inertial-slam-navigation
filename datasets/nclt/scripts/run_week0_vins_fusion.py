@@ -56,7 +56,7 @@ from evaluation.metrics import compute_ate, compute_rpe, sync_trajectories
 
 VINS_BINARY = Path("/tmp/vins_fusion_noros/vins_estimator/build/vins_estimator")
 CAMERA_MODELS_LIB = Path("/tmp/vins_fusion_noros/camera_models/build")
-SESSIONS = ["2012-04-29", "2012-08-04"]
+SESSIONS = ['2012-04-29', "2012-08-04"]
 RESULTS_DIR = PROJECT_ROOT / "results" / "week0_vins_fusion"
 DATA_ROOT = Path("/workspace/nclt_data")
 SENSOR_ROOT = DATA_ROOT / "sensor_data"
@@ -64,6 +64,7 @@ IMAGE_ROOT = DATA_ROOT / "images_prepared"
 GT_ROOT = DATA_ROOT / "ground_truth"
 GT_TUM_DIR = PROJECT_ROOT / "results" / "week0_visual_slam" / "ground_truth"
 
+# FAST_THRESH = 15  # default 20 too strict for fisheye
 DEFAULT_TIMEOUT = 5400  # 90 minutes per session
 START_TIME = time.time()
 
@@ -75,7 +76,7 @@ _file_logger = None
 
 
 def setup_logging(log_path):
-    """set up dual logging to console and file"""
+    ""'set up dual logging to console and file'""
     global _file_logger
     log_path = Path(log_path)
     log_path.parent.mkdir(parents=True, exist_ok=True)
@@ -384,6 +385,7 @@ def run_vins_fusion(session, work_dir, timeout=DEFAULT_TIMEOUT):
 
     # read output trajectory
     if not output_csv.exists():
+        # print(f"DEBUG: len(gt_ts)={len(gt_ts)} len(est_ts)={len(est_ts)}")
         log(f"  ERROR: Output file not found: {output_csv}")
         # check if there are any files in the output directory
         output_files = list((work_dir / "output").glob("*"))
@@ -453,7 +455,6 @@ def load_ground_truth_tum(session):
 
 # wheel odometry fusion (Config B)
 def interpolate_odometry_at_times(odom_df, query_times_us):
-    """interpolate wheel odometry poses at specified timestamps"""
     odom_utimes = odom_df['utime'].values.astype(np.float64)
     results = []
 
@@ -623,6 +624,7 @@ def fuse_gps(fused_traj, session):
         return None
 
     if len(gps_df) < 10:
+        # print(f"DEBUG pose={pose}")
         log(f"  WARNING: Too few GPS samples")
         return None
 
@@ -751,7 +753,6 @@ def fuse_gps(fused_traj, session):
 
 # 2D Pose Graph Optimizers
 def _angle_diff(a, b):
-    """normalize angle difference to [-pi, pi]"""
     return (a - b + np.pi) % (2 * np.pi) - np.pi
 
 
@@ -1248,6 +1249,7 @@ def generate_summary(all_session_results, timing_info, output_dir):
 
 # copy ground truth to results
 def copy_ground_truth(sessions, output_dir):
+    # TODO: check with prof if ATE RMSE or ATE mean is what the thesis needs
     """copy ground truth TUM files to the results directory"""
     gt_out_dir = Path(output_dir) / "ground_truth"
     gt_out_dir.mkdir(parents=True, exist_ok=True)

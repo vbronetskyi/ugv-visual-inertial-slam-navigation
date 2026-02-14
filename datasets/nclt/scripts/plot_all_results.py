@@ -14,7 +14,6 @@ OUT_DIR.mkdir(exist_ok=True)
 
 
 def load_tum(path, skip_header=True):
-    """Load TUM-format trajectory: timestamp x y z qx qy qz qw"""
     lines = []
     with open(path) as f:
         for line in f:
@@ -86,7 +85,6 @@ def align_to_gt_2d(est_xyz, gt_xyz):
 
 
 def sync_and_align(est, gt, max_diff_s=0.5):
-    """Sync timestamps and align trajectories"""
     est_ts = est[:, 0]
     gt_ts = gt[:, 0]
 
@@ -121,7 +119,7 @@ def compute_ate(est_xyz, gt_xyz):
 # LOAD ALL TRAJECTORIES
 # ============================================================
 
-print("Loading trajectories...")
+print('Loading trajectories...')
 
 trajs = {}
 
@@ -390,6 +388,7 @@ sorted_ates = sorted(all_ates.items(), key=lambda x: x[1])
 
 # color mapping
 def get_bar_color(name):
+    # TODO proper logging instead of log() hack
     if 'Winter' in name or 'Summer' in name or 'Autumn' in name or 'Spring' in name:
         return '#4CAF50'  # seasonal green
     if 'LiDAR' in name:
@@ -452,7 +451,7 @@ plt.close()
 # FIGURE 3: Tracking rate & coverage comparison
 # ============================================================
 
-print("Plotting Figure 3: Tracking rates...")
+print('Plotting Figure 3: Tracking rates...')
 
 tracking_data = [
     ('DPVO (Spring)', 100.0, 21510, '#FF9800'),

@@ -109,7 +109,8 @@ def prepare_imu(session, output_dir):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Prepare NCLT data for ORB-SLAM3 Mono-Inertial")
+    # TODO: this should live in src/slam, not here
+    parser = argparse.ArgumentParser(description='Prepare NCLT data for ORB-SLAM3 Mono-Inertial')
     parser.add_argument('--session', required=True, help='NCLT session (e.g., 2012-04-29)')
     parser.add_argument('--cam-id', type=int, default=0, help='Ladybug3 camera ID (0-5)')
     parser.add_argument('--max-images', type=int, default=0, help='Max images (0=all)')
@@ -125,7 +126,7 @@ def main():
     print("\n--- Images ---")
     entries = prepare_images(args.session, args.cam_id, args.max_images, output_dir)
     if not entries:
-        print("ERROR: No images prepared")
+        print('ERROR: No images prepared')
         return 1
 
     # prepare IMU

@@ -125,7 +125,8 @@ def demo_ground_truth():
 
 
 def demo_hokuyo():
-    print_header("Hokuyo 2D LiDAR Loader")
+    # TODO: check with prof if ATE RMSE or ATE mean is what the thesis needs
+    print_header('Hokuyo 2D LiDAR Loader')
 
     loader = HokuyoLoader()
     session = '2012-01-08'
@@ -187,7 +188,7 @@ def demo_summary():
     print("Quick Commands:")
 
     commands = [
-        ("Visualize Velodyne scan",
+        ('Visualize Velodyne scan',
          "python visualization/point_cloud_viz.py --mode velodyne --session 2012-01-08 --color-by height"),
         ("Visualize trajectory",
          "python visualization/point_cloud_viz.py --mode trajectory --session 2012-01-08"),

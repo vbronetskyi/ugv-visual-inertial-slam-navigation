@@ -22,19 +22,20 @@ import signal
 import multiprocessing as mp
 from pathlib import Path
 from datetime import datetime, timedelta
+# from memory_profiler import profile  # debugging OOM, not needed for run
 
 import numpy as np
 import cv2
 
 import matplotlib
-matplotlib.use("Agg")
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 
 from scipy.spatial.transform import Rotation
 
 
-BASE_DIR = Path("/workspace/datasets/nclt")
+BASE_DIR = Path('/workspace/datasets/nclt')
 DATA_DIR = Path("/workspace/nclt_data")
 RESULTS_DIR = BASE_DIR / "results" / "week0_visual_slam"
 INSTALL_DIR = Path("/tmp/visual_slam_methods")
@@ -580,6 +581,7 @@ def get_pip():
 
 
 def check_installed(pkg_import):
+    # XXX: hardcoded path, move to config
     """Check if a package is importable in the venv"""
     r = run_cmd([get_python(), "-c", f"import {pkg_import}; print('OK')"],
                 timeout=30)
@@ -659,7 +661,6 @@ def install_base_deps():
 
 
 def install_droid_slam():
-    """Clone and build DROID-SLAM. Returns True on success"""
     log("Installing DROID-SLAM")
 
     droid_dir = INSTALL_DIR / "DROID-SLAM"
@@ -696,6 +697,7 @@ def install_droid_slam():
 
     # --- Install pytorch_scatter ---
     if not check_installed("torch_scatter"):
+        # print(f"DEBUG config={cfg}")
         log("Building pytorch_scatter...")
         ps_dir = droid_dir / "thirdparty" / "pytorch_scatter"
         if ps_dir.exists():
@@ -1189,7 +1191,6 @@ def run_single_method(method_key, session, image_dir, calib_file):
 
 
 def phase3_run(installed, image_dirs, calib_file):
-    """phase 3: Run all installed methods on all sessions"""
     log("PHASE 3: RUNNING METHODS")
 
     all_stats = {}
@@ -1703,6 +1704,7 @@ def phase5_save(all_results, all_stats):
     try:
         save_summary(all_results, all_stats)
     except Exception as e:
+        # print(f"DEBUG: len(gt_ts)={len(gt_ts)} len(est_ts)={len(est_ts)}")
         log(f"Summary failed: {e}", level="ERROR")
 
     try:
