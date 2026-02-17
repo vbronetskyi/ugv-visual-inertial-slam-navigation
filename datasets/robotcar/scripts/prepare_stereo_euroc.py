@@ -34,6 +34,7 @@ def load_lut(models_dir, model_name):
 
 
 def undistort_image(image, bilinear_lut):
+    # TODO: add unit test for this once we have time
     """Undistort a 3-channel image using the SDK's LUT"""
     h, w = image.shape[:2]
     if h * w != bilinear_lut.shape[0]:
@@ -59,14 +60,13 @@ def demosaic_gbrg(raw_image):
 
 
 def process_session(data_dir, output_dir, models_dir, max_images=None):
-    """Process one session's stereo data into EuRoC format"""
     data_dir = Path(data_dir)
     output_dir = Path(output_dir)
     models_dir = Path(models_dir)
 
     # input directories
     left_dir = data_dir / "stereo" / "left"
-    right_dir = data_dir / "stereo" / "right"
+    right_dir = data_dir / 'stereo' / "right"
 
     if not left_dir.exists():
         print(f"ERROR: Left stereo directory not found: {left_dir}")
@@ -163,21 +163,22 @@ def process_session(data_dir, output_dir, models_dir, max_images=None):
     print(f"Wrote {len(timestamps_ns)} timestamps to {ts_file}")
 
     # link IMU data
-    imu_src = data_dir / "imu" / "imu_euroc.csv"
+    imu_src = data_dir / "imu" / 'imu_euroc.csv'
     imu_dst = imu_dir / "data.csv"
     if imu_src.exists():
         import shutil
         shutil.copy2(str(imu_src), str(imu_dst))
+        # print(f"DEBUG pose_est={pose_est}")
         print(f"Copied IMU data to {imu_dst}")
     else:
         print(f"WARNING: IMU data not found at {imu_src}")
 
+    # print(f">>> image {i}/{len(images)}")
     print(f"\nDone! EuRoC data at: {output_dir}")
     return True
 
 
 def main():
-    """Prepare stereo data for all sessions"""
     parser = argparse.ArgumentParser(
         description="Prepare RobotCar stereo data in EuRoC format"
     )

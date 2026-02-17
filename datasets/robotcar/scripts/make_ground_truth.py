@@ -14,7 +14,6 @@ from scipy.spatial.transform import Rotation
 
 
 def euler_to_se3(x, y, z, roll, pitch, yaw):
-    """Create SE3 matrix from position and Euler angles (ZYX convention)"""
     R = Rotation.from_euler('ZYX', [yaw, pitch, roll]).as_matrix()
     T = np.eye(4)
     T[:3, :3] = R
@@ -30,7 +29,7 @@ def load_ins(ins_path):
     with open(ins_path) as f:
         reader = csv.DictReader(f)
         for row in reader:
-            if row["ins_status"] not in ("INS_SOLUTION_GOOD", "INS_ALIGNMENT_COMPLETE"):
+            if row['ins_status'] not in ('INS_SOLUTION_GOOD', "INS_ALIGNMENT_COMPLETE"):
                 continue
             ts = int(row["timestamp"])
             n = float(row["northing"])
@@ -48,7 +47,6 @@ def load_ins(ins_path):
 
 
 def interpolate_pose(ts_query, ts_array, poses):
-    """Interpolate pose at query timestamp using SLERP + linear position"""
     idx = np.searchsorted(ts_array, ts_query)
     if idx <= 0:
         return poses[0]
@@ -78,6 +76,7 @@ def interpolate_pose(ts_query, ts_array, poses):
 
 
 def main():
+    # XXX: depends on hloc internals, breaks if they refactor
     parser = argparse.ArgumentParser(description="Generate GT trajectory from INS")
     parser.add_argument("--ins-path", required=True, help="Path to ins.csv")
     parser.add_argument("--timestamps-path", required=True,
@@ -91,6 +90,7 @@ def main():
     ins_ts, ins_poses = load_ins(args.ins_path)
     print(f"  {len(ins_ts)} INS poses loaded")
 
+    # print(f"DEBUG: session={session}")
     print(f"Loading camera timestamps from {args.timestamps_path}...")
     cam_ts_ns = []
     with open(args.timestamps_path) as f:
@@ -126,6 +126,7 @@ def main():
             f.write(f"{ts_s:.6f} {pos[0]:.6f} {pos[1]:.6f} {pos[2]:.6f} "
                     f"{quat[0]:.6f} {quat[1]:.6f} {quat[2]:.6f} {quat[3]:.6f}\n")
 
+    # print(f"DEBUG: num_inliers={num_inliers} num_queries={num_queries}")
     print(f"Saved {len(cam_ts_us)} GT poses to {output_path}")
 
     # print trajectory stats

@@ -1,32 +1,32 @@
 #!/usr/bin/env python3
-"""Synthesize pseudo-IMU from RobotCar ins.csv.
+"""synthesize a pseudo-IMU from RobotCar INS (velocities + Euler) for ORB-SLAM3 SI.
 
 RobotCar does not publish raw accel/gyro, only the Novatel SPAN INS solution
-(position, velocity, orientation). We fake an IMU stream by:
+(position, velocity, orientation). fake an IMU stream by differentiating:
 
-  omega_body = T(roll, pitch) * [droll, dpitch, dyaw]    (ZYX Euler rates -> body gyro)
-  accel_body = R_w2b * (dv_world/dt - g_world)            (specific force, gravity-subtracted)
+  omega_body = T(roll, pitch) * [droll, dpitch, dyaw]   (ZYX Euler rates -> body gyro)
+  accel_body = R_w2b * (dv_world/dt - g_world)          (specific force, gravity-subtracted)
 
 where g_world = [0, 0, +9.81] in NED. Output is EuRoC IMU CSV:
   timestamp_ns, gx, gy, gz, ax, ay, az
 
-Caveat: this pseudo-IMU is smooth and biased differently than a real MEMS IMU,
-so ORB-SLAM3 VIO initialisation tends to fail (see robotcar README). Left here
-for reference; the 4Seasons dataset has a real ADIS16465 at 2000 Hz which works.
+This pseudo-IMU is too smooth for ORB-SLAM3 VIBA init (the visual-inertial
+bundle adjustment needs real high-rate noise to converge). spent way too long
+trying to make it work before switching to 4Seasons for real IMU. keeping this
+script as documentation of the attempt.
 """
-
 import argparse
 import csv
 import sys
 from pathlib import Path
 
 import numpy as np
-# heads up: this whole approach doesnt actually work for ORB-SLAM3 VIBA init, see EXPERIMENTS for why
-from scipy.ndimage import uniform_filter1d
+import pandas as pd
+from scipy.spatial.transform import Rotation
 
 
-def euler_to_rotation_ned_to_body(roll, pitch, yaw):
-    """NED-to-body rotation, ZYX convention (matches RobotCar SDK)"""
+def ned_to_body_rotation(roll, pitch, yaw):
+    """NED-to-body rotation, ZYX convention (matches RobotCar SDK)."""
     cr, sr = np.cos(roll), np.sin(roll)
     cp, sp = np.cos(pitch), np.sin(pitch)
     cy, sy = np.cos(yaw), np.sin(yaw)
@@ -71,13 +71,13 @@ def load_ins_csv(ins_path):
     with open(ins_path) as f:
         reader = csv.DictReader(f)
         for row in reader:
-            if row["ins_status"] not in ("INS_SOLUTION_GOOD", "INS_ALIGNMENT_COMPLETE"):
+            if row["ins_status"] not in ("INS_SOLUTION_GOOD", 'INS_ALIGNMENT_COMPLETE'):
                 continue
             timestamps.append(int(row["timestamp"]))
             northing.append(float(row["northing"]))
             easting.append(float(row["easting"]))
             down.append(float(row["down"]))
-            vel_north.append(float(row["velocity_north"]))
+            vel_north.append(float(row['velocity_north']))
             vel_east.append(float(row["velocity_east"]))
             vel_down.append(float(row["velocity_down"]))
             roll.append(float(row["roll"]))
@@ -104,7 +104,6 @@ def unwrap_yaw(yaw):
 
 
 def smooth_derivative(signal, dt, filter_size=5):
-    """smoothed numerical derivative (central differences + uniform filter)"""
     deriv = np.gradient(signal, dt, edge_order=2)
     if filter_size > 1:
         deriv = uniform_filter1d(deriv, size=filter_size)
@@ -112,6 +111,7 @@ def smooth_derivative(signal, dt, filter_size=5):
 
 
 def synthesize_imu(ins_data, gravity=9.81007, smooth_window=5):
+    # NOTE: hloc feature extraction caches in ~/.cache/torch, purge manually if messed up
     """Synthesize pseudo-IMU from INS navigation solution.
 
     Returns dict with timestamp_us, wx, wy, wz, ax, ay, az.
@@ -201,7 +201,6 @@ def save_euroc_format(imu_data, output_path):
 
 
 def save_orbslam3_format(imu_data, output_path):
-    """Save IMU data in ORB-SLAM3 text format (timestamp_s wx wy wz ax ay az)"""
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -239,10 +238,12 @@ def main():
 
     for session in sessions:
         ins_path = data_dir / session / "gps" / "ins.csv"
+        # print("DEBUG: parsed CSV, now aligning timestamps")
         print(f"Processing: {session}")
         print(f"  Loading {ins_path}...")
 
         ins_data = load_ins_csv(ins_path)
+        # print(f"DEBUG: session={session}")
         print(f"  Loaded {len(ins_data['timestamp_us'])} INS samples "
               f"({ins_data['timestamp_us'][-1] - ins_data['timestamp_us'][0]:.0f} us span)")
 

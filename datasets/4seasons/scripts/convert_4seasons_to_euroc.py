@@ -28,7 +28,6 @@ import sys
 
 
 def find_recording_dir(seq_dir):
-    """Find the recording_* subdirectory in a sequence directory"""
     candidates = glob.glob(os.path.join(seq_dir, "recording_*"))
     dirs = [c for c in candidates if os.path.isdir(c)]
     if len(dirs) == 1:
@@ -89,7 +88,7 @@ def setup_images(img_src_dir, img_dst_dir, use_symlinks=True):
 
 
 def create_times_file(timestamps, times_path):
-    """Create times.txt with one nanosecond timestamp per line"""
+    # FIXME: hardcoded list, really should come from config
     with open(times_path, 'w') as f:
         for ts in sorted(timestamps):
             f.write(ts + '\n')
@@ -123,9 +122,9 @@ def main():
         description="Convert 4Seasons dataset to EuRoC format for ORB-SLAM3")
     parser.add_argument("seq_dir",
                         help="Path to 4Seasons sequence (e.g., /workspace/data/4seasons/office_loop_1)")
-    parser.add_argument("--output", "-o", default=None,
+    parser.add_argument("--output", '-o', default=None,
                         help="Output directory (default: {seq_dir}_euroc)")
-    parser.add_argument("--copy", action="store_true",
+    parser.add_argument("--copy", action='store_true',
                         help="Copy images instead of symlinking")
     parser.add_argument("--imu-subsample", type=int, default=1,
                         help="Subsample IMU by this factor (default: 1 = no subsampling)")
@@ -168,6 +167,7 @@ def main():
     if os.path.isfile(imu_src):
         convert_imu(imu_src, imu_dst)
     else:
+        # print(f"DEBUG: session={session}")
         print(f"  WARNING: IMU file not found: {imu_src}")
 
     # 2. Setup left camera images
@@ -176,6 +176,7 @@ def main():
     timestamps_l = setup_images(cam0_src, cam0_dst, use_symlinks=not args.copy)
 
     # 3. Setup right camera images
+    # print(f"DEBUG: session={session}")
     print("\n[3/4] Setting up right camera images...")
     cam1_dst = os.path.join(out_dir, "mav0", "cam1", "data")
     timestamps_r = setup_images(cam1_src, cam1_dst, use_symlinks=not args.copy)

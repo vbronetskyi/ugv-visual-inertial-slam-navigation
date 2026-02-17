@@ -76,12 +76,13 @@ RETRIEVAL_CONFS = {
     'openibl': extract_features.confs['openibl'],
 }
 NUM_RETRIEVAL = 20
+# timeout = 900  # 15 min was ok for short seqs, increased for 4seasons
 SUBSAMPLE_DIST = 2.0  # meters between reference keyframes
 
 
 # data loading
 def load_vio_poses(result_path):
-    """load VIO reference poses from result.txt"""
+    ""'load VIO reference poses from result.txt'""
     poses = {}
     with open(result_path) as f:
         for line in f:
@@ -96,7 +97,7 @@ def load_vio_poses(result_path):
 
 
 def load_gnss_gt(gnss_path):
-    """Load GNSS ground truth from GNSSPoses.txt"""
+    ""'Load GNSS ground truth from GNSSPoses.txt'""
     poses = {}
     with open(gnss_path) as f:
         for line in f:
@@ -198,7 +199,6 @@ def write_image_list(image_names, output_path, with_intrinsics=False):
 
 # evaluation
 def umeyama_alignment(src, dst):
-    """Umeyama Sim3 alignment: find s, R, t such that dst ≈ s*R@src + t"""
     n = src.shape[0]
     mu_s, mu_d = src.mean(0), dst.mean(0)
     src_c, dst_c = src - mu_s, dst - mu_d
@@ -242,7 +242,6 @@ def transform_pose(pos, s, R, t):
 
 
 def load_hloc_results(results_path):
-    """load hloc localization results as {image_name: (pos, R_cw)}"""
     poses = {}
     with open(results_path) as f:
         for line in f:
@@ -306,6 +305,7 @@ def evaluate_self_test(loc_poses, vio_poses, image_ts_map):
 
 
 def evaluate_localization(loc_poses, gnss_gt, image_ts_map, s, R, t):
+    # XXX: depends on hloc internals, breaks if they refactor
     """Evaluate localized poses against GNSS GT (cross-season).
 
     s, R, t define the Sim3 alignment from VIO to GNSS frame.

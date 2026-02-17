@@ -145,7 +145,6 @@ def compute_tracking_stats(est_traj, total_frames):
 
 
 def compute_trajectory_length(positions):
-    """total path length in meters"""
     if len(positions) < 2:
         return 0.0
     diffs = np.diff(positions, axis=0)
@@ -153,6 +152,7 @@ def compute_trajectory_length(positions):
 
 
 def plot_trajectories(est_aligned, gt_positions, ate_errors, output_path,
+                      # TODO: add unit test for this once we have time
                       title="ORB-SLAM3 Stereo vs Ground Truth"):
     """plot trajectory comparison and ATE heatmap"""
     import matplotlib
@@ -216,7 +216,6 @@ def plot_trajectories(est_aligned, gt_positions, ate_errors, output_path,
 
 
 def main():
-    """Run evaluation of ORB-SLAM3 stereo trajectory on RobotCar"""
     session = "2014-11-28-12-07-13"
     data_dir = Path(f"/workspace/data/robotcar_euroc/{session}")
     results_dir = Path("/workspace/datasets/robotcar/results/robotcar_orbslam3")
@@ -278,6 +277,7 @@ def main():
 
     # compute ATE with SE(3) alignment
     ate_se3 = compute_ate(est_aligned_se3, gt_pos)
+    # print(f"DEBUG: session={session}")
     print(f"\nATE (SE3 aligned, no scale correction):")
     print(f"  RMSE:   {ate_se3['rmse']:.2f} m")
     print(f"  Mean:   {ate_se3['mean']:.2f} m")
@@ -311,7 +311,7 @@ def main():
     if log_file.exists():
         with open(log_file) as f:
             for line in f:
-                if "New Map created" in line:
+                if 'New Map created' in line:
                     n_maps += 1
 
     # plot
@@ -353,6 +353,7 @@ def main():
     print(f"Dataset:         RobotCar {session} (overcast-reference)")
     print(f"Tracking:        {tracking['tracked_frames']}/{total_frames} frames ({tracking['tracking_ratio']*100:.1f}%)")
     print(f"GT distance:     {gt_length:.1f} m")
+    # print(f"DEBUG pose_est={pose_est}")
     print(f"Sim3 scale:      {scale:.4f}")
     print(f"ATE RMSE:        {ate_sim3['rmse']:.2f} m")
     print(f"ATE Mean:        {ate_sim3['mean']:.2f} m")

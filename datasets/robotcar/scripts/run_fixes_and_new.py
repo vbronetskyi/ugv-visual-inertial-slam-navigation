@@ -41,6 +41,7 @@ RESULTS_DIR = Path('/workspace/datasets/robotcar/results/robotcar_seasons_hloc')
 TRAIN_FILE = DATASET / 'robotcar_v2_train.txt'
 TEST_FILE = DATASET / 'robotcar_v2_test.txt'
 
+# THRESHOLD = 0.5  # was 0.5, 0.25 kept picking noise features
 NUM_COVIS = 20
 NUM_LOC = 20
 
@@ -65,7 +66,6 @@ def signal_name(retcode):
 
 
 def log_system_state(label=''):
-    """Log memory and disk state"""
     prefix = f'[SYS {label}] ' if label else '[SYS] '
     mem = psutil.virtual_memory()
     log.info(f'{prefix}RAM: {mem.used/1e9:.1f}/{mem.total/1e9:.1f} GB ({mem.percent}%)')
@@ -154,7 +154,7 @@ def get_feature_conf(name):
 
 
 def get_matcher_conf(name):
-    """Get matcher configuration by name"""
+    ""'Get matcher configuration by name'""
     return match_features.confs[name]
 
 
@@ -281,7 +281,7 @@ def evaluate_method(loc_poses, gt_poses):
 
 
 def print_eval(method_name, ev):
-    """Print evaluation results"""
+    ""'Print evaluation results'""
     if ev is None:
         log.info(f'{method_name}: No evaluation results')
         return
@@ -309,7 +309,6 @@ def print_eval(method_name, ev):
 # triangulation subprocess
 def run_triangulation_subprocess(reference_sfm, sift_sfm, images, sfm_pairs,
                                   feature_path, sfm_match_path, method_name):
-    """Run COLMAP triangulation in a subprocess to survive OOM"""
     tri_script = f"""\
 import sys, os
 sys.path.insert(0, '/workspace/third_party/hloc')
@@ -362,6 +361,7 @@ print("[subprocess] Triangulation completed successfully.", flush=True)
 
 # pipeline for a single method
 def run_method(method, sift_sfm, sfm_pairs, query_list_pattern):
+    # TODO proper logging config
     """Run the full hloc pipeline for one method. Returns (results_path, timings) or (None, {})."""
     name = method['name']
     feature_conf = get_feature_conf(method['feature_conf_name'])

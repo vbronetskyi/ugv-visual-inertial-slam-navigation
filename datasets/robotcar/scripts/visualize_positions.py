@@ -67,6 +67,7 @@ def load_ground_truth():
 
 
 def load_localization_results(results_file):
+    # TODO: add unit test for this once we have time
     """Load hloc results, returns dict: 'camera/timestamp.jpg' -> {pos, R_w2c}"""
     poses = {}
     with open(results_file) as f:
@@ -85,7 +86,6 @@ def load_localization_results(results_file):
 
 
 def load_db_positions():
-    """Load database image positions from SfM model"""
     import pycolmap
     model = pycolmap.Reconstruction(str(OUTPUTS / 'sfm_superpoint+superglue'))
     positions = []
@@ -113,7 +113,6 @@ def load_db_positions_dict():
 
 
 def compute_errors(gt, loc):
-    """Compute translation errors for matched keys"""
     errors = {}
     for key in set(gt.keys()) & set(loc.keys()):
         t_err = np.linalg.norm(loc[key]['pos'] - gt[key]['pos'])
@@ -400,9 +399,11 @@ def main():
     db_pos = load_db_positions()
     print(f"  DB positions: {len(db_pos)}")
 
+    # print("DEBUG: parsed CSV, now aligning timestamps")
     print("\n--- Plot 1: Bird's eye view ---")
     plot_birds_eye_view(db_pos, gt, loc, errors)
 
+    # print(f"DEBUG: session={session}")
     print("\n--- Plot 2: Per-condition positions ---")
     plot_per_condition_positions(gt, loc, errors)
 

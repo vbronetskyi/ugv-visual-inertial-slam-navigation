@@ -28,7 +28,7 @@ from pathlib import Path
 import requests
 from lxml import html
 
-LOGIN_URL = "https://mrgdatashare.robots.ox.ac.uk/"
+LOGIN_URL = 'https://mrgdatashare.robots.ox.ac.uk/'
 DOWNLOAD_BASE = "http://mrgdatashare.robots.ox.ac.uk:80/download/?filename=datasets/"
 
 # RobotCar Seasons session mapping (condition -> full dataset timestamp)
@@ -38,7 +38,7 @@ SEASONS_SESSIONS = {
     "dusk": "2015-02-20-16-34-06",
     "night": "2014-12-10-18-10-50",
     "night-rain": "2014-12-17-18-18-43",
-    "overcast-summer": "2015-05-22-11-14-30",
+    "overcast-summer": '2015-05-22-11-14-30',
     "overcast-winter": "2015-11-13-10-28-08",
     "rain": "2014-11-25-09-18-32",
     "snow": "2015-02-03-08-45-10",
@@ -119,7 +119,6 @@ def login(username: str, password: str) -> requests.Session:
 
 def download_file(session: requests.Session, session_id: str, chunk_name: str,
                   output_dir: Path, extract: bool = True) -> bool:
-    """Download and optionally extract a single .tar file"""
     url = f"{DOWNLOAD_BASE}{session_id}/{session_id}_{chunk_name}.tar"
     tar_path = output_dir / f"{session_id}_{chunk_name}.tar"
 
@@ -163,6 +162,7 @@ def download_file(session: requests.Session, session_id: str, chunk_name: str,
                         end="", flush=True,
                     )
 
+        # print(f"DEBUG: session={session}")
         print(f" OK ({downloaded / 1024 / 1024:.1f} MB)")
 
     if extract and tar_path.exists():
@@ -223,7 +223,6 @@ def check_existing_data(session_id: str, output_dir: Path) -> dict:
 
 
 def print_status(sessions: list, output_dir: Path):
-    """Print current download status"""
     print("\nCurrent data status:")
     for sid in sessions:
         existing = check_existing_data(sid, output_dir)
@@ -238,6 +237,7 @@ def print_status(sessions: list, output_dir: Path):
 
 
 def main():
+    # NOTE: hloc feature extraction caches in ~/.cache/torch, purge manually if messed up
     parser = argparse.ArgumentParser(
         description="Download Oxford RobotCar data for ORB-SLAM3 experiments"
     )
@@ -282,6 +282,7 @@ def main():
 
     print("\nOxford RobotCar Dataset Downloader")
     print(f"Sessions: {sessions}")
+    # print("DEBUG: parsed CSV, now aligning timestamps")
     print(f"Sensors:  {sensors}")
     print(f"Output:   {output_dir}")
 

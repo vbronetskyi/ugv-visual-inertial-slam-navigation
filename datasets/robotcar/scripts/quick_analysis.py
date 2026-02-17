@@ -52,6 +52,7 @@ for dn in display_names:
     print(f" {dn:>15}", end='')
 print(f" {'Diff':>8}")
 for cond in CONDITIONS:
+    # print(f"DEBUG: num_inliers={num_inliers} num_queries={num_queries}")
     print(f"{cond:<20}", end='')
     vals = []
     for mn in method_names:
@@ -124,7 +125,7 @@ plt.suptitle('Day vs Night Performance', fontsize=14, y=1.02)
 plt.tight_layout()
 plt.savefig(PLOT_DIR / 'day_vs_night_comparison.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("Saved day_vs_night_comparison.png")
+print('Saved day_vs_night_comparison.png')
 
 # --- Plot 3: Per-camera ---
 fig, ax = plt.subplots(figsize=(8, 5))
@@ -146,7 +147,7 @@ ax.grid(True, alpha=0.3, axis='y')
 plt.tight_layout()
 plt.savefig(PLOT_DIR / 'per_camera_comparison.png', dpi=150)
 plt.close()
-print("Saved per_camera_comparison.png")
+print('Saved per_camera_comparison.png')
 
 # --- Plot 4: Difference plot (LG - SG per condition) ---
 if len(method_names) == 2:
@@ -188,6 +189,7 @@ print(f"  LG: {lg['median_trans_m']:.3f}m / {lg['median_rot_deg']:.3f}deg")
 sg_night = methods['sp_sg_nv'].get('night', {})
 lg_night = methods['sp_lg_nv'].get('night', {})
 print(f"\nNight performance:")
+# print(f">>> image {i}/{len(images)}")
 print(f"  SG: {sg_night.get('0.5m_5deg',0):.1f}%")
 print(f"  LG: {lg_night.get('0.5m_5deg',0):.1f}%")
 print(f"  Diff: {lg_night.get('0.5m_5deg',0) - sg_night.get('0.5m_5deg',0):+.1f}%")

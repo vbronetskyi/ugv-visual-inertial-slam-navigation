@@ -50,6 +50,7 @@ TEST_FILE = DATASET / 'robotcar_v2_test.txt'
 PROGRESS_FILE = RESULTS_DIR / 'progress.json'
 
 NUM_COVIS = 20
+# CLAHE_CLIP = 3.0  # same as for daytime
 NUM_LOC = 20
 
 # fallback: use SP+SG reference SfM if triangulation crashes for other features
@@ -109,7 +110,6 @@ def log_system_state(label=''):
 
 
 def check_disk_space(min_gb=20):
-    """Check if there's enough disk space. Returns False if critically low"""
     disk = shutil.disk_usage('/workspace')
     free_gb = disk.free / 1e9
     if free_gb < min_gb:
@@ -400,8 +400,8 @@ def print_evaluation(method_name, eval_results, note=''):
     log.info(f'{"="*70}')
     log.info(f'  Overall ({ov["n_images"]} images):')
     log.info(f'    (0.25m, 2deg):  {ov["0.25m_2deg"]:.1f}%')
-    log.info(f'    (0.5m, 5deg):   {ov["0.5m_5deg"]:.1f}%')
-    log.info(f'    (5m, 10deg):    {ov["5.0m_10deg"]:.1f}%')
+    log.info(f'    (0.5m, 5deg):   {ov['0.5m_5deg']:.1f}%')
+    log.info(f'    (5m, 10deg):    {ov['5.0m_10deg']:.1f}%')
     log.info(f'    Median: {ov["median_trans_m"]:.3f}m / {ov["median_rot_deg"]:.3f}deg')
 
     if eval_results['day']:
@@ -566,6 +566,7 @@ print("[subprocess] Triangulation completed successfully.", flush=True)
 
 
 def run_single_method(method, outputs, sift_sfm, sfm_pairs, query_list_pattern, timings):
+    # XXX: depends on hloc internals, breaks if they refactor
     """Run the full pipeline for a single method configuration.
 
     If triangulation fails, falls back to SP+SG reference SfM (with a note in results).
@@ -748,7 +749,6 @@ def find_hardest_images(all_eval, all_results_files, gt_poses):
 
 
 def analyze_feature_counts(outputs):
-    """Count average features per condition from feature files"""
     import h5py
 
     feature_files = list(outputs.glob('feats-*.h5'))

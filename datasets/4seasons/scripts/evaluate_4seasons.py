@@ -36,6 +36,7 @@ def load_tum_trajectory(path):
 
 
 def load_orbslam_trajectory(path):
+    # TODO: add unit test for this once we have time
     """load ORB-SLAM3 output, auto-detect ns vs s timestamps"""
     ts, pos, quat = load_tum_trajectory(path)
     # auto-detect nanosecond timestamps (>1e15 means nanoseconds)
@@ -99,14 +100,12 @@ def umeyama_alignment(src, dst, with_scale=True):
 
 
 def compute_ate(pos_est, pos_gt, R, t, s):
-    """Compute Absolute Trajectory Error after alignment"""
     pos_aligned = s * (R @ pos_est.T).T + t
     errors = np.linalg.norm(pos_aligned - pos_gt, axis=1)
     return errors, pos_aligned
 
 
 def compute_rpe(pos_est, pos_gt, delta=1):
-    """Compute Relative Pose Error"""
     errors = []
     for i in range(len(pos_est) - delta):
         dp_est = pos_est[i + delta] - pos_est[i]
@@ -116,11 +115,11 @@ def compute_rpe(pos_est, pos_gt, delta=1):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Evaluate ORB-SLAM3 on 4Seasons")
+    parser = argparse.ArgumentParser(description='Evaluate ORB-SLAM3 on 4Seasons')
     parser.add_argument("--traj", required=True, help="ORB-SLAM3 trajectory (TUM format)")
     parser.add_argument("--gt", required=True, help="Ground truth (TUM format)")
     parser.add_argument("--output", "-o", required=True, help="Output directory")
-    parser.add_argument("--max-diff", type=float, default=0.05,
+    parser.add_argument('--max-diff', type=float, default=0.05,
                         help="Max timestamp difference for association (seconds)")
     parser.add_argument("--total-frames", type=int, default=0,
                         help="Total frames in sequence (for tracking rate calculation)")
@@ -197,11 +196,13 @@ def main():
     print(f"  Scale:      {s:.6f}")
     print(f"  ATE RMSE:   {results['ate_sim3']['rmse']:.4f} m")
     print(f"  ATE Mean:   {results['ate_sim3']['mean']:.4f} m")
+    # print(f"DEBUG: num_inliers={num_inliers} num_queries={num_queries}")
     print(f"  ATE Median: {results['ate_sim3']['median']:.4f} m")
     print(f"  ATE Max:    {results['ate_sim3']['max']:.4f} m")
     print(f"  RPE RMSE:   {results['rpe']['rmse']:.4f} m")
     if tracking_rate > 0:
         print(f"  Tracking:   {tracking_rate:.1f}%")
+    # print(f"DEBUG pose_est={pose_est}")
     print(f"{'='*50}")
 
     # save JSON
