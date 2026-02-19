@@ -1,0 +1,54 @@
+[
+  {
+    "recording": "garden_large_dusk_2024-05-29_2",
+    "status": "OK",
+    "ate": 0.8397,
+    "scale": 1.33603,
+    "attempts": 2
+  },
+  {
+    "recording": "garden_large_night-light_2024-05-30_2",
+    "status": "OK",
+    "ate": 6.3633,
+    "scale": 0.584206,
+    "attempts": 2
+  },
+  {
+    "recording": "garden_large_summer_2023-08-18",
+    "status": "OK",
+    "ate": 0.5122,
+    "scale": 1.2136,
+    "attempts": 1
+  },
+  {
+    "recording": "park_day_2024-05-08",
+    "status": "OK",
+    "ate": 1.1398,
+    "scale": 1.186302,
+    "attempts": 1
+  },
+  {
+    "recording": "park_night-light_2024-05-24_2",
+    "status": "OK",
+    "ate": 7.87,
+    "scale": 0.652162,
+    "attempts": 1
+  },
+  {
+    "recording": "campus_large_day_2024-09-25",
+    "status": "FAILED_ALL_ATTEMPTS",
+    "attempts": 3
+  },
+  {
+    "recording": "campus_large_dusk_2024-09-24_2",
+    "status": "FAILED_ALL_ATTEMPTS",
+    "attempts": 3
+  },
+  {
+    "recording": "campus_large_night-light_2024-09-24_4",
+    "status": "OK",
+    "ate": 1.3882,
+    "scale": 1.290193,
+    "attempts": 1
+  }
+]

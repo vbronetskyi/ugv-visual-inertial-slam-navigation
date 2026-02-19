@@ -1,0 +1,104 @@
+ROVER ORB-SLAM3 Baseline Results (All 3 Routes)
+==============================================================================================================
+garden_large: 8 recordings | park: 7 recordings | campus_large: 7 recordings
+Modes: Stereo PinHole, Stereo-Inertial PinHole, RGB-D
+==============================================================================================================
+
+
+--- GARDEN_LARGE ---
+Recording                                     Mode                        ATE RMSE    Scale  Matched
+----------------------------------------------------------------------------------------------------
+garden_large_autumn_2023-12-21                rgbd                          0.3653   0.9811    13790
+garden_large_autumn_2023-12-21                stereo_inertial_pinhole       3.8543   0.8726     1818
+garden_large_autumn_2023-12-21                stereo_pinhole                0.5808   1.2570     3645
+garden_large_day_2024-05-29_1                 rgbd                          0.3983   0.9767    11761
+garden_large_day_2024-05-29_1                 stereo_inertial_pinhole       0.6524   1.2214     1097
+garden_large_day_2024-05-29_1                 stereo_pinhole                0.5271   1.2137     1098
+garden_large_dusk_2024-05-29_2                rgbd                          6.6899   0.4975    11959
+garden_large_dusk_2024-05-29_2                stereo_inertial_pinhole       FAILED                    (no trajectory file)
+garden_large_dusk_2024-05-29_2                stereo_pinhole                FAILED                    (no trajectory file)
+garden_large_night-light_2024-05-30_2         rgbd                          0.4803   0.9593    11948
+garden_large_night-light_2024-05-30_2         stereo_inertial_pinhole       6.4310   0.0000     2069
+garden_large_night-light_2024-05-30_2         stereo_pinhole                FAILED                    (no trajectory file)
+garden_large_night_2024-05-30_1               rgbd                          FAILED                    (no trajectory file)
+garden_large_night_2024-05-30_1               stereo_inertial_pinhole       2.1361   1.1344     1251
+garden_large_night_2024-05-30_1               stereo_pinhole                0.8793   1.2084      985
+garden_large_spring_2024-04-11                rgbd                          0.4202   0.9881    13406
+garden_large_spring_2024-04-11                stereo_inertial_pinhole       0.6019   1.2553     1612
+garden_large_spring_2024-04-11                stereo_pinhole                0.5357   1.2467     3277
+garden_large_summer_2023-08-18                rgbd                          0.4525   0.9875    13656
+garden_large_summer_2023-08-18                stereo_inertial_pinhole       0.7029   1.2078     1814
+garden_large_summer_2023-08-18                stereo_pinhole                FAILED                    (no trajectory file)
+garden_large_winter_2024-01-13                rgbd                          0.3667   0.9802    12825
+garden_large_winter_2024-01-13                stereo_inertial_pinhole       7.5632   0.0010     1417
+garden_large_winter_2024-01-13                stereo_pinhole                0.3928   1.2736      639
+
+--- PARK ---
+Recording                                     Mode                        ATE RMSE    Scale  Matched
+----------------------------------------------------------------------------------------------------
+park_autumn_2023-11-07                        rgbd                          1.8743   0.9798    13927
+park_autumn_2023-11-07                        stereo_inertial_pinhole       6.5215   0.4743     1830
+park_autumn_2023-11-07                        stereo_pinhole                0.3716   1.2209     2353
+park_day_2024-05-08                           rgbd                          0.4804   1.0034    14436
+park_day_2024-05-08                           stereo_inertial_pinhole       8.1166   0.0232     2095
+park_day_2024-05-08                           stereo_pinhole                FAILED                    (no trajectory file)
+park_dusk_2024-05-13_1                        rgbd                          1.6291   1.0362    14347
+park_dusk_2024-05-13_1                        stereo_inertial_pinhole       7.6321   0.3382     1819
+park_dusk_2024-05-13_1                        stereo_pinhole                1.5092   1.2849     7671
+park_night-light_2024-05-24_2                 rgbd                          0.4513   0.9930    13743
+park_night-light_2024-05-24_2                 stereo_pinhole                FAILED                    (no trajectory file)
+park_night_2024-05-13_2                       rgbd                          6.5534   0.9294    14157
+park_night_2024-05-13_2                       stereo_inertial_pinhole       2.6087   1.1934     1764
+park_night_2024-05-13_2                       stereo_pinhole                1.7830   1.5281     4491
+park_spring_2024-04-14                        rgbd                          0.5365   1.0310    13854
+park_spring_2024-04-14                        stereo_inertial_pinhole       0.4237   1.2184     1584
+park_spring_2024-04-14                        stereo_pinhole                0.5103   1.2277     3467
+park_summer_2023-07-31                        rgbd                          0.4477   1.0214     6387
+park_summer_2023-07-31                        stereo_inertial_pinhole       0.4460   1.1781     1498
+park_summer_2023-07-31                        stereo_pinhole                0.5439   1.2084     6191
+
+--- CAMPUS_LARGE ---
+Recording                                     Mode                        ATE RMSE    Scale  Matched
+----------------------------------------------------------------------------------------------------
+campus_large_autumn_2023-11-07                rgbd                          0.7180   0.9893    28936
+campus_large_autumn_2023-11-07                stereo_inertial_pinhole       7.4071   1.0719     4021
+campus_large_autumn_2023-11-07                stereo_pinhole                2.0731   1.1885     6981
+campus_large_day_2024-09-25                   rgbd                          0.6559   0.9871    21243
+campus_large_day_2024-09-25                   stereo_inertial_pinhole       2.0210   1.2276     2657
+campus_large_day_2024-09-25                   stereo_pinhole                FAILED                    (no trajectory file)
+campus_large_dusk_2024-09-24_2                rgbd                          4.5966   0.9134    21237
+campus_large_dusk_2024-09-24_2                stereo_inertial_pinhole       FAILED                    (no trajectory file)
+campus_large_dusk_2024-09-24_2                stereo_pinhole                FAILED                    (no trajectory file)
+campus_large_night_2024-09-24_3               rgbd                         10.1062   1.5363    16834
+campus_large_night_2024-09-24_3               stereo_inertial_pinhole      12.3121   0.0081     2150
+campus_large_night_2024-09-24_3               stereo_pinhole                7.7928   2.8279      965
+campus_large_spring_2024-04-14                rgbd                          0.7470   0.9964    28303
+campus_large_spring_2024-04-14                stereo_inertial_pinhole       FAILED                    (no trajectory file)
+campus_large_spring_2024-04-14                stereo_pinhole                1.6301   1.2046     6929
+campus_large_summer_2023-07-20                rgbd                          0.6064   1.0123    30902
+campus_large_summer_2023-07-20                stereo_inertial_pinhole      15.4113   0.0123     3855
+campus_large_summer_2023-07-20                stereo_pinhole                2.3715   1.2491     6112
+campus_large_winter_2024-01-27                rgbd                          0.4829   0.9902    22668
+campus_large_winter_2024-01-27                stereo_pinhole                0.7118   1.2305     3794
+
+==============================================================================================================
+SUMMARY PER MODE (all routes combined):
+
+  stereo_pinhole           : mean=1.4809m, median=0.7118m, success=15/22
+  stereo_inertial_pinhole  : mean=4.9907m, median=3.8543m, success=17/20
+  rgbd                     : mean=1.8599m, median=0.5365m, success=21/22
+
+SUMMARY PER ROUTE PER MODE:
+
+  garden_large:
+    stereo_pinhole           : mean=0.5831m, median=0.5357m, success=5/8
+    stereo_inertial_pinhole  : mean=3.1345m, median=2.1361m, success=7/8
+    rgbd                     : mean=1.3105m, median=0.4202m, success=7/8
+  park:
+    stereo_pinhole           : mean=0.9436m, median=0.5439m, success=5/7
+    stereo_inertial_pinhole  : mean=4.2914m, median=4.5651m, success=6/6
+    rgbd                     : mean=1.7104m, median=0.5365m, success=7/7
+  campus_large:
+    stereo_pinhole           : mean=2.9159m, median=2.0731m, success=5/7
+    stereo_inertial_pinhole  : mean=9.2879m, median=9.8596m, success=4/6
+    rgbd                     : mean=2.5590m, median=0.7180m, success=7/7
