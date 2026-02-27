@@ -1,0 +1,240 @@
+lifecycle_manager:
+  ros__parameters:
+    use_sim_time: True
+    autostart: True
+    node_names:
+      - controller_server
+      - smoother_server
+      - planner_server
+      - behavior_server
+      - bt_navigator
+      - velocity_smoother
+      - collision_monitor
+      - waypoint_follower
+    bond_timeout: 10.0
+    attempt_respawn_reconnection: True
+    bond_respawn_max_duration: 10.0
+
+bt_navigator:
+  ros__parameters:
+    use_sim_time: True
+    global_frame: map
+    robot_base_frame: base_link
+    odom_topic: /odom
+    bt_loop_duration: 10
+    default_server_timeout: 20
+
+controller_server:
+  ros__parameters:
+    use_sim_time: True
+    controller_frequency: 10.0
+    min_x_velocity_threshold: 0.001
+    min_y_velocity_threshold: 0.5
+    min_theta_velocity_threshold: 0.001
+    progress_checker_plugins: ["progress_checker"]
+    goal_checker_plugins: ["goal_checker"]
+    controller_plugins: ["FollowPath"]
+
+    progress_checker:
+      plugin: "nav2_controller::SimpleProgressChecker"
+      required_movement_radius: 0.3
+      movement_time_allowance: 15.0
+
+    goal_checker:
+      plugin: "nav2_controller::SimpleGoalChecker"
+      xy_goal_tolerance: 0.5
+      yaw_goal_tolerance: 0.5
+      stateful: True
+
+    # Husky A200: 50 kg, skid steer - uses RPP controller
+    FollowPath:
+      plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
+      desired_linear_vel: 0.5
+      lookahead_dist: 1.5
+      min_lookahead_dist: 0.8
+      max_lookahead_dist: 2.5
+      lookahead_time: 1.5
+      rotate_to_heading_angular_vel: 0.8
+      transform_tolerance: 0.5
+      use_velocity_scaled_lookahead_dist: true
+      min_approach_linear_velocity: 0.1
+      approach_velocity_scaling_dist: 1.0
+      use_collision_detection: false
+      max_allowed_time_to_collision_up_to_carrot: 1.0
+      use_regulated_linear_velocity_scaling: true
+      use_fixed_curvature_lookahead: false
+      curvature_deadband: 0.01
+      rotate_to_heading_when_stuck: true
+      allow_reversing: false
+
+planner_server:
+  ros__parameters:
+    use_sim_time: True
+    expected_planner_frequency: 20.0
+    planner_plugins: ["GridBased"]
+    GridBased:
+      plugin: "nav2_navfn_planner::NavfnPlanner"
+      tolerance: 0.5
+      use_astar: true
+      allow_unknown: true
+
+smoother_server:
+  ros__parameters:
+    use_sim_time: True
+    smoother_plugins: ["simple_smoother"]
+    simple_smoother:
+      plugin: "nav2_smoother::SimpleSmoother"
+      tolerance: 1.0e-10
+      max_its: 1000
+
+behavior_server:
+  ros__parameters:
+    use_sim_time: True
+    costmap_topic: local_costmap/costmap_raw
+    footprint_topic: local_costmap/published_footprint
+    cycle_frequency: 10.0
+    behavior_plugins: ["spin", "backup", "wait"]
+    spin:
+      plugin: "nav2_behaviors::Spin"
+    backup:
+      plugin: "nav2_behaviors::BackUp"
+    wait:
+      plugin: "nav2_behaviors::Wait"
+
+collision_monitor:
+  ros__parameters:
+    use_sim_time: True
+    base_frame_id: "base_link"
+    odom_frame_id: "odom"
+    cmd_vel_in_topic: "cmd_vel_nav"
+    cmd_vel_out_topic: "cmd_vel"
+    transform_tolerance: 0.5
+    source_timeout: 5.0
+    stop_pub_timeout: 2.0
+    polygons: ["PolygonStop"]
+    PolygonStop:
+      type: "polygon"
+      points: "[[0.50, 0.34], [0.50, -0.34], [-0.50, -0.34], [-0.50, 0.34]]"
+      action_type: "stop"
+      max_points: 3
+      visualize: False
+      polygon_pub_topic: "polygon_stop"
+    observation_sources: ["scan_source"]
+    scan_source:
+      type: "scan"
+      topic: "/scan"
+      enabled: True
+
+velocity_smoother:
+  ros__parameters:
+    use_sim_time: True
+    smoothing_frequency: 20.0
+    scale_velocities: False
+    feedback: "OPEN_LOOP"
+    max_velocity: [1.0, 0.0, 1.0]
+    min_velocity: [-0.3, 0.0, -1.0]
+    max_accel: [0.5, 0.0, 0.8]
+    max_decel: [-0.5, 0.0, -0.8]
+    odom_topic: "/odom"
+    odom_duration: 0.1
+
+# Husky A200: 670mm wide -> radius ~0.55m with margin
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      use_sim_time: True
+      update_frequency: 5.0
+      publish_frequency: 2.0
+      global_frame: odom
+      robot_base_frame: base_link
+      rolling_window: true
+      width: 5
+      height: 5
+      resolution: 0.05
+      robot_radius: 0.55
+      plugins: ["voxel_layer", "inflation_layer"]
+      voxel_layer:
+        plugin: "nav2_costmap_2d::VoxelLayer"
+        enabled: True
+        publish_voxel_map: True
+        origin_z: 0.0
+        z_resolution: 0.05
+        z_voxels: 16
+        max_obstacle_height: 2.0
+        mark_threshold: 0
+        observation_sources: scan depth
+        scan:
+          topic: /scan
+          max_obstacle_height: 2.0
+          clearing: True
+          marking: True
+          data_type: "LaserScan"
+          raytrace_max_range: 5.0
+          raytrace_min_range: 0.08
+          obstacle_max_range: 4.0
+          obstacle_min_range: 0.08
+        depth:
+          topic: /camera/depth/color/points
+          max_obstacle_height: 2.0
+          min_obstacle_height: 0.05
+          clearing: True
+          marking: True
+          data_type: "PointCloud2"
+          raytrace_max_range: 4.0
+          raytrace_min_range: 0.3
+          obstacle_max_range: 3.5
+          obstacle_min_range: 0.3
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 2.0
+        inflation_radius: 0.55
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      use_sim_time: True
+      update_frequency: 0.5
+      publish_frequency: 0.3
+      global_frame: map
+      robot_base_frame: base_link
+      robot_radius: 0.55
+      resolution: 0.20
+      width: 500
+      height: 500
+      rolling_window: true
+      track_unknown_space: false
+      plugins: ["obstacle_layer", "inflation_layer"]
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: True
+        observation_sources: depth
+        depth:
+          topic: /camera/depth/color/points
+          max_obstacle_height: 2.0
+          min_obstacle_height: 0.1
+          clearing: True
+          marking: True
+          data_type: "PointCloud2"
+          raytrace_max_range: 10.0
+          raytrace_min_range: 0.3
+          obstacle_max_range: 8.0
+          obstacle_min_range: 0.3
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 2.0
+        inflation_radius: 0.55
+
+# SLAM Toolbox - LiDAR-based alternative
+slam_toolbox:
+  ros__parameters:
+    use_sim_time: True
+    odom_frame: odom
+    map_frame: map
+    base_frame: base_link
+    scan_topic: /scan
+    mode: mapping
+    resolution: 0.05
+    max_laser_range: 12.0
+    minimum_time_interval: 0.5
+    transform_timeout: 1.0
+    map_update_interval: 5.0

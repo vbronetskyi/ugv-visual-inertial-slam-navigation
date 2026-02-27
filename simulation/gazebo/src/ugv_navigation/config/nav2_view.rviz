@@ -1,0 +1,106 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Cell Size: 1
+      Plane Cell Count: 30
+      Color: 160; 160; 160
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Frame Timeout: 15
+    - Class: rviz_default_plugins/RobotModel
+      Name: RobotModel
+      Enabled: true
+      Description Source: Topic
+      Description Topic: /robot_description
+    # SLAM map (from RTAB-Map or SLAM Toolbox)
+    - Class: rviz_default_plugins/Map
+      Name: SLAM Map
+      Enabled: true
+      Topic: /map
+      Color Scheme: map
+    # Nav2 costmaps
+    - Class: rviz_default_plugins/Map
+      Name: Local Costmap
+      Enabled: true
+      Topic: /local_costmap/costmap
+      Color Scheme: costmap
+    - Class: rviz_default_plugins/Map
+      Name: Global Costmap
+      Enabled: false
+      Topic: /global_costmap/costmap
+      Color Scheme: costmap
+    # LiDAR scan (sim only)
+    - Class: rviz_default_plugins/LaserScan
+      Name: LaserScan
+      Enabled: true
+      Topic: /scan
+      Size (m): 0.05
+      Color Transformer: FlatColor
+      Color: 255; 0; 0
+    # RTAB-Map 3D cloud map
+    - Class: rviz_default_plugins/PointCloud2
+      Name: RTAB-Map Cloud
+      Enabled: true
+      Topic: /rtabmap/cloud_map
+      Size (Pixels): 2
+      Color Transformer: RGB8
+      Decay Time: 0
+    # D435i depth point cloud (live)
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Depth Points
+      Enabled: false
+      Topic: /camera/depth/color/points
+      Size (Pixels): 2
+      Color Transformer: AxisColor
+      Decay Time: 0
+    # Nav2 paths
+    - Class: rviz_default_plugins/Path
+      Name: Global Path
+      Enabled: true
+      Topic: /plan
+      Color: 0; 255; 0
+      Line Style: Lines
+    - Class: rviz_default_plugins/Path
+      Name: Local Path
+      Enabled: true
+      Topic: /local_plan
+      Color: 255; 255; 0
+      Line Style: Lines
+    # Camera feeds
+    - Class: rviz_default_plugins/Image
+      Name: RGB Camera
+      Enabled: true
+      Topic: /camera/color/image_raw
+    - Class: rviz_default_plugins/Image
+      Name: Depth Image
+      Enabled: false
+      Topic: /camera/depth/image_rect_raw
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: map
+    Frame Rate: 30
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/SetInitialPose
+      Topic: /initialpose
+    - Class: rviz_default_plugins/SetGoal
+      Topic: /goal_pose
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 20
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+Window Geometry:
+  Width: 1400
+  Height: 900

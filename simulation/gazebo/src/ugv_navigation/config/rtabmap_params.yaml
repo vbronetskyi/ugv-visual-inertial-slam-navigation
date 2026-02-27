@@ -1,0 +1,62 @@
+# RTAB-Map params for Husky A200 with D435i RGB-D SLAM
+# visual SLAM using depth camera - matches real robot config
+
+rtabmap:
+  ros__parameters:
+    use_sim_time: True
+    frame_id: "base_link"
+    odom_frame_id: "odom"
+    map_frame_id: "map"
+
+    subscribe_depth: True
+    subscribe_rgb: True
+    subscribe_scan: False
+    approx_sync: True
+    queue_size: 10
+    publish_tf: False  # don't publish map->odom TF - conflicts with Gazebo
+
+    # topic remappings are in the launch file
+    # rgb/image:       /camera/color/image_raw
+    # rgb/camera_info: /camera/camera_info
+    # depth/image:     /camera/depth/image_rect_raw
+    # odom:            /odom
+    # imu:             /imu/data
+
+    # core params
+    Mem/IncrementalMemory: "true"
+    Mem/InitWMWithAllNodes: "false"
+
+    # visual features
+    Vis/MinInliers: "10"
+    Vis/InlierDistance: "0.1"
+    Vis/FeatureType: "8"
+
+    # registration: 0=visual only
+    Reg/Strategy: "0"
+    Reg/Force3DoF: "true"
+
+    # loop closure
+    RGBD/OptimizeFromGraphEnd: "false"
+    RGBD/ProximityBySpace: "true"
+    RGBD/AngularUpdate: "0.1"
+    RGBD/LinearUpdate: "0.1"
+    RGBD/CreateOccupancyGrid: "true"
+
+    # grid map - feeds Nav2 /map topic
+    Grid/FromDepth: "true"
+    Grid/RangeMax: "5.0"
+    Grid/RangeMin: "0.3"
+    Grid/CellSize: "0.05"
+    Grid/MaxObstacleHeight: "1.5"
+    Grid/MinGroundHeight: "-0.1"
+    Grid/MaxGroundHeight: "0.05"
+
+    # optimizer
+    Optimizer/Strategy: "1"
+    Optimizer/Iterations: "5"
+    Optimizer/Slam2D: "true"
+
+    # resource limits
+    Rtabmap/DetectionRate: "2.0"
+    Kp/MaxFeatures: "200"
+    GFTT/MinDistance: "5.0"
