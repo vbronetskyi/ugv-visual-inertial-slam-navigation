@@ -1,0 +1,84 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# Gazebo Simulated D435i - Camera Parameters
+#--------------------------------------------------------------------------------------------
+File.version: "1.0"
+
+Camera.type: "PinHole"
+
+# Camera calibration (from Gazebo camera_info topic)
+Camera1.fx: 382.0
+Camera1.fy: 382.0
+Camera1.cx: 320.0
+Camera1.cy: 240.0
+
+# No distortion (simulated camera)
+Camera1.k1: 0.0
+Camera1.k2: 0.0
+Camera1.p1: 0.0
+Camera1.p2: 0.0
+
+# Camera resolution
+Camera.width: 640
+Camera.height: 480
+
+# Camera frames per second
+Camera.fps: 9
+
+# Color order (1: RGB)
+Camera.RGB: 1
+
+# Stereo/RGBD parameters
+Stereo.ThDepth: 40.0
+Stereo.b: 0.0745
+
+# Depth map factor (depth images saved as uint16 in mm, factor converts to meters)
+RGBD.DepthMapFactor: 1000.0
+
+# Transformation from IMU body frame to camera
+# In our simulation, camera and IMU are co-located on robot base
+# Camera is at (0.48, 0, 0.05) relative to base_link
+# IMU is at (0, 0, 0.08) relative to base_link
+# T_b_c1 = transform from IMU to camera
+IMU.T_b_c1: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: f
+   data: [1.0, 0.0, 0.0, 0.48,
+         0.0, 1.0, 0.0, 0.0,
+         0.0, 0.0, 1.0, -0.03,
+         0.0, 0.0, 0.0, 1.0]
+
+# Do not insert KFs when recently lost
+IMU.InsertKFsWhenLost: 0
+
+# IMU noise parameters (Gazebo simulated - near ideal but not zero)
+IMU.NoiseGyro: 5e-3      # rad/s^0.5
+IMU.NoiseAcc: 1e-2       # m/s^1.5
+IMU.GyroWalk: 1e-4       # rad/s^1.5
+IMU.AccWalk: 1e-3        # m/s^2.5
+IMU.Frequency: 230.0
+
+#--------------------------------------------------------------------------------------------
+# ORB Parameters
+#--------------------------------------------------------------------------------------------
+ORBextractor.nFeatures: 1500
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 8
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7
+
+#--------------------------------------------------------------------------------------------
+# Viewer Parameters (disabled for headless)
+#--------------------------------------------------------------------------------------------
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -3.5
+Viewer.ViewpointF: 500.0
