@@ -1,0 +1,243 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.0"
+    }
+    defaultPrim = "husky"
+    doc = """Generated from Composed Stage of root layer /tmp/tmpxfsz7_uf/husky.usdc
+
+
+Generated from Composed Stage of root layer /workspace/simulation/husky/usdex/husky.usdc
+
+
+Generated from Composed Stage of root layer /workspace/simulation/husky/temp/husky_d435i.usd
+
+
+Generated from Composed Stage of root layer /workspace/simulation/husky/husky_d435i/payloads/base.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    subLayers = [
+        @./physics.usda@
+    ]
+    upAxis = "Z"
+)
+
+over "husky"
+{
+    over "Geometry"
+    {
+        over "base_link" (
+            # articulation removed for floating base IMU
+            # was: delete NewtonArticulationRootAPI, prepend PhysxArticulationAPI
+        )
+        {
+
+            over "front_left_wheel_link"
+            {
+                def Sphere "collision" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double radius = 0.165
+                    token purpose = "guide"
+                }
+            }
+
+            over "front_right_wheel_link"
+            {
+                def Sphere "collision" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double radius = 0.165
+                    token purpose = "guide"
+                }
+            }
+
+            over "rear_left_wheel_link"
+            {
+                def Sphere "collision" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double radius = 0.165
+                    token purpose = "guide"
+                }
+            }
+
+            over "rear_right_wheel_link"
+            {
+                def Sphere "collision" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                )
+                {
+                    double radius = 0.165
+                    token purpose = "guide"
+                }
+            }
+
+            over "base_footprint"
+            {
+            }
+
+            def Cube "body_collision" (
+                prepend apiSchemas = ["PhysicsCollisionAPI"]
+            )
+            {
+                double size = 1.0
+                float3 xformOp:scale = (0.9, 0.55, 0.2)
+                double3 xformOp:translate = (0, 0, 0.15)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+                token purpose = "guide"
+            }
+
+            over "inertial_link"
+            {
+            }
+
+            over "top_chassis_link"
+            {
+            }
+
+            over "front_bumper_link"
+            {
+            }
+
+            over "rear_bumper_link"
+            {
+            }
+
+            over "user_rail_link"
+            {
+            }
+
+            over "top_plate_link"
+            {
+                over "top_plate_front_link"
+                {
+                }
+
+                over "top_plate_rear_link"
+                {
+                }
+
+                over "camera_realsense_bottom_screw_frame"
+                {
+                    over "camera_realsense_link"
+                    {
+                        over "camera_realsense_link_gazebo"
+                        {
+                        }
+
+                        over "d435"
+                        {
+                        }
+                    }
+                }
+
+                over "top_plate"
+                {
+                }
+            }
+
+            over "imu_link"
+            {
+            }
+
+            over "base_link"
+            {
+            }
+        }
+    }
+
+    over "Physics"
+    {
+        over "front_left_wheel" (
+            prepend apiSchemas = ["PhysxJointAPI"]
+        )
+        {
+        }
+
+        over "front_right_wheel" (
+            prepend apiSchemas = ["PhysxJointAPI"]
+        )
+        {
+        }
+
+        over "rear_left_wheel" (
+            prepend apiSchemas = ["PhysxJointAPI"]
+        )
+        {
+        }
+
+        over "rear_right_wheel" (
+            prepend apiSchemas = ["PhysxJointAPI"]
+        )
+        {
+        }
+
+        # over "root_joint" {}  # removed for floating base
+
+        over "base_footprint_joint"
+        {
+        }
+
+        over "inertial_joint"
+        {
+        }
+
+        over "top_chassis_joint"
+        {
+        }
+
+        over "front_bumper"
+        {
+        }
+
+        over "rear_bumper"
+        {
+        }
+
+        over "user_rail"
+        {
+        }
+
+        over "top_plate_joint"
+        {
+        }
+
+        over "imu_joint"
+        {
+        }
+
+        over "top_plate_front_joint"
+        {
+        }
+
+        over "top_plate_rear_joint"
+        {
+        }
+
+        over "camera_realsense_joint"
+        {
+        }
+
+        over "camera_realsense_link_joint"
+        {
+        }
+
+        over "camera_realsense_link_gazebo_joint"
+        {
+        }
+    }
+
+    over "Materials"
+    {
+    }
+
+    over "VisualMaterials"
+    {
+    }
+}
+

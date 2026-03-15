@@ -1,0 +1,234 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.0"
+    }
+    defaultPrim = "husky"
+    doc = """Generated from Composed Stage of root layer /tmp/tmpxfsz7_uf/husky.usdc
+
+
+Generated from Composed Stage of root layer /workspace/simulation/husky/usdex/husky.usdc
+
+
+Generated from Composed Stage of root layer /workspace/simulation/husky/temp/husky_d435i.usd
+
+
+Generated from Composed Stage of root layer /workspace/simulation/husky/husky_d435i/payloads/base.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    subLayers = [
+        @./physics.usda@
+    ]
+    upAxis = "Z"
+)
+
+over "husky"
+{
+    over "Physics"
+    {
+        def MjcActuator "front_left_wheel_actuator"
+        {
+            uniform double mjc:forceRange:max = inf
+            uniform double mjc:forceRange:min = -inf
+            custom rel mjc:target
+            prepend rel mjc:target = </husky/Physics/front_left_wheel>
+        }
+
+        def MjcActuator "front_right_wheel_actuator"
+        {
+            uniform double mjc:forceRange:max = inf
+            uniform double mjc:forceRange:min = -inf
+            custom rel mjc:target
+            prepend rel mjc:target = </husky/Physics/front_right_wheel>
+        }
+
+        def MjcActuator "rear_left_wheel_actuator"
+        {
+            uniform double mjc:forceRange:max = inf
+            uniform double mjc:forceRange:min = -inf
+            custom rel mjc:target
+            prepend rel mjc:target = </husky/Physics/rear_left_wheel>
+        }
+
+        def MjcActuator "rear_right_wheel_actuator"
+        {
+            uniform double mjc:forceRange:max = inf
+            uniform double mjc:forceRange:min = -inf
+            custom rel mjc:target
+            prepend rel mjc:target = </husky/Physics/rear_right_wheel>
+        }
+
+        over "front_left_wheel" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "front_right_wheel" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "rear_left_wheel" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "rear_right_wheel" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "root_joint"
+        {
+        }
+
+        over "base_footprint_joint"
+        {
+        }
+
+        over "inertial_joint"
+        {
+        }
+
+        over "top_chassis_joint"
+        {
+        }
+
+        over "front_bumper"
+        {
+        }
+
+        over "rear_bumper"
+        {
+        }
+
+        over "user_rail"
+        {
+        }
+
+        over "top_plate_joint"
+        {
+        }
+
+        over "imu_joint"
+        {
+        }
+
+        over "top_plate_front_joint"
+        {
+        }
+
+        over "top_plate_rear_joint"
+        {
+        }
+
+        over "camera_realsense_joint"
+        {
+        }
+
+        over "camera_realsense_link_joint"
+        {
+        }
+
+        over "camera_realsense_link_gazebo_joint"
+        {
+        }
+    }
+
+    over "Geometry"
+    {
+        over "base_link"
+        {
+            over "front_left_wheel_link"
+            {
+            }
+
+            over "front_right_wheel_link"
+            {
+            }
+
+            over "rear_left_wheel_link"
+            {
+            }
+
+            over "rear_right_wheel_link"
+            {
+            }
+
+            over "base_footprint"
+            {
+            }
+
+            over "inertial_link"
+            {
+            }
+
+            over "top_chassis_link"
+            {
+            }
+
+            over "front_bumper_link"
+            {
+            }
+
+            over "rear_bumper_link"
+            {
+            }
+
+            over "user_rail_link"
+            {
+            }
+
+            over "top_plate_link"
+            {
+                over "top_plate_front_link"
+                {
+                }
+
+                over "top_plate_rear_link"
+                {
+                }
+
+                over "camera_realsense_bottom_screw_frame"
+                {
+                    over "camera_realsense_link"
+                    {
+                        over "camera_realsense_link_gazebo"
+                        {
+                        }
+
+                        over "d435"
+                        {
+                        }
+                    }
+                }
+
+                over "top_plate"
+                {
+                }
+            }
+
+            over "imu_link"
+            {
+            }
+
+            over "base_link"
+            {
+            }
+        }
+    }
+
+    over "Materials"
+    {
+    }
+
+    over "VisualMaterials"
+    {
+    }
+}
+

@@ -1,0 +1,168 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.0"
+    }
+    doc = """Generated from Composed Stage of root layer /tmp/tmpxfsz7_uf/husky.usdc
+
+
+Generated from Composed Stage of root layer /workspace/simulation/husky/usdex/husky.usdc
+
+
+Generated from Composed Stage of root layer /workspace/simulation/husky/temp/husky_d435i.usd
+
+
+Generated from Composed Stage of root layer /workspace/simulation/husky/husky_d435i/payloads/base.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Scope "Instances"
+{
+    def Xform "base_link" (
+        prepend references = @./geometries.usd@</Geometries/base_link>
+    )
+    {
+        over "base_link" (
+            apiSchemas = ["MaterialBindingAPI", "PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            custom rel material:binding
+            prepend rel material:binding = </Instances/base_link/VisualMaterials/Dark>
+            token physics:approximation = "convexHull"
+        }
+
+        def Scope "VisualMaterials"
+        {
+            def Material "Dark" (
+                instanceable = true
+                prepend references = @./materials.usda@</Materials/Dark>
+            )
+            {
+            }
+        }
+    }
+
+    def Xform "wheel" (
+        prepend references = @./geometries.usd@</Geometries/wheel>
+    )
+    {
+        over "wheel" (
+            apiSchemas = ["MaterialBindingAPI", "PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            custom rel material:binding
+            prepend rel material:binding = </Instances/wheel/VisualMaterials/Grey>
+            token physics:approximation = "convexHull"
+        }
+
+        def Scope "VisualMaterials"
+        {
+            def Material "Grey" (
+                instanceable = true
+                prepend references = @./materials.usda@</Materials/Grey>
+            )
+            {
+            }
+        }
+    }
+
+    def Xform "top_chassis" (
+        prepend references = @./geometries.usd@</Geometries/top_chassis>
+    )
+    {
+        over "top_chassis" (
+            apiSchemas = ["MaterialBindingAPI", "PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            custom rel material:binding
+            prepend rel material:binding = </Instances/top_chassis/VisualMaterials/Yellow>
+            token physics:approximation = "convexHull"
+        }
+
+        def Scope "VisualMaterials"
+        {
+            def Material "Yellow" (
+                instanceable = true
+                prepend references = @./materials.usda@</Materials/Yellow>
+            )
+            {
+            }
+        }
+    }
+
+    def Xform "bumper" (
+        prepend references = @./geometries.usd@</Geometries/bumper>
+    )
+    {
+        over "bumper" (
+            apiSchemas = ["MaterialBindingAPI", "PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            custom rel material:binding
+            prepend rel material:binding = </Instances/bumper/VisualMaterials/Dark_1>
+            token physics:approximation = "convexHull"
+        }
+
+        def Scope "VisualMaterials"
+        {
+            def Material "Dark_1" (
+                instanceable = true
+                prepend references = @./materials.usda@</Materials/Dark>
+            )
+            {
+            }
+        }
+    }
+
+    def Xform "user_rail" (
+        prepend references = @./geometries.usd@</Geometries/user_rail>
+    )
+    {
+        over "user_rail" (
+            apiSchemas = ["MaterialBindingAPI", "PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            custom rel material:binding
+            prepend rel material:binding = </Instances/user_rail/VisualMaterials/Dark_2>
+            token physics:approximation = "convexHull"
+        }
+
+        def Scope "VisualMaterials"
+        {
+            def Material "Dark_2" (
+                instanceable = true
+                prepend references = @./materials.usda@</Materials/Dark>
+            )
+            {
+            }
+        }
+    }
+
+    def Xform "top_plate" (
+        prepend references = @./geometries.usd@</Geometries/top_plate>
+    )
+    {
+        over "top_plate" (
+            apiSchemas = ["MaterialBindingAPI", "PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            custom rel material:binding
+            prepend rel material:binding = </Instances/top_plate/VisualMaterials/Dark_3>
+            token physics:approximation = "convexHull"
+        }
+
+        def Scope "VisualMaterials"
+        {
+            def Material "Dark_3" (
+                instanceable = true
+                prepend references = @./materials.usda@</Materials/Dark_3>
+            )
+            {
+            }
+        }
+    }
+}
+
