@@ -1,0 +1,80 @@
+%YAML:1.0
+Camera.type: "PinHole"
+Camera.fx: 320.0
+Camera.fy: 320.0
+Camera.cx: 320.0
+Camera.cy: 240.0
+Camera.k1: 0.0
+Camera.k2: 0.0
+Camera.p1: 0.0
+Camera.p2: 0.0
+Camera.width: 640
+Camera.height: 480
+Camera.fps: 10
+Camera.RGB: 0
+Camera.bf: 40.0
+ThDepth: 160.0
+DepthMapFactor: 1000.0
+ORBextractor.nFeatures: 2000
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 8
+ORBextractor.iniThFAST: 15
+ORBextractor.minThFAST: 5
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3
+Viewer.ViewpointX: 0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -1.8
+Viewer.ViewpointF: 500
+
+#--------------------------------------------------------------------------------------------
+# IMU Parameters (Isaac Sim PhysX IMU on Husky A200)
+#--------------------------------------------------------------------------------------------
+# Measured with filter_size=60 in exp 15:
+#   stationary: acc_std=0.0001, gyro_std=0.0001
+#   moving 0.5 m/s: acc_std=0.050, gyro_std=0.022
+# Matches real Phidgets Spatial 1042 (~2x acc, ~4x gyro of real device)
+IMU.NoiseGyro: 2.2e-2        # rad/s (measured moving gyro_std)
+IMU.NoiseAcc: 5.0e-2         # m/s² (measured moving acc_std)
+IMU.GyroWalk: 1.0e-3         # bias instability
+IMU.AccWalk: 5.0e-3          # acc bias walk (lower than before since IMU is cleaner)
+IMU.Frequency: 200           # Hz
+
+#--------------------------------------------------------------------------------------------
+# IMU-Camera Extrinsic: Tbc (body/IMU sensor frame -> camera frame)
+#--------------------------------------------------------------------------------------------
+# IMU frame URF (from world transform diagnostics):
+#   IMU X -> world Z (up) - gravity +9.81 on X axis
+#   IMU Y -> world -Y (right)
+#   IMU Z -> world +X (forward)
+# Camera frame RDF (OpenCV):
+#   Cam X -> world -Y (right)
+#   Cam Y -> world -Z (down)
+#   Cam Z -> world +X (forward)
+#
+# Rotation: cam_X = +imu_Y, cam_Y = -imu_X, cam_Z = +imu_Z
+# Translation (camera frame):
+#   camera world ≈ (-94.46, -6.0, 0.57), IMU world ≈ (-94.77, -6.0, 0.235)
+#   world delta: (+0.31, 0.0, +0.335)
+#   cam frame: x=0 (no lateral), y=-0.335 (up->cam down negative), z=0.31 (forward)
+
+# IMU and Camera both in FLU after Python URF->FLU conversion
+# (same as real D435i where Tbc ≈ identity)
+# ORB-SLAM3 estimates gravity from IMU data - Tbc is only geometric offset
+# IMU at base_link+(0.2, 0, 0.38), Camera at base_link+(0.5, 0, 0.48)
+# Translation = camera - IMU = (0.3, 0, 0.1)
+Tbc: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: f
+   data: [1.0, 0.0, 0.0, 0.3,
+          0.0, 1.0, 0.0, 0.0,
+          0.0, 0.0, 1.0, 0.1,
+          0.0, 0.0, 0.0, 1.0]
+
+# mapping mode: save atlas for later localization
+System.SaveAtlasToFile: "husky_forest_inertial_atlas"

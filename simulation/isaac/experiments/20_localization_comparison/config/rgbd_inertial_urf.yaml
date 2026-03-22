@@ -1,0 +1,50 @@
+%YAML:1.0
+Camera.type: "PinHole"
+Camera.fx: 320.0
+Camera.fy: 320.0
+Camera.cx: 320.0
+Camera.cy: 240.0
+Camera.k1: 0.0
+Camera.k2: 0.0
+Camera.p1: 0.0
+Camera.p2: 0.0
+Camera.width: 640
+Camera.height: 480
+Camera.fps: 10
+Camera.RGB: 0
+Camera.bf: 40.0
+ThDepth: 160.0
+DepthMapFactor: 1000.0
+ORBextractor.nFeatures: 2000
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 8
+ORBextractor.iniThFAST: 15
+ORBextractor.minThFAST: 5
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3
+Viewer.ViewpointX: 0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -1.8
+Viewer.ViewpointF: 500
+
+# IMU params for forest script (180Hz, gravity on X axis = URF frame)
+IMU.NoiseGyro: 1.0e-2
+IMU.NoiseAcc: 5.0e-2
+IMU.GyroWalk: 1.0e-3
+IMU.AccWalk: 5.0e-3
+IMU.Frequency: 180
+
+# Tbc Variant B - for URF IMU frame (gravity on X, no Python conversion)
+# Maps URF body to RDF camera
+Tbc: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: f
+   data: [ 0.0,  1.0,  0.0,  0.0,
+           1.0,  0.0,  0.0, -0.335,
+           0.0,  0.0, -1.0, -0.31,
+           0.0,  0.0,  0.0,  1.0]
