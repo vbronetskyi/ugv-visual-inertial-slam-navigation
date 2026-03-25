@@ -1,0 +1,23 @@
+<!--
+  Nav2 BT for Husky A200 skid-steer robot.
+  Recovery: clear costmap -> backup 1.0m -> wait 3s -> global replan (via RateController).
+  No spin - skid-steer Husky rotates too slowly, gets stuck in rotate-to-heading.
+  8 retries before giving up on this goal.
+-->
+<root BTCPP_format="4" main_tree_to_execute="MainTree">
+  <BehaviorTree ID="MainTree">
+    <RecoveryNode number_of_retries="8" name="NavigateRecovery">
+      <PipelineSequence name="NavigateWithReplanning">
+        <RateController hz="1.0">
+          <ComputePathToPose goal="{goal}" path="{path}" planner_id="GridBased"/>
+        </RateController>
+        <FollowPath path="{path}" controller_id="FollowPath"/>
+      </PipelineSequence>
+      <Sequence name="RecoveryActions">
+        <ClearEntireCostmap name="ClearLocalCostmap" service_name="local_costmap/clear_entirely_local_costmap"/>
+        <BackUp backup_dist="1.0" backup_speed="0.25" error_code_id="{backup_error_code}"/>
+        <Wait wait_duration="3.0"/>
+      </Sequence>
+    </RecoveryNode>
+  </BehaviorTree>
+</root>

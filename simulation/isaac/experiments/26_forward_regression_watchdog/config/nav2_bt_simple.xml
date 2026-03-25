@@ -1,0 +1,27 @@
+<!--
+  Nav2 BT for Husky A200 skid-steer robot.
+  Recovery: clear local + global costmap -> wait 3s -> global replan.
+  NO BackUp - aggressive reverse motion breaks RGBD SLAM tracking (exp 25).
+  NO Spin - skid-steer Husky rotates too slowly, gets stuck in rotate-to-heading.
+  8 retries before giving up on this goal.
+-->
+<root BTCPP_format="4" main_tree_to_execute="MainTree">
+  <BehaviorTree ID="MainTree">
+    <RecoveryNode number_of_retries="8" name="NavigateRecovery">
+      <PipelineSequence name="NavigateWithReplanning">
+        <RateController hz="1.0">
+          <ComputePathToPose goal="{goal}" path="{path}" planner_id="GridBased"/>
+        </RateController>
+        <FollowPath path="{path}" controller_id="FollowPath"/>
+      </PipelineSequence>
+      <Sequence name="RecoveryActions">
+        <ClearEntireCostmap name="ClearLocalCostmap" service_name="local_costmap/clear_entirely_local_costmap"/>
+        <ClearEntireCostmap name="ClearGlobalCostmap" service_name="global_costmap/clear_entirely_global_costmap"/>
+        <Wait wait_duration="2.0"/>
+        <!-- Minimal gentle BackUp (exp 26): 0.08 m/s reverse, 0.15m max -
+             just enough to unwedge, minimal regression in the world frame. -->
+        <BackUp backup_dist="0.15" backup_speed="0.08" error_code_id="{backup_error_code}"/>
+      </Sequence>
+    </RecoveryNode>
+  </BehaviorTree>
+</root>
