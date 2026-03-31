@@ -1,0 +1,66 @@
+map_server:
+  ros__parameters:
+    # Use a BLANK static map - the robot does not know obstacle positions
+    # in advance. Static map only provides the route-area world frame.
+    # Obstacles are sensed via the depth camera, fed into obstacle_layer
+    # below as /depth_points, and show up in global_costmap at runtime.
+    yaml_filename: "/workspace/simulation/isaac/experiments/53_proactive_reroute/teach/south_teach_map.yaml"
+
+planner_server:
+  ros__parameters:
+    expected_planner_frequency: 0.5
+    planner_plugins: ["GridBased"]
+    GridBased:
+      plugin: "nav2_navfn_planner::NavfnPlanner"
+      tolerance: 1.0
+      use_astar: true
+      allow_unknown: true
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      update_frequency: 2.0
+      publish_frequency: 1.0
+      global_frame: map
+      robot_base_frame: base_link
+      # Husky A200 real footprint ~1.0m × 0.67m; use 0.5m radius circular
+      # approximation with safety. Previous 0.35 was too tight.
+      robot_radius: 0.5
+      resolution: 0.2
+      track_unknown_space: false
+      rolling_window: false
+      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_subscribe_transient_local: true
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: true
+        observation_sources: depth
+        depth:
+          topic: /depth_points
+          data_type: PointCloud2
+          marking: true
+          clearing: true
+          min_obstacle_height: 0.2
+          max_obstacle_height: 0.8
+          # Extend range so cones appear in the costmap earlier -
+          # previous 3 m was too close (robot would enter commit zone
+          # before planner could route around).
+          obstacle_max_range: 5.0
+          raytrace_max_range: 7.0
+          inf_is_valid: false
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        # Bigger inflation - planner stays 1.2 m from any marked obstacle
+        # centre. With robot_radius 0.5 m that gives 1.7 m total safety
+        # buffer (was 0.9 m, too tight - robot physically hit a cone in run 1).
+        inflation_radius: 1.2
+        cost_scaling_factor: 3.0
+      always_send_full_costmap: true
+
+lifecycle_manager:
+  ros__parameters:
+    autostart: true
+    node_names: ["map_server", "planner_server"]
+    bond_timeout: 10.0

@@ -1,0 +1,63 @@
+%YAML:1.0
+Camera.type: "PinHole"
+Camera.fx: 320.0
+Camera.fy: 320.0
+Camera.cx: 320.0
+Camera.cy: 240.0
+Camera.k1: 0.0
+Camera.k2: 0.0
+Camera.p1: 0.0
+Camera.p2: 0.0
+Camera.width: 640
+Camera.height: 480
+Camera.fps: 10
+Camera.RGB: 0
+Camera.bf: 40.0
+ThDepth: 160.0
+DepthMapFactor: 1000.0
+
+# Exp 51 v3: disable loop closing for teach-and-repeat single-pass navigation.
+# Forest features caused 24+ BAD LOOP candidates in v2; one false-accepted loop
+# at ~150m jumped the map 30m and crashed localization. Single-pass routes
+# don't benefit from loop closure. Read by System.cc:101-106.
+loopClosing: 0
+
+# Exp 51 v6: IMU noise model matched to measured synth-IMU std.
+# v5 diagnostic found yaml's 0.02/0.005 is 50-176x too optimistic:
+# measured ax std = 3.52, ay/az = 1.1, gz = 0.139, gx/gy = 0.005.
+# Old 0.02/0.005 caused ORB-SLAM3 BA to over-trust IMU -> integrate
+# high-frequency noise as signal -> scale drift. Corrected values let
+# BA weight IMU proportionally to its actual uncertainty.
+IMU.NoiseGyro: 5.0e-2     # was 5.0e-3 (gz noise 0.14; gx/gy 0.005 - conservative middle)
+IMU.NoiseAcc: 1.5         # was 2.0e-2 (ax noise 3.5, ay/az 1.1; RMS ~1.5)
+IMU.GyroWalk: 1.0e-3
+IMU.AccWalk: 5.0e-3
+IMU.Frequency: 200
+
+# exp 23 Tbc (URDF-measured: IMU-to-camera physical offset)
+Tbc: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: f
+   data: [ 0.0,  0.0,  1.0, 0.102,
+          -1.0,  0.0,  0.0, 0.018,
+           0.0, -1.0,  0.0, 0.132,
+           0.0,  0.0,  0.0, 1.0]
+
+# Enhanced ORB for forest - more features + more levels
+ORBextractor.nFeatures: 3000
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 12
+ORBextractor.iniThFAST: 10
+ORBextractor.minThFAST: 3
+
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3
+Viewer.ViewpointX: 0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -1.8
+Viewer.ViewpointF: 500

@@ -1,0 +1,9 @@
+free_thresh: 0.25
+image: /workspace/simulation/isaac/experiments/52_obstacles_v9/scripts/../config/map_return_leg.pgm
+negate: 0
+occupied_thresh: 0.65
+origin:
+- -110
+- -50
+- 0.0
+resolution: 0.2

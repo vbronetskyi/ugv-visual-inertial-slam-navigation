@@ -1,0 +1,22 @@
+<!--
+  Exp 49 continuation BT: simple DWB pipeline, NO BackUp recovery.
+  Spin + Wait as only recovery (Husky never drives in reverse).
+  Replan at 2Hz.
+-->
+<root BTCPP_format="4" main_tree_to_execute="MainTree">
+  <BehaviorTree ID="MainTree">
+    <PipelineSequence name="NavigateWithReplanning">
+      <RateController hz="2.0">
+        <ComputePathToPose goal="{goal}" path="{path}" planner_id="GridBased"/>
+      </RateController>
+      <RecoveryNode number_of_retries="3" name="FollowPathRecovery">
+        <FollowPath path="{path}" controller_id="FollowPath"/>
+        <Sequence name="Recovery">
+          <ClearEntireCostmap name="ClearLocalCostmap" service_name="local_costmap/clear_entirely_local_costmap"/>
+          <Spin spin_dist="1.57"/>
+          <Wait wait_duration="2.0"/>
+        </Sequence>
+      </RecoveryNode>
+    </PipelineSequence>
+  </BehaviorTree>
+</root>
