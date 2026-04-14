@@ -1,0 +1,69 @@
+map_server:
+  ros__parameters:
+    # Use a BLANK static map - the robot does not know obstacle positions
+    # in advance. Static map only provides the route-area world frame.
+    # Obstacles are sensed via the depth camera, fed into obstacle_layer
+    # below as /depth_points, and show up in global_costmap at runtime.
+    yaml_filename: "/root/isaac_tr_datasets/09_se_ne/teach/teach_outputs/teach_map.yaml"
+
+planner_server:
+  ros__parameters:
+    expected_planner_frequency: 0.5
+    planner_plugins: ["GridBased"]
+    GridBased:
+      plugin: "nav2_navfn_planner::NavfnPlanner"
+      # v59: tight tolerance so plan cannot terminate within inflation
+      # (was 1.0 - that's what allowed plans 1 m from obstacle centre).
+      tolerance: 1.0
+      use_astar: true
+      allow_unknown: true
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      update_frequency: 2.0
+      publish_frequency: 1.0
+      global_frame: map
+      robot_base_frame: base_link
+      # v59: robot_radius 0.5 -> 0.7 m = actual half-width (0.5) + 0.2 m
+      # safety margin.  Nav2 treats cells within 0.7 m of an occupied
+      # cell as inscribed (cost 99) - planner avoids them.
+      robot_radius: 0.4
+      resolution: 0.1
+      track_unknown_space: false
+      rolling_window: false
+      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_subscribe_transient_local: true
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: true
+        observation_sources: depth
+        depth:
+          topic: /depth_points
+          data_type: PointCloud2
+          marking: true
+          clearing: true
+          min_obstacle_height: 0.2
+          max_obstacle_height: 0.8
+          # v59: 5 -> 8 m so obstacles enter costmap earlier and the
+          # look-ahead skip fires before robot gets near.
+          obstacle_max_range: 8.0
+          raytrace_max_range: 10.0
+          inf_is_valid: false
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        # v59: 1.2 -> 1.5 m.  Planner stays ≥ 1.5 m from obstacle centre.
+        # Combined with robot_radius 0.7 m ⇒ path centre ≥ 1.5 m from
+        # obstacle, robot edge ≥ 0.8 m from obstacle centre ⇒ ≥ 0.5 m
+        # clear space beyond the robot body.
+        inflation_radius: 0.7
+        cost_scaling_factor: 3.0
+      always_send_full_costmap: true
+
+lifecycle_manager:
+  ros__parameters:
+    autostart: true
+    node_names: ["map_server", "planner_server"]
+    bond_timeout: 10.0

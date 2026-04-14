@@ -1,0 +1,45 @@
+# Exp 52 obstacle positions - REUSING exp 50's validated ON-route positions
+#
+# Exp 50 placed cone walls ACROSS the south route (perpendicular to travel),
+# proven to force meaningful replanning. Each wall is a 3-5 cone line
+# blocking a ~2-5 m band across the robot path.
+#
+# Route at each obstacle (from exp 50 analysis):
+#   Group A: x=-75 -> route y ~ -24.6  -> wall blocks y=-24..-26 (3 cones)
+#   Group B: x=-18 -> route y ~ -24.0  -> wall blocks y=-23..-26 (4 cones)
+#   Group C: x=+5  -> route y ~ -17.8  -> wall blocks y=-16..-20 (5 cones)
+
+obstacles:
+  - id: A
+    kind: cone_wall
+    description: "deep forest, on route (x=-75)"
+    cone_cluster:
+      - [-75.0, -24.0]
+      - [-75.0, -25.0]
+      - [-75.0, -26.0]
+    footprint_radius_m: 0.4
+  - id: B
+    kind: cone_wall
+    description: "transition zone, on route (x=-18)"
+    cone_cluster:
+      - [-18.0, -23.0]
+      - [-18.0, -24.0]
+      - [-18.0, -25.0]
+      - [-18.0, -26.0]
+    footprint_radius_m: 0.4
+  - id: C
+    kind: cone_wall
+    description: "after first building, on route (x=+5)"
+    cone_cluster:
+      - [5.0, -16.0]
+      - [5.0, -17.0]
+      - [5.0, -18.0]
+      - [5.0, -19.0]
+      - [5.0, -20.0]
+    footprint_radius_m: 0.4
+
+# Map inflation parameters
+inflation:
+  robot_radius_m: 0.5
+  safety_margin_m: 0.3
+  total_radius_m: 0.8
