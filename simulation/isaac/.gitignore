@@ -1,0 +1,36 @@
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# SLAM trajectory dumps (auto-generated at runtime)
+CameraTrajectory.txt
+KeyFrameTrajectory.txt
+
+# Per-run output data - lives in /root/isaac_tr_datasets/, not in repo
+**/results/run_*/
+**/results/repeat_run/
+**/results/repeat_run_prefix_*/
+**/results/plot_scratch/
+route_memory/
+
+# Auto-generated metric / plot caches
+routes/_common/metrics.json
+routes/_common/runs/
+routes/_common/drafts/
+
+# Runtime artefacts from experiments
+experiments/*/results/
+experiments/results/
+experiments/comparison_*.png
+
+# Bag / binary depth
+*.bag
+*.db3
+*.npy
+*.pgm
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
