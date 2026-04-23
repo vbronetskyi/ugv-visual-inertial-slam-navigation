@@ -14,15 +14,17 @@ across 9 routes, with stock-Nav2 and RGB-D-only ablations for comparison
 
 ## Results summary (headline only)
 
+in chronological order (this is how the project actually went):
+
 | Pipeline | best result | where to read more |
 |---|---|---|
 | [**NCLT**](datasets/nclt/) | LiDAR ICP + GPS LC - 30.2 m winter, 151-188 m other seasons | [`datasets/nclt/CHANGELOG.md`](datasets/nclt/CHANGELOG.md), [`reports/orbslam3_nclt_report.md`](datasets/nclt/reports/orbslam3_nclt_report.md) |
 | [**NCLT Kaggle**](datasets/nclt_kaggle/) | MinkLoc3D scaffold, training pending | [`README.md`](datasets/nclt_kaggle/README.md), [`PROJECT_CONTEXT.md`](datasets/nclt_kaggle/PROJECT_CONTEXT.md) |
-| [**ROVER**](datasets/rover/) | ORB-SLAM3 RGB-D - **0.37 m** best (GL autumn), 11/15 success | [`CHANGELOG.md`](datasets/rover/CHANGELOG.md), [`EXPERIMENTS_ROVER.md`](datasets/rover/EXPERIMENTS_ROVER.md), [`REPORT_experiment_1.1.md`](datasets/rover/REPORT_experiment_1.1.md) |
 | [**RobotCar**](datasets/robotcar/) | ORB-SLAM3 Stereo - 3.91 m ATE RMSE, 72.7% tracking | [`CHANGELOG.md`](datasets/robotcar/CHANGELOG.md), [`EXPERIMENTS_ROBOTCAR.md`](datasets/robotcar/EXPERIMENTS_ROBOTCAR.md) |
 | [**4Seasons**](datasets/4seasons/) | ORB-SLAM3 Stereo-Inertial - **0.93 m** ATE RMSE, 99.99% tracking | [`CHANGELOG.md`](datasets/4seasons/CHANGELOG.md), [`EXPERIMENTS_4SEASONS.md`](datasets/4seasons/EXPERIMENTS_4SEASONS.md) |
+| [**ROVER**](datasets/rover/) | ORB-SLAM3 RGB-D - **0.37 m** best (GL autumn), 11/15 success.  closest sensor match to our Husky | [`CHANGELOG.md`](datasets/rover/CHANGELOG.md), [`EXPERIMENTS_ROVER.md`](datasets/rover/EXPERIMENTS_ROVER.md), [`REPORT_experiment_1.1.md`](datasets/rover/REPORT_experiment_1.1.md) |
 | [**Gazebo sim**](simulation/gazebo/) | RTAB-Map RGB-D 9.23 m on forest, ORB-SLAM3 failed | [`experiments/`](simulation/gazebo/experiments/) |
-| [**Isaac sim T&R**](simulation/isaac/) | our pipeline **100%** on route 09 vs 63% stock Nav2 | [`routes/README.md`](simulation/isaac/routes/README.md), [`results/final/`](simulation/isaac/results/final/) |
+| [**Isaac sim T&R**](simulation/isaac/) | our pipeline **100%** on route 09 vs 63% stock Nav2 | [`results/final/README.md`](simulation/isaac/results/final/README.md), [`routes/README.md`](simulation/isaac/routes/README.md) |
 
 the 100 % headline is a single route (09 SE-NE, 36/36 WPs), not the whole
 campaign.  cross-route numbers are in [`simulation/isaac/routes/README.md`](simulation/isaac/routes/README.md)
@@ -33,9 +35,9 @@ campaign.  cross-route numbers are in [`simulation/isaac/routes/README.md`](simu
 datasets/
   nclt/           LiDAR ICP + ORB-SLAM3 + DROID-SLAM on NCLT campus dataset
   nclt_kaggle/    MinkLoc3D place recognition scaffold (Kaggle-hosted NCLT subset)
-  rover/          ORB-SLAM3 on ROVER UGV (RGB-D + stereo fisheye + SI)
   robotcar/       hloc + ORB-SLAM3 Stereo on Oxford RobotCar
   4seasons/       ORB-SLAM3 Stereo-Inertial on TU Munich 4Seasons
+  rover/          ORB-SLAM3 on ROVER UGV (RGB-D + stereo fisheye + SI) - last + closest to our Husky
 simulation/
   gazebo/         Gazebo Harmonic + Nav2 baselines
   isaac/          Isaac Sim T&R campaign - 9 routes, 3 methods, full pipeline
@@ -85,12 +87,24 @@ per-dataset dependencies live in each pipeline's README
 the reason the project started with datasets and ended with Isaac Sim is
 that I didn't trust the Husky simulator at first.  the datasets gave
 calibrated ground truth and let me see what methods do on real fisheye
-cameras with real IMU noise.  once RGB-D + IMU was clearly the only
-combination that worked (ROVER 0.37 m on D435i, 4Seasons 0.93 m with real
-IMU, but RobotCar no-raw-IMU fails), the sim story became clear: build
-Isaac Sim, drive husky with D435i + phidgets-class IMU, and prove that a
-teach-and-repeat pipeline can beat stock Nav2.  the 9-route campaign is that
-proof
+cameras and real IMU noise.  order went:
+
+1. **NCLT** (LiDAR + fisheye) - visual SLAM fails on 5 Hz fisheye + 48 Hz IMU,
+   LiDAR ICP is the only thing that works
+2. **NCLT Kaggle** - side project, MinkLoc3D place recognition scaffold for
+   later loop-closure work
+3. **RobotCar** - first working visual SLAM (Stereo 3.91 m ATE).  but
+   Stereo-Inertial impossible because no raw IMU is published
+4. **4Seasons** - proves IMU matters.  same class of stereo + a real 2000 Hz
+   IMU, ATE drops to 0.93 m
+5. **ROVER** - last dataset, closest match to our real Husky (D435i + T265 on
+   a ground robot).  RGB-D wins at 0.37 m, stereo fisheye fails without
+   undistortion
+
+once D435i RGB-D + real IMU was clearly the winning combo, the sim story
+became clear: build Isaac Sim, drive Husky with D435i + phidgets-class IMU,
+and prove a teach-and-repeat pipeline can beat stock Nav2.  the 9-route
+campaign is that proof
 
 ## References
 
