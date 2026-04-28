@@ -8,7 +8,7 @@
 
 this file lives next to the thesis figures used throughout the defence.
 the numbers here are the post-hoc GT-based evaluation on
-`/workspace/simulation/isaac/routes/` (symlinked out-of-tree for the bags) -
+`/workspace/simulation/isaac/routes/` (symlinked out-of-tree for the bags) -   
 regenerate by running `python3 ../../../isaac/routes/_common/scripts/compute_metrics.py`
 
 ## contents
@@ -40,7 +40,7 @@ regenerate by running `python3 ../../../isaac/routes/_common/scripts/compute_met
 | controller | custom pure pursuit + costmap-aware forward-arc speed limiter |
 | goal delivery | WP-projection client with BFS detour-ring + final-5 no-skip policy |
 | obstacles | 4-7 per repeat route, non-traversable convex-hull collision |
-| campaign | 9 out-and-back routes, ~1850 m driven total |
+| campaign | 9 out-and-back routes, +-1850 m driven total |
 | ablations | exp 74 stock Nav2 (no matcher) · exp 76 our pipeline, RGB-D only (no IMU) |
 | headline | **our T&R: 9/9 reach, 4/9 return, 75 % WP coverage** (vs 2/9, 0/9, 22 % stock Nav2) |
 
@@ -140,8 +140,6 @@ per-route artifacts live out-of-tree at
 
 ## the final teach-and-repeat pipeline
 
-![coverage overlaid on scene](13_coverage_on_map.png)
-
 the pipeline is 8 components split across two stages.  all live in
 [`../../scripts/common/`](../../scripts/common/) and
 [`../../scripts/nav_our_custom/`](../../scripts/nav_our_custom/).  each
@@ -164,7 +162,7 @@ reference map
    rely on VIO quality)
 4. **`visual_landmark_recorder.py`** - every 2 m of VIO displacement
    captures rgb + depth + pose, extracts ORB, back-projects keypoints
-   into 3D via depth, pickles the record.  ~150-200 landmarks per 400 m
+   into 3D via depth, pickles the record.  +-150-200 landmarks per 400 m
    route.  2 m spacing came from sweeping 1/2/5 m on 03_south: 1 m
    overfit, 5 m too sparse in forest
 5. **`teach_run_depth_mapper.py`** - accumulates the depth stream during
@@ -182,10 +180,10 @@ run with the obstacles spawned for that route
 2. **ORB-SLAM3 RGB-D-Inertial** - same config as teach, but VIO drift
    is now free to accumulate because no GT feed
 3. **`visual_landmark_matcher.py`** (core of the anchor correction) -
-   at ~1-2 Hz: finds teach landmarks within CANDIDATE_RADIUS of current
+   at +-1-2 Hz: finds teach landmarks within CANDIDATE_RADIUS of current
    VIO pose, matches live-frame ORB descriptors (Lowe ratio, >=
    MIN_MATCHES good matches), PnP-RANSAC (teach 3D kpts <-> live 2D
-   kpts) with reprojection-px filter, consistency gate
+   kpts) with reprojection-px filter, consistency gate   
    `|anchor - current_vio| < 3 m`, publishes
    `/anchor_correction` (PoseWithCovarianceStamped).  covariance
    diagonal from inlier count
@@ -209,7 +207,7 @@ run with the obstacles spawned for that route
    `/cmd_vel`.  forward-arc proximity speed limiter samples costmap in
    0.3-1.5 m ahead of robot: cost < 30 -> full speed (MAX_VEL),
    30-70 -> 0.15 m/s, 70-99 -> 0.08 m/s, >=99 or unknown -> 0.03 m/s.
-   inflation radius is 1.2 m so slowdown starts ~0.7 m before an obstacle
+   inflation radius is 1.2 m so slowdown starts +-0.7 m before an obstacle
    centre.  keeps the controller out of the failure mode where SLAM
    drifted mid-detour and the robot drove through the inflation zone
 8. **`turnaround_supervisor.py`** - polls
@@ -222,12 +220,12 @@ run with the obstacles spawned for that route
 
 ### why these 8 components
 
-the thesis argument, reduced to one paragraph each:
+the thesis arguement, reduced to one paragraph each:
 
-- **RGB-D over stereo or mono.**  ROVER (dataset) showed 0.37 m RGB-D is
+- RGB-D over stereo or mono.  ROVER (dataset) showed 0.37 m RGB-D is
   the closest sensor match to the real Husky D435i, outperforming stereo
   fisheye which failed without undistortion
-- **RGB-D-Inertial over RGB-D alone.**  4Seasons showed Stereo-Inertial
+- RGB-D-Inertial over RGB-D alone.  4Seasons showed Stereo-Inertial
   drops ATE 4x vs Stereo-only (0.93 m vs 3.91 m on comparable classes).
   exp 76 ablation in this campaign (3/9 reach vs 9/9) re-confirms on sim
 - **visual landmark matcher instead of full loop closure.**  ORB-SLAM3
@@ -238,10 +236,10 @@ the thesis argument, reduced to one paragraph each:
   anchors, got 83 m of drift reinforcement before the bug was spotted.
   exp 59 reverted to a stateless EMA + consistency gate, drift dropped to
   1.67 m mean.  current is exp 64 = exp 59 + precise GT-finisher on endpoint
-- **Nav2 planner-only, custom controller.**  stock Nav2 RPP kept sending
+- Nav2 planner-only, custom controller.  stock Nav2 RPP kept sending
   the robot into cones when SLAM drifted mid-detour (exps 53-56).  custom
   pure pursuit + forward-arc speed cap removes that failure mode
-- **WP projection with BFS + detour ring.**  exp 52's reactive projection
+- WP projection with BFS + detour ring.  exp 52's reactive projection
   (within 3 m of WP) was too late.  exp 53 went proactive + full window.
   exp 59 added a 4-7 m detour ring around blocked WPs.  exp 64 kept this
 - **final-5 no-skip + GT-open-loop finisher.**  the endpoint approach was
@@ -262,10 +260,10 @@ localization estimate):
 
 teach WP list is split at the WP nearest the turnaround into outbound
 + return halves.  GT trajectory is split at the GT sample nearest the
-turnaround timestamp.  a WP is "visited" if the closest sample from
+turnaround timestamp.  a WP is visited if the closest sample from
 **its own half** of the GT is within `R_TOL = 3 m`.  direction split
 is essential - without it the metric gives a false 100 % on runs that
-never returned (return WPs would be "reached" by the starting pose)
+never returned (return WPs would be reached by the starting pose)
 
 ### (2) endpoint success - primary
 
@@ -275,7 +273,7 @@ never returned (return WPs would be "reached" by the starting pose)
 both use `ENDPOINT_TOL = 10 m` (GNSS-class precision for an outdoor
 UGV).  a run counts as endpoint success only if both <= 10 m.  a
 coverage floor of >= 50 % is required for return to count, to stop a
-"robot stood at spawn" false-positive on the stock baselines
+robot stood at spawn false-positive on the stock baselines
 
 ### (3) localization drift
 
@@ -295,8 +293,6 @@ well RGB-D + IMU + anchors localise - the core claim of the thesis title
 inflation zones and barely accumulates motion.  the matcher deficit has
 little time to manifest.  reach / return / coverage are the faithful
 signals_
-
-![reach + return per route, all 3 stacks](06_endpoint_bars.png)
 
 ![drift mean + p95 per route, all 3 stacks](05_drift_bars.png)
 
@@ -320,6 +316,30 @@ regenerate all with `python3 ../../scripts/analysis/plot_three_way.py`
 (writes into each route's repeat dir) or
 `python3 ../../scripts/analysis/make_thesis_final_plots.py` (writes the
 curated thesis figures into this directory)
+
+### map + costmap state on route 01_road
+
+teach → repeat handoff for the road route.  the **teach-derived static
+map** is what Nav2 loads via `map_server` at the start of the repeat
+run
+
+![teach map for road, before repeat](10_teach_map_road.png)
+
+**03_south teach atlas** (south-forest loop, 200 x 60 m view) - depth-
+mapped occupancy built during the teach drive, same raster format that
+Nav2's map_server loads at repeat time:
+
+![teach map for south](10b_teach_map_south.png)
+
+**teach atlas + visual landmarks (03_south)** - every ORB landmark
+recorded by `visual_landmark_recorder.py` during the teach drive,
+plotted at its camera-pose (x, y).  128 landmarks at +-2 m spacing, each
+storing +-75 ORB features with back-projected 3D keypoints.  coloured
+early-to-late; dot size scales with feature count.  at repeat time the
+visual landmark matcher re-matches live ORB frames against this set via
+PnP-RANSAC to publish `/anchor_correction`
+
+![teach landmarks on south atlas](10e_teach_map_landmarks_south.png)
 
 ## per-route breakdown
 
@@ -386,7 +406,7 @@ time to drift before anchor locks
 
 **primary result - reach.**  our stack arrives at the far goal on **every
 one of 9 routes** (avg 3.0 m reach error).  this is the strongest claim
-the system makes about the "point-to-point" half of the title.  no
+the system makes about the point-to-point half of the title.  no
 baseline gets above 3/9
 
 **return.**  4/9 routes close the loop within 10 m.  three more (01, 06,
@@ -398,19 +418,19 @@ clearest next-work target
 long corner routes where VIO drift eats the 3 m REACH tolerance even
 when the robot passes close
 
-**IMU is load-bearing.**  exp 76 drops to 3/9 reach on the same routes.
+IMU is load-bearing.  exp 76 drops to 3/9 reach on the same routes.
 the IMU is what lets anchor-free stretches between landmark hits stay
 within the matcher's consistency gate (3 m).  strip it and the VIO runs
 too far between anchors for the matcher to catch up
 
-**WP projection + detour ring is load-bearing.**  exp 74 drops to 2/9
+WP projection + detour ring is load-bearing.  exp 74 drops to 2/9
 reach.  stock Nav2 can't even leave spawn on 7 of 9 routes - recovery
 behaviors loop in tree-inflation
 
 **limits.**  drift on long corner routes (05: 9.9 m mean, 07: 3.8 m,
 04: 5.3 m) is the dominant failure mode for the return leg.  anchor
 density drops on diagonals + parallel-edge runs because teach landmarks
-get recorded at ~2 m spacing in a straight line - corners and long
+get recorded at +-2 m spacing in a straight line - corners and long
 open stretches are where the matcher goes silent.  a denser teach pass
 or a descriptor-based relocalisation fallback (exp 63 prototype) would
 narrow the return gap
@@ -423,7 +443,7 @@ expected to be cleaner.  this caveat does not change the ranking: our
 
 ## cross-references
 
-**thesis argument (in order):**
+**thesis arguement (in order):**
 - [thesis reading order](../../../../docs/thesis_reading_order.md)
 
 **per-pipeline stories:**
@@ -470,21 +490,35 @@ python3 _common/scripts/compute_metrics.py   # reads artifacts in place,
 | `01_web_map.png`                | this + isaac README | 2D web map view                     | scene render |
 | `02_terrain_relief.png`         | this + isaac README | heightfield relief                  | scene render |
 | `03_scene_topdown.png`          | this + isaac README | scene top-down                      | scene render |
-| `03b_scene_forward.png`         | -                   | ground-level forward view           | scene render |
+| `03b_scene_forward.jpg`         | -                   | ground-level forward view           | scene render |
 | `03c_scene_oblique.png`         | this + isaac README | oblique scene render                | scene render |
 | `04_teach_gt_9routes.png`       | this + isaac README | 9 teach GT trajectories on scene    | `make_thesis_final_plots.py` |
 | `05_drift_bars.png`             | this + isaac README | drift mean+p95 per route, 3 stacks  | `make_thesis_final_plots.py` |
-| `06_endpoint_bars.png`          | this + isaac README | reach + return error per route, 3 stacks | `make_thesis_final_plots.py` |
 | `07_compare_09_se_ne.png`       | this + isaac README | 3-stack trajectories on 09 SE-NE    | `make_thesis_final_plots.py` |
 | `08_compare_04_nw_se.png`       | this                | 3-stack trajectories on 04 NW-SE    | `make_thesis_final_plots.py` |
 | `09_compare_01_road.png`        | this                | 3-stack trajectories on 01 road     | `make_thesis_final_plots.py` |
-| `13_coverage_on_map.png`        | this + isaac README | 3-panel coverage overlay on map     | `plot_13` in `make_final_plots.py` |
+| `10_teach_map_road.png`         | this                | teach-derived static occupancy, 01_road, before repeat | `make_map_figures.py` |
+| `10b_teach_map_south.png`       | this                | teach-derived static occupancy, 03_south (south-forest loop) | `make_map_figures.py` |
+| `10e_teach_map_landmarks_south.png` | this            | 03_south teach atlas + 128 ORB landmarks used by visual_landmark_matcher | `make_map_figures.py` |
 | `18_scene_obstacles_routes.png` | this + root README  | all 9 routes + obstacles on scene   | `plot_18` in `make_final_plots.py` |
+| `phase2/14_drift_curves_09.png`         | thesis Ch. 5  | drift over time, 09 SE-NE * 3 stacks | `make_chapter5_plots.py` |
+| `phase2/15_traj_12_ne_mid_best.png`     | thesis Ch. 5  | trajectory, best phase-2 result      | `make_chapter5_plots.py` |
+| `phase2/16_traj_13_cross_nws_worst.png` | thesis Ch. 5  | trajectory, worst phase-2 result     | `make_chapter5_plots.py` |
+| `phase2/17_success_heatmap_9x3.png`     | thesis Ch. 5  | reach + return endpoint heatmap, 9 routes * 3 stacks | `make_phase2_plots.py` |
+| `phase2/18_metrics_heatmap_15.png`      | thesis Ch. 5  | our-pipeline metrics heatmap, 15 routes * 6 cols     | `make_phase2_plots.py` |
+| `phase2/21_teach_vio_vs_gt_12_ne_mid.png` | thesis Ch. 5 | teach run: GT vs raw ORB-SLAM3 VIO (origin-aligned), drift mean 2.0 m / max 4.1 m | `make_chapter5_plots.py` |
+| `phase2/22_repeat_nav_vs_gt_03_south.png` | thesis Ch. 5 | repeat run: GT (actual path) vs published nav pose, drift mean 1.7 m / max 3.6 m with anchor correction | `make_chapter5_plots.py` |
+| `phase2/23_drifty_teach_success_repeat_04_nw_se.png` | thesis Ch. 5 | teach has VIO drift up to 11 m, repeat still reaches apex + returns | `make_chapter5_plots.py` |
+| `phase2/24_low_coverage_success_11_nw_mid.png` | thesis Ch. 5 | only 34 % WP coverage but reach 7.1 m + return 7.3 m PASS | `make_chapter5_plots.py` |
+| `main_experiments/` | thesis Ch. 5 §5.3 | 18 milestone plots tracing the iterative process | `make_dev_history_plots.py` |
+| `ROUTES.md` | this | per-route narrative + plots index | - |
+| `map_vis.png` | -            | scene map visualisation             | scene render |
 
 regenerate all thesis figures:
 ```bash
 cd /workspace/simulation/isaac
 python3 routes/_common/scripts/compute_metrics.py       # refresh metrics.json
-python3 scripts/analysis/make_thesis_final_plots.py     # 04-09
-python3 scripts/analysis/make_final_plots.py            # 13, 18 (+ scratch 07-21)
+python3 scripts/analysis/make_thesis_final_plots.py     # 04-09 (routes + 3-stack comparisons)
+python3 scripts/analysis/make_map_figures.py            # 10a/b/e (teach maps + landmarks)
+python3 scripts/analysis/make_final_plots.py            # 18 (+ scratch 07-21)
 ```
