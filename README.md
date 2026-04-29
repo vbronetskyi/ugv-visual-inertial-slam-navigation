@@ -108,7 +108,9 @@ the robot driving the route end-to-end with our pipeline doing the
 navigation.  Top-left overlay tracks live drift, waypoints reached,
 distance travelled and the current goal (out / back).
 
-<video src="https://github.com/vbronetskyi/ugv-visual-inertial-slam-navigation/raw/main/simulation/isaac/results/final/03_south_repeat_run_compressed.mp4" controls></video>
+<video controls width="640">
+  <source src="https://raw.githubusercontent.com/vbronetskyi/ugv-visual-inertial-slam-navigation/main/simulation/isaac/results/final/03_south_repeat_run_compressed.mp4" type="video/mp4">
+</video>
 
 inline player above is the compressed 480p version - for HD 1080p see [youtu.be/l2n_DYET82M](https://youtu.be/l2n_DYET82M)
 
