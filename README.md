@@ -108,7 +108,9 @@ the robot driving the route end-to-end with our pipeline doing the
 navigation.  Top-left overlay tracks live drift, waypoints reached,
 distance travelled and the current goal (out / back).
 
-<video src="simulation/isaac/results/final/03_south_repeat_run.mp4" controls width="640"></video>
+[![03_south repeat run](https://img.youtube.com/vi/l2n_DYET82M/maxresdefault.jpg)](https://youtu.be/l2n_DYET82M)
+
+(click thumbnail to watch on YouTube - 1080p)
 
 ## Isaac Sim teach-and-repeat campaign (15 routes)
 
