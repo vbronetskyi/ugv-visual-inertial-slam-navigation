@@ -54,6 +54,18 @@ simulation/
 └── README.md             (you are here)
 ```
 
+## links
+
+- code (this repo): [github.com/vbronetskyi/ugv-visual-inertial-slam-navigation](https://github.com/vbronetskyi/ugv-visual-inertial-slam-navigation)
+- dataset (Kaggle): [kaggle.com/datasets/vbronet/isaac-tr-forest-visual-inertial](https://www.kaggle.com/datasets/vbronet/isaac-tr-forest-visual-inertial)
+
+the Kaggle dataset packages the 30 sensor bags used in the Isaac Sim
+campaign — 15 routes x 2 phases (teach + repeat-with-obstacles), about
+38 GB total. each bag carries 10 Hz RGB + aligned depth, 200 Hz
+synthetic IMU, 50 Hz wheel odometry, and 10 Hz ground-truth pose, plus
+the per-route teach landmarks and occupancy maps. anyone can rerun the
+analysis without re-running the simulator.
+
 ## references
 
 - Gazebo Harmonic, open source physics simulator, [website](https://gazebosim.org/)

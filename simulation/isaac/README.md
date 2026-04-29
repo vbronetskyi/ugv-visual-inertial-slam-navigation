@@ -1,16 +1,12 @@
 # isaac sim - husky a200 outdoor simulation
 
-*[thesis root](../../README.md) > [simulation](../README.md) > isaac*
-
-> Isaac Sim 6 + Husky A200 + D435i + Phidgets-class IMU.  9-route teach-and-repeat campaign, **~1850 m driven across all repeats**.  our T&R pipeline beats stock Nav2 on the same routes
-
-nvidia isaac sim setup for the clearpath husky a200 with d435i rgb-d camera in
+nvidia isaac sim setup for the clearpath husky a200 with d435i rgb-d camera in   
 a procedural forest environment. the robot drives via PhysX wheel-terrain
 interaction and records RGB-D + IMU data for ORB-SLAM3 evaluation.
 
 ## development history
 
-the simulation went through several iterations before reaching the current state:
+the simulation went thorugh several iterations before reaching the current state:
 
 1. **jackal robot** - initially the clearpath jackal was used as the test platform.
    switched to husky a200 because it matches the real hardware available for
@@ -61,14 +57,14 @@ note: isaacsim 4.5.0 needs python 3.10, 5.x needs 3.11, only 6.0.0 works with 3.
 
 ```bash
 # build the forest scene (terrain + trees + buildings)
-/opt/isaac-sim-6.0.0/python.sh scripts/convert_gazebo_to_isaac.py
+/opt/isaac-sim-6.0.0/python.sh scripts/isaac_sim/convert_gazebo_to_isaac.py
 
 # set ros2 env
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/isaac-sim-6.0.0/exts/isaacsim.ros2.core/jazzy/lib
 
 # run simulation with auto route
-/opt/isaac-sim-6.0.0/python.sh scripts/run_husky_forest.py --route road --duration 600
+/opt/isaac-sim-6.0.0/python.sh scripts/_archive/run_husky_forest.py --route road --duration 600
 
 # or manual driving via web UI
 python3 tools/web_nav.py  # open http://localhost:8765
@@ -81,7 +77,7 @@ python3 tools/web_nav.py  # open http://localhost:8765
 ![oblique view](results/final/03c_scene_oblique.png)
 
 the simulated forest covers 240x160m with rolling terrain (heightfield mesh,
-multi-octave noise, 2m grid). a winding S-curve dirt road runs through the center.
+multi-octave noise, 2m grid). a winding S-curve dirt road runs thorugh the center.
 objects are placed from `gazebo_models.json` (single source of truth for both
 scene builder and collision checker).
 
@@ -94,7 +90,7 @@ scene builder and collision checker).
 | rocks | 28 | dsready rocks |
 | buildings | 6 | procedural (peaked roofs, porches) |
 | barrels | 4 | dsready props |
-| ground cover (ferns, grass, leaves) | ~900 | scattered in forest |
+| ground cover (ferns, grass, leaves) | +-900 | scattered in forest |
 
 terrain has vertex-color shading: brown dirt on the road, green grass in the
 forest, dark earth under tree canopies. dome light at 1500 intensity provides
@@ -121,133 +117,104 @@ annotator (z-depth in meters, stored as uint16 mm).
 
 ## routes
 
-nine out-and-back routes sweep the 240x160 m scene.  01-03 are the legacy
-single-segment routes (road / north-forest / south); 04-09 are the
-corner-to-corner campaign routes (diagonals, parallel edges, short
-corners).  each is driven twice - obstacle-free **teach**, then **repeat**
-with 4-7 non-traversable props spawned on the outbound leg
+all three legacy routes share start (-95, -6) and destination (72, -5)
+near the houses. the robot drives to the destination and returns.
 
-![9-route teach GT trajectories](results/final/04_teach_gt_9routes.png)
+**road** - follows the dirt road. gentle curves, good visibility. the
+shortest and most open route.
 
-full per-route tables (spawn, turnaround, obstacles, coverage) live in
-[`routes/README.md`](routes/README.md); teach-time landmarks + map at
-[`results/final/README.md`](results/final/README.md#dataset)
+**north forest** - goes north into the forest (up to y=42), weaving between
+trees, shrubs, fallen logs and rocks. dense canopy, limited visibility.
 
-## slam configuration
+**south forest** - goes south into the forest (down to y=-40). manually
+driven to ensure realistic path selection.
+
+these three were extended into the 9-route campaign in `routes/`.  GT
+trajectories for all 9 are plotted in
+[`results/final/04_teach_gt_9routes.png`](results/final/04_teach_gt_9routes.png)
+
+## slam evaluation
+
+orb-slam3 RGB-D was characterised on the three legacy routes under two
+drive modes (kinematic vs PhysX) before the 9-route campaign
+
+### kinematic drive results (original)
+
+the robot was driven kinematically (position set directly each frame, no
+physics). this gives perfectly smooth camera motion.
+
+| route | distance | frames | resets | ATE (m) |
+|-------|----------|--------|--------|---------|
+| road | 339 m | 4557 | 0 | 0.92 |
+| north | 473 m | 6760 | 0 | 1.93 |
+| south | 396 m | 5483 | 0 | 0.75 |
+
+### PhysX drive results
+
+the robot drives via PhysX articulation (wheels on terrain, real friction
+and slip). camera motion has natural dynamics from terrain interaction.
+
+| route | distance | frames | resets | ATE (m) |
+|-------|----------|--------|--------|---------|
+| road | 338 m | 3651 | 0 | 0.49 |
+| north | 464 m | 7367 | 0 | 2.07 |
+| south | 393 m | 5694 | 0 | 1.29 |
+
+all routes: 0 resets, 100% tracking. PhysX drive gives comparable accuracy
+to kinematic (road even improved from 0.92 to 0.49m). north and south
+are slightly worse due to less smooth camera motion from terrain bumps.
+
+raw trajectory plots are kept in [`results/slam_rgbd/`](results/slam_rgbd/)
+and [`results/debug/`](results/debug/) for history
+
+### slam configuration
 
 orb-slam3 config (`rgbd_d435i_v2.yaml`):
 - camera: pinhole, fx=fy=320, cx=320, cy=240, 640x480 @ 10 Hz
 - depth: uint16 mm, DepthMapFactor=1000, ThDepth=160 (20m range)
 - ORB features: 2000 per frame, FAST treshold 15/5
-- robot speed: ~1.0 m/s (effective ~0.5-0.7 with PhysX slip)
+- robot speed: +-1.0 m/s (effective +-0.5-0.7 with PhysX slip)
 
-### navigation - early attempts (history)
+### obstacle avoidance - early prototypes (history)
 
-before the final teach-and-repeat stack, two obstacle-avoidance prototypes
-were explored on the road route only.  neither is the final pipeline
-- they're here because they informed the design decisions further down
+two prototypes tested before the final teach-and-repeat stack.  both
+live in [`scripts/_archive/`](scripts/_archive/) - they're here as   
+evidence of why the design ended up where it did
 
-**approach 1: custom pure pursuit + depth dodge** (`run_husky_nav_v1.py`)
+**approach 1: custom pure pursuit + depth dodge**
+([`scripts/_archive/run_husky_nav_v1.py`](scripts/_archive/run_husky_nav_v1.py))
 
-robot follows SLAM route waypoints via pure pursuit.  depth camera detects
+robot follows SLAM route waypoints using pure pursuit. depth camera detects
 obstacles ahead -> robot stops, plans 5-point detour around obstacle, returns
-to route.  ORB-SLAM3 provides localization.  reached 130/170 m (76 %) on
-road, bypassed first cone group but SLAM lost tracking during detour
-(camera sees new view -> feature mismatch -> pose jumps).  also: depth
-can't distinguish trees from new obstacles
+to route. SLAM (ORB-SLAM3) provides localization.
 
-**approach 2: stock Nav2 + MPPI + SLAM occupancy map** (`run_husky_nav2.py`)
+results: robot reached 130m/170m (76%) on road route. bypassed first cone
+group but SLAM lost tracking during detour maneuver (camera sees new view ->
+feature mismatch -> position jumps). also: depth can't distinguish trees from
+new obstacles.
 
-full ROS 2 Nav2 stack: static SLAM occupancy map -> NavFn global planner ->
-depth PointCloud2 local costmap -> MPPI controller.  Isaac Sim publishes
-sensors via ROS 2 bridge, subscribes to /cmd_vel.  NavFn planned correct
-paths but MPPI horizon (2.8 m) was too short to navigate around obstacles
-that block the global path.  one run bypassed cones but left the road
+**approach 2: Nav2 + MPPI + SLAM map**
+([`scripts/_archive/run_husky_nav2.py`](scripts/_archive/run_husky_nav2.py))
+
+full ROS2 Nav2 stack: static SLAM occupancy map -> NavFn global planner ->
+depth PointCloud2 local costmap -> MPPI controller. Isaac Sim publishes
+sensors via ROS2 bridge, subscribes to /cmd_vel from Nav2.
+
+results: NavFn plans correct path along road between trees. MPPI follows
+smoothly at 0.6 m/s. sucessfully bypassed cones in one experiment (but
+went off-road into forest). core problem: MPPI horizon (2.8m) too short
+to navigate around obstacles that block the global path.
 
 **why this went to full T&R:** both prototypes proved the reactive
 approach isn't enough once SLAM drift + obstacle detours combine.  the
-final pipeline (below) replaces reactive dodging with a teach phase that
-records landmarks + a reference path, and uses anchor correction at
-repeat time to keep SLAM locked to that path even during detours
+final pipeline replaces reactive dodging with a teach phase that records
+landmarks + a reference path, and uses anchor correction at repeat time
+to keep SLAM locked to that path even during detours.  see
+[`results/final/README.md`](results/final/README.md) for the final
+pipeline + 9-route campaign results
 
-collision objects in scene: standing trees (r=0.7 m), shrubs (r=0.4 m),
-fallen trees (9 points along trunk, r=0.6 m), rocks (r=0.8 m), houses
-(r=6.0 m)
-
-### final teach-and-repeat pipeline (exps 51-64, 9-route campaign)
-
-the thesis pipeline is a teach-and-repeat stack that combines ORB-SLAM3
-RGB-D-Inertial VIO, a visual landmark matcher for anchor correction, and
-a Nav2 planner + custom pure-pursuit follower + hybrid goal sender.  all
-components live in `scripts/common/` and `scripts/nav_our_custom/`
-
-![9 T&R routes on the scene](results/final/18_scene_obstacles_routes.png)
-
-**teach stage** (obstacle-free run, one-time per route)
-
-1. `run_husky_forest.py` drives the Husky along the planned route (manual
-   or scripted) and publishes RGB-D + IMU + GT pose
-2. `rgbd_inertial_slam.py` runs ORB-SLAM3 RGB-D-Inertial VIO (synthetic
-   Phidgets 1042 IMU noise profile)
-3. `tf_wall_clock_relay_v55.py` publishes map -> base_link TF in GT mode
-   (teach is a reference, GT is the source of truth)
-4. `visual_landmark_recorder.py` captures RGB + depth + VIO pose every
-   2 m of displacement, back-projects ORB keypoints into 3D, saves
-   `<route>_landmarks.pkl` (~150-200 landmarks per ~400 m route)
-5. `teach_run_depth_mapper.py` converts the depth stream into an
-   occupancy `teach_map.pgm` used by Nav2 at repeat time
-
-**repeat stage** (obstacles dropped, VIO + landmark-anchored localization)
-
-1. Isaac Sim restarts with obstacles spawned at 20-80 % of the outbound
-   leg (benches, barrels, cardboxes, trashcans, etc., with non-
-   traversable convex-hull collision)
-2. ORB-SLAM3 RGB-D-Inertial runs live, VIO drifts freely
-3. `visual_landmark_matcher.py` picks up the teach landmarks pickle, at
-   ~1-2 Hz finds teach landmarks within search radius of current VIO,
-   matches current ORB descriptors (Lowe ratio) + PnP-RANSAC to recover
-   anchor pose, publishes `/anchor_correction`
-4. `tf_wall_clock_relay_v55.py` in `--slam-encoder` mode fuses VIO +
-   wheel encoder + anchor correction (4 regimes: no_anchor, ok, strong,
-   jump) and publishes map -> base_link TF to Nav2
-5. Nav2 planner-only (`planner_server` + `map_server` loading the teach
-   map) plans between waypoints
-6. `send_goals_hybrid.py` feeds teach WPs at 4 m spacing, proactively
-   projects any WP that lands in costmap inflation to the nearest free
-   cell (BFS within 4-7 m ring), SKIPs unreachable WPs except the final
-   5 which always re-plan
-7. `pure_pursuit_path_follower.py` consumes /plan, emits /cmd_vel with
-   forward-arc costmap-aware speed limiting (full speed < cost 30,
-   0.15 m/s < 70, crawl < 99, near-stop else)
-8. `turnaround_supervisor.py` watches pose, signals obstacle removal
-   when robot passes within 10 m of the turnaround xy and starts
-   heading back - keeps the return leg clean
-
-### campaign results (9 routes, 3 stacks)
-
-![coverage on scene map](results/final/13_coverage_on_map.png)
-
-| stack | reach 9/9 | return 9/9 | avg coverage | avg drift mean |
-|---|---|---|---|---|
-| **our custom T&R** | **9 / 9** (avg 3.0 m) | **4 / 9** | **75 %** | 4.3 m |
-| exp 74 stock Nav2 (no matcher) | 2 / 9 | 0 / 9 | 22 % | 1.4 m\* |
-| exp 76 our pipeline, RGB-D only (no IMU) | 3 / 9 | 2 / 9 | 29 % | 5.7 m |
-
-\* _stock Nav2's low drift is because the robot stalls inside inflation
-zones and barely accumulates motion.  route completion columns are the
-faithful signal_
-
-![endpoint reach + return per route](results/final/06_endpoint_bars.png)
-
-![localization drift per route](results/final/05_drift_bars.png)
-
-**trajectory comparison - 100 % headline route (09 SE-NE):**
-
-![09 SE-NE: 3-stack trajectories](results/final/07_compare_09_se_ne.png)
-
-full per-route numbers in [`routes/README.md`](routes/README.md);
-thesis-grade narrative + conclusions in
-[`results/final/README.md`](results/final/README.md)
+collision objects: standing trees (r=0.7m), shrubs (r=0.4m), fallen trees
+(9 points along trunk, r=0.6m), rocks (r=0.8m), houses (r=6.0m).
 
 ## imu experiments
 
@@ -275,30 +242,58 @@ isaac/
       payloads/           physics, geometry, materials
       Textures/
   scripts/
-    run_husky_forest.py   main sim: PhysX drive + recording + web UI
-    run_husky_nav_v1.py   navigation v1: pure pursuit + depth dodge
-    run_husky_nav2.py     navigation v2: Nav2 + MPPI + depth costmap
-    send_nav2_goal.py     sends route waypoints to Nav2 sequentially
-    build_occupancy_map.py  builds 2D grid from SLAM depth + trajectory
-    spawn_obstacles.py    spawns cones/tent for obstacle avoidance tests
-    slam_tf_publisher.py  bridges SLAM pose -> ROS2 tf (map->odom)
-    convert_gazebo_to_isaac.py   scene builder (terrain + objects)
-    generate_husky_urdf.py       xacro to urdf
-    start_nav2_all.sh     launches Isaac Sim + Nav2 + TF + goals
+    spawn_obstacles.py            spawns cones/tent for obstacle avoidance tests
+    plot_trajectory_map.py        per-route trajectory plotter (scene + GT + waypoints)
+    common/                       T&R pipeline (tf_relay, matcher, recorder, PP follower, supervisor)
+    nav_our_custom/               our Nav2 patches (send_goals_hybrid, launch template)
+    nav_stock_nav2/               stock Nav2 baseline (exp 74)
+    nav_rgbd_no_imu/              RGB-D-only ablation (exp 76)
+    isaac_sim/                    scene builders + URDF conversion
+                                  (build_outdoor_scene, convert_gazebo_to_isaac,
+                                   generate_husky_urdf, build_occupancy_map, ...)
+    analysis/                     post-hoc metrics + thesis plot generators
+                                  (compute_metrics, make_thesis_final_plots,
+                                   make_chapter5_plots, make_phase2_plots, ...)
+    _archive/                     legacy navigation prototypes + early scripts
+                                  (run_husky_forest.py, run_husky_nav_v1.py,
+                                   run_husky_nav2.py, etc.)
   config/
-    nav2_husky_params.yaml   Nav2 params (MPPI, costmaps, planner)
-    nav2_husky_launch.py     Nav2 launch file
-    nav2_bt_simple.xml       behavior tree (no recovery)
+    nav2_husky_params.yaml        Nav2 params (MPPI, costmaps, planner)
+    nav2_husky_launch.py          Nav2 launch file
+    nav2_bt_simple.xml            behavior tree (no recovery)
   tools/
     web_nav.py            flask web UI for manual driving (port 8765)
   results/
-    final/                images for this README
+    final/                thesis figures + main writeup
     scene/                scene renders
     slam_rgbd/            RGB-D SLAM charts
     slam_imu/             IMU experiment charts
-    navigation/           obstacle avoidance experiment plots + analysis
+    navigation/           early Nav2 obstacle-avoidance plots
     debug/                development iterations
 ```
+
+## node coordination via /tmp/
+
+several pipeline nodes coordinate through plain text files in `/tmp/`
+instead of ROS topics.  Isaac Sim and Nav2 each live in their own
+Python process and the ROS 2 bridge between them mixed sim_time and
+wall_clock in ways that broke TF lookups.  file-based IPC sidesteps
+that entirely, lets you inspect per-step state with `cat`, and works
+without a colcon workspace
+
+a few of the files in use:
+
+- `/tmp/isaac_pose.txt` - current robot pose, written by
+  `run_husky_forest.py`, read by `tf_wall_clock_relay`, the visual
+  landmark nodes and the turnaround supervisor
+- `/tmp/isaac_remove_obstacles.txt` - the turnaround supervisor uses
+  this flag to tell `run_husky_forest.py` to despawn the outbound props
+- `/tmp/slam_pose.txt` - ORB-SLAM3 wrapper publishes here, tf_relay
+  reads it for the map->odom correction
+- `/tmp/gazebo_models.json` - scene-object dump that the plot scripts
+  use to render trees / shrubs / houses on top of trajectories
+- `/tmp/isaac_goal.txt`, `/tmp/isaac_hold_autopilot.txt` - click-to-drive
+  commands coming from `web_nav.py`
 
 ## known issues
 
@@ -342,30 +337,3 @@ meshes that have unnamed materials. see `material_cache.py` line 31 and
 - [ORB-SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3)
 - [OpenUSD](https://openusd.org/release/index.html)
 - [PhysX](https://developer.nvidia.com/physx-sdk)
-
-## Content map
-
-- [`README.md`](README.md) - this file.  setup + development history + quick start
-- [`experiments/`](experiments/) - 79 experiments across 2 months, indexed in [`../../docs/experiment_index.md`](../../docs/experiment_index.md)
-- [`routes/`](routes/) - 9 T&R routes (01_road through 09_se_ne), each with teach + repeat, see [`routes/README.md`](routes/README.md) for the campaign overview
-- [`scripts/`](scripts/) - the pipeline code
-  - [`common/`](scripts/common/) - our final T&R pipeline (tf_relay, matcher, recorder, PP follower, supervisor, plan logger, drift monitor)
-  - [`nav_our_custom/`](scripts/nav_our_custom/) - Nav2 patches (send_goals_hybrid, launch template)
-  - [`nav_stock_nav2/`](scripts/nav_stock_nav2/) - stock Nav2 client for baseline
-  - [`nav_rgbd_no_imu/`](scripts/nav_rgbd_no_imu/) - RGB-D-only ablation
-  - [`isaac_sim/`](scripts/isaac_sim/) - scene builders + URDF conversion
-  - [`analysis/`](scripts/analysis/) - post-hoc metrics + plot generators
-  - [`_archive/`](scripts/_archive/) - old versions kept for history
-- [`assets/`](assets/) - URDF + USD + meshes (mostly vendored)
-- [`config/`](config/) - Nav2 launch + params + behaviour tree
-- [`tools/`](tools/) - misc helpers
-- [`results/final/`](results/final/) - thesis figures (scene layout, route coverage map)
-- [`analysis/`](analysis/) - experiment ranking data
-
-## Where to read next
-
-- **main thesis numbers (9-route campaign)**: [`routes/README.md`](routes/README.md)
-- **our pipeline vs baselines (exp 74 stock Nav2, exp 76 RGB-D-no-IMU)**: [`experiments/74_pure_stock_nav2_baseline/README.md`](experiments/74_pure_stock_nav2_baseline/) and [`experiments/76_rgbd_no_imu_ours/README.md`](experiments/76_rgbd_no_imu_ours/)
-- **full journey across 79 experiments**: [`../../docs/experiment_index.md`](../../docs/experiment_index.md)
-- **the core algorithm (VIO + anchor fusion)**: [`scripts/common/tf_wall_clock_relay_v55.py`](scripts/common/tf_wall_clock_relay_v55.py) + [`visual_landmark_matcher.py`](scripts/common/visual_landmark_matcher.py)
-- **thesis-grade figures**: [`results/final/`](results/final/)

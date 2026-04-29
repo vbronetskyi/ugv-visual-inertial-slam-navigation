@@ -1,12 +1,12 @@
 # Thesis reading order
 
-if you want to read the project as if it were a thesis argument, go in this
+if you want to read the project as if it were a thesis arguement, go in this
 order.  each step has a recommended file to read and what question it answers
 
 ## 1.  the motivation
 
 [`/README.md`](../README.md) - the 1-paragraph thesis story + headline results
-table.  explains why the project has two halves (datasets first, then
+table.  explains why the project has two halves (datasets first, then   
 simulation)
 
 ## 2.  datasets: what works on real sensors
@@ -23,7 +23,7 @@ outdoor sensors.  read in this order:
    localisation at 64.5 % correct.  but Stereo-Inertial doesn't work because
    RobotCar only exposes fused INS, not raw IMU
 
-3. [`datasets/4seasons/README.md`](../datasets/4seasons/README.md) - the "IMU really
+3. [`datasets/4seasons/README.md`](../datasets/4seasons/README.md) - the "IMU realy
    matters" proof.  same class of stereo camera as RobotCar, but with a real
    2000 Hz IMU.  ATE drops from 3.91 m -> 0.93 m
 
@@ -57,13 +57,13 @@ teach-and-repeat pipeline on our own robot
    3 thesis metrics
 
 10. [`simulation/isaac/experiments/74_pure_stock_nav2_baseline/README.md`](../simulation/isaac/experiments/74_pure_stock_nav2_baseline/README.md) -
-    the stock Nav2 baseline.  shows what a "default" Nav2 config does
+    the stock Nav2 baseline.  shows what a default Nav2 config does
     without our T&R additions.  our pipeline 100% vs stock Nav2 63% on
     route 09 is the headline comparison
 
 11. [`simulation/isaac/experiments/76_rgbd_no_imu_ours/README.md`](../simulation/isaac/experiments/76_rgbd_no_imu_ours/README.md) -
     the RGB-D-only ablation.  our full pipeline but ORB-SLAM3 in pure RGB-D
-    mode (no IMU).  answers "how much does the IMU actually buy us"
+    mode (no IMU).  answers how much does the IMU actually buy us
 
 ## 5.  the pipeline code
 
@@ -77,7 +77,7 @@ teach-and-repeat pipeline on our own robot
 14. [`simulation/isaac/scripts/nav_our_custom/send_goals_hybrid.py`](../simulation/isaac/scripts/nav_our_custom/send_goals_hybrid.py) -
     the Nav2 patch for proactive waypoint projection around obstacles
 
-15. [`simulation/isaac/scripts/analysis/compute_metrics.py`](../simulation/isaac/scripts/analysis/compute_metrics.py) -
+15. [`simulation/isaac/scripts/analysis/compute_metrics.py`](../simulation/isaac/scripts/analysis/compute_metrics.py) -   
     the 3 thesis metrics (GT WP coverage / endpoint success / localisation drift)
 
 ## 6.  failure analysis

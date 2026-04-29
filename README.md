@@ -8,13 +8,150 @@ the project has two halves. first half is benchmarking existing visual SLAM
 methods on four public outdoor datasets - to figure out what works, where it
 breaks, and what the real robot pipeline needs to look like.  second half is
 building that pipeline in Isaac Sim and running a teach-and-repeat campaign
-across 9 routes, with stock-Nav2 and RGB-D-only ablations for comparison
+across 15 routes, with stock-Nav2 and RGB-D-only ablations for comparison
 
-![all 9 T&R routes on the simulation scene](simulation/isaac/results/final/18_scene_obstacles_routes.png)
+## How the final solution works
 
-## Results summary (headline only)
+![pipeline architecture - sensors, localization, planning, route dispatch, control](simulation/isaac/system_architecture.png)
 
-in chronological order (this is how the project actually went):
+the system is a **two-pass teach-and-repeat** stack.  the diagram above
+shows the full repeat-time graph; the teach pass uses the same Isaac +
+Localization boxes but writes to disk instead of into Nav2.  i'll walk
+through both passes with one route as a running example
+(`03_south`, the south forest loop).
+
+### Teach pass
+
+on teach the robot is driven once along the planned route, while the
+**Localization** subsystem records to disk what the repeat pass will
+need.  only three of the diagram's boxes matter here:
+
+- **Isaac Sim** publishes RGB + depth + IMU + wheel encoders
+- **Localization** runs ORB-SLAM3 RGB-D-Inertial VIO and a relay
+  ([`tf_wall_clock_relay.py --use-gt`](simulation/isaac/scripts/common/tf_wall_clock_relay.py))
+  that publishes GT (not VIO) as `map -> base_link` so the recorded
+  artefacts have no drift baked in.  in parallel
+  [`visual_landmark_recorder.py`](simulation/isaac/scripts/common/visual_landmark_recorder.py)
+  snapshots ORB descriptors + 3D depth points whenever the camera has
+  moved another 2 m and the frame has enough features
+- **Teach-Time Artefacts** (the cylinder) is what gets written:
+  `landmarks.pkl` (ORB visual landmarks),
+  `teach_map.{yaml,pgm}` (depth-derived occupancy at 0.1 m),
+  the dense pose log `vio_pose_dense.csv`, and `traj_gt.csv` for
+  later evaluation
+
+Global Planning, Route Dispatch and Low-Level Control are all dormant
+on teach - the robot follows the pre-planned A*-Chaikin trajectory
+directly.
+
+![teach trajectory + ORB landmarks recorded for 03_south](simulation/isaac/results/final/10e_teach_map_landmarks_south.png)
+
+the teach plot above is `03_south`.  the dotted line is the planned
+route, the orange dots are individual ORB landmarks the recorder
+dropped along the way (one dot = one entry in `landmarks.pkl`,
+~250-400 entries per route).  density is uneven on purpose - landmarks
+are recorded only where the depth-variance gate passes, which means
+clusters near houses, scattered through the forest, sparse on open
+clearings.  the sparse stretches are exactly where VIO drift will need
+to be tolerated on repeat.
+
+### Repeat pass
+
+on repeat the same teach trajectory is replayed autonomously, with
+obstacles dropped along the outbound leg.  now all five subsystems on
+the diagram are live:
+
+- **Isaac Sim** publishes the same four sensor streams plus a depth
+  point cloud (the obstacle layer needs it)
+- **Localization** runs ORB-SLAM3 RGB-D-Inertial VIO + the visual
+  landmark matcher (live frames matched against the teach
+  `landmarks.pkl` via ORB + PnP-RANSAC) + the pose-fusion relay
+  ([`tf_wall_clock_relay_v55.py`](simulation/isaac/scripts/common/tf_wall_clock_relay_v55.py))
+  that combines VIO, wheel-odometry fallback and matcher anchor
+  corrections through four fusion regimes (no_anchor / ok / strong /
+  jump) and publishes `map -> base_link`
+- **Global Planning** runs Nav2 `planner_server` on the static
+  teach-time occupancy map + a depth-driven obstacle layer, with
+  NavFn `GridBased` producing the global path
+- **Route Dispatch** is a custom waypoint dispatcher
+  ([`send_goals_hybrid.py`](simulation/isaac/scripts/nav_our_custom/send_goals_hybrid.py))
+  - walks the teach WP list at 4 m spacing, projects unsafe WPs to
+  the nearest free cell, falls back to a 4-7 m detour ring on plan
+  failure, and the turnaround supervisor removes obstacles when GT is
+  within 10 m of the apex so the return leg is obstacle-free
+- **Low-Level Control** is a pure-pursuit follower
+  ([`pure_pursuit_path_follower.py`](simulation/isaac/scripts/nav_our_custom/pure_pursuit_path_follower.py))
+  with a safety speed-limiter and an anti-spin guard, emitting the
+  velocity commands back into Isaac
+
+the cylinder still feeds the live system: the matcher reads the
+landmark library, the costmap loads the teach occupancy map, and the
+dispatcher walks the teach waypoints.  closing the loop, the
+Localization's published pose goes back to the dispatcher for the
+REACH check.  see
+[`simulation/isaac/routes/README.md#shared-pipeline`](simulation/isaac/routes/README.md#shared-pipeline)
+for the exact process graph + scripts.
+
+![repeat run, fused pose vs GT for 03_south](simulation/isaac/results/final/phase2/22_repeat_nav_vs_gt_03_south.png)
+
+the repeat plot is the same `03_south` route at runtime: the green
+line is what the relay was publishing as `map -> base_link` (i.e.
+what Nav2 was planning against), the dotted line is GT, and you can
+read drift right off as the gap between the two.  most of the run
+sits within 1-2 m, with the matcher snapping pose back into agreement
+each time the robot passes a landmark cluster - those snaps are the
+visible kinks.  this is the "matcher pulls VIO drift back into the
+map" pattern the whole stack is designed around.
+
+## Isaac Sim teach-and-repeat campaign (15 routes)
+
+### Headline results - 3-stack comparison across 15 routes
+
+each stack ran on the same 15 teach trajectories, the same per-route
+obstacle configuration, and the same 10 m endpoint threshold.
+
+| stack | reach success | return success | avg WP coverage | avg drift mean |
+|---|---|---|---|---|
+| **our T&R** (RGB-D-Inertial + matcher + Nav2 + detour ring) | **15 / 15** (avg reach **3.5 m**) | **8 / 15** | **70 %** | 5.2 m |
+| our pipeline, ORB-SLAM3 RGB-D only (no IMU) - exp 76 ablation | 10 / 15 | 7 / 15 | 51 % | 4.9 m |
+| stock Nav2 baseline (no matcher, no detour ring) - exp 74 | 2 / 15 (08, 09) | 0 / 15 | 17 % | 1.5 m\* |
+
+\* _stock Nav2's drift looks low because the robot stalls inside inflation
+zones and barely accumulates distance - the route-completion columns are
+the real signal._
+
+the headline split is **matcher + detour ring** (RGB-D-only ablation) vs
+**+ IMU** (full stack).  the matcher carries the short / mid-range
+routes by itself; the IMU is load-bearing on the long forest crossings
+(02, 03, 07) where matcher anchors are sparse and VIO drift is what
+keeps the robot pointed at the next teach WP between corrections.
+
+### Cross-campaign heatmap
+
+[![Isaac campaign heatmap, 15 routes x 3 stacks x 3 metrics](simulation/isaac/results/final/phase2/18_metrics_heatmap_15.png)](simulation/isaac/results/final/phase2/18_metrics_heatmap_15.png)
+
+three panels - WP coverage, reach distance, return distance.  rows are the
+15 routes, columns are the three stacks.  green = ≤ 5 m / ≥ 75 %, lime up
+to 10 m / 50 %, yellow at the threshold, orange / red beyond.  the
+visual story:
+
+- the **stock Nav2** column is mostly orange / red - it doesn't finish
+- the **RGB-D-only** column is split: green on the short / mid-range
+  routes, red on the long forest ones (02 / 03 / 07)
+- the **full stack** column is green / lime everywhere except return
+  on the longest corner crossings (05 / 13 / 15) where drift outruns
+  the matcher's correction window
+
+a per-group breakdown (forest density, length, obstacle type) lives in
+[`simulation/isaac/routes/README.md#route-groups`](simulation/isaac/routes/README.md#route-groups);
+per-route 3-stack overlays are at
+`simulation/isaac/routes/<NN>/repeat/results/repeat_run/compare_stacks.png`.
+
+## Project pipelines (chronological)
+
+the Isaac campaign above is the final piece.  it stands on top of four
+public-dataset benchmarks + a Gazebo bring-up that came before it.  in
+the order the project actually ran:
 
 | Pipeline | best result | where to read more |
 |---|---|---|
@@ -24,10 +161,14 @@ in chronological order (this is how the project actually went):
 | [**4Seasons**](datasets/4seasons/) | ORB-SLAM3 Stereo-Inertial - **0.93 m** ATE RMSE, 99.99% tracking | [`CHANGELOG.md`](datasets/4seasons/CHANGELOG.md), [`EXPERIMENTS_4SEASONS.md`](datasets/4seasons/EXPERIMENTS_4SEASONS.md) |
 | [**ROVER**](datasets/rover/) | ORB-SLAM3 RGB-D - **0.37 m** best (GL autumn), 11/15 success.  closest sensor match to our Husky | [`CHANGELOG.md`](datasets/rover/CHANGELOG.md), [`EXPERIMENTS_ROVER.md`](datasets/rover/EXPERIMENTS_ROVER.md), [`REPORT_experiment_1.1.md`](datasets/rover/REPORT_experiment_1.1.md) |
 | [**Gazebo sim**](simulation/gazebo/) | RTAB-Map RGB-D 9.23 m on forest, ORB-SLAM3 failed | [`experiments/`](simulation/gazebo/experiments/) |
-| [**Isaac sim T&R**](simulation/isaac/) | our pipeline **100%** on route 09 vs 63% stock Nav2 | [`results/final/README.md`](simulation/isaac/results/final/README.md), [`routes/README.md`](simulation/isaac/routes/README.md) |
+| [**Isaac sim T&R**](simulation/isaac/) | our stack **15/15 reach** + 8/15 return + 70 % WP coverage on the 15-route campaign | [`results/final/README.md`](simulation/isaac/results/final/README.md), [`routes/README.md`](simulation/isaac/routes/README.md) |
 
-the 100 % headline is a single route (09 SE-NE, 36/36 WPs), not the whole
-campaign.  cross-route numbers are in [`simulation/isaac/routes/README.md`](simulation/isaac/routes/README.md)
+each row is a self-contained pipeline (own README, configs, results).
+the chronology matters: NCLT ruled out 5 Hz fisheye + 48 Hz IMU, RobotCar
+got the first working visual SLAM but no IMU, 4Seasons proved IMU
+matters, ROVER picked the D435i sensor combo, Isaac built the T&R stack
+on top of it.  see [Thesis story at a glance](#thesis-story-at-a-glance)
+below for the one-paragraph narrative.
 
 ## Repository layout
 
@@ -50,16 +191,16 @@ configs, scripts, results.  see the pipeline READMEs above for the full story
 
 depending on what you want to know
 
-- **just tell me what works on my UGV**: [`simulation/isaac/routes/README.md`](simulation/isaac/routes/README.md)
+- **just tell me what works on my UGV**: [`simulation/isaac/routes/README.md`](simulation/isaac/routes/README.md)   
   is the main campaign + 9-route table.  the pipeline scripts live in
   [`simulation/isaac/scripts/common/`](simulation/isaac/scripts/common/) and
   [`simulation/isaac/scripts/nav_our_custom/`](simulation/isaac/scripts/nav_our_custom/)
 
-- **thesis defence / full argument**: start with [`docs/thesis_reading_order.md`](docs/thesis_reading_order.md)
+- **thesis defence / full arguement**: start with [`docs/thesis_reading_order.md`](docs/thesis_reading_order.md)
   which walks through the readmes in the order the thesis tells its story
 
 - **reproducing a result**: each pipeline README has a `How to run` block
-  with exact commands.  raw data needs to be downloaded separately (see each
+  with exact commands.  raw data needs to be downloaded separately (see each   
   dataset's setup section)
 
 - **per-experiment details**: Isaac has 79 experiments in
