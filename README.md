@@ -108,9 +108,9 @@ the robot driving the route end-to-end with our pipeline doing the
 navigation.  Top-left overlay tracks live drift, waypoints reached,
 distance travelled and the current goal (out / back).
 
-[![03_south repeat run](https://img.youtube.com/vi/l2n_DYET82M/maxresdefault.jpg)](https://youtu.be/l2n_DYET82M)
+<video src="https://github.com/vbronetskyi/ugv-visual-inertial-slam-navigation/releases/download/v0-demo/03_south_repeat_run_compressed.mp4" controls></video>
 
-(click thumbnail to watch on YouTube - 1080p)
+inline player above is the compressed 480p version - for HD 1080p see [youtu.be/l2n_DYET82M](https://youtu.be/l2n_DYET82M)
 
 ## Isaac Sim teach-and-repeat campaign (15 routes)
 
