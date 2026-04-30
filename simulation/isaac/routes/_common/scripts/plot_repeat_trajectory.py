@@ -19,6 +19,14 @@ TEACH_COL  = '#000000'   # black  - teach GT
 REPEAT_COL = '#eab308'   # yellow - repeat GT
 NAV_COL    = '#1d4ed8'   # blue   - published nav pose
 
+# legacy 01/02/03 routes used the old `road` / `north` / `south` keys in
+# OBSTACLES (cones + tent), so map them so the plot picks the obstacles up
+LEGACY_OBS_ALIAS = {
+    '01_road':         'road',
+    '02_north_forest': 'north',
+    '03_south':        'south',
+}
+
 
 NAV_RE = re.compile(
     r'nav=\(([\-\d.]+),([\-\d.]+)\)\s*gt=\(([\-\d.]+),([\-\d.]+)\)\s*err=([\-\d.]+)m')
@@ -154,7 +162,7 @@ def plot_one(route):
         metrics_lines=metrics,
         with_obstacles=True,
         with_waypoints=False,
-        route=route,
+        route=LEGACY_OBS_ALIAS.get(route, route),
         reference_csv=None,
         xlim=xlim, ylim=ylim,
         figsize=figsize,
