@@ -1,4 +1,4 @@
-# v9 results - FULL ROUNDTRIP COMPLETED 🎉
+# v9 results - full roundtrip completed
 
 ## Clean run vs end-spin
 

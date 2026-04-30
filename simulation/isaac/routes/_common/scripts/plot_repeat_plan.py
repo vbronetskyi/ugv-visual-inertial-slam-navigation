@@ -6,9 +6,6 @@ For each route in 04-09, draws:
   - planned trajectory (red dashed) from routes.json
   - obstacles (cones / tent / props) from spawn_obstacles.OBSTACLES
   - 10m trigger ring at turnaround point
-
-Saves to routes/<NN>/repeat/results/repeat_run/plan_obstacles.png (creates
-results/repeat_run/ if not present).
 """
 import csv, json, sys, math
 from pathlib import Path
@@ -22,20 +19,38 @@ from matplotlib.lines import Line2D
 
 
 TURNAROUND = {
+    '01_road':         ( 70.5,  -2.7),
+    '02_north_forest': ( 70.4,  -2.3),
+    '03_south':        ( 69.7,  -5.1),
     '04_nw_se': (+65, -35),
     '05_ne_sw': (-90, -35),
     '06_nw_ne': (+65, +35),
     '07_se_sw': (-90, -35),
     '08_nw_sw': (-90, -35),
     '09_se_ne': (+65, +35),
+    '10_nmid_smid':  ( 24.75, -31.69),
+    '11_nw_mid':     (-24.32, -12.61),
+    '12_ne_mid':     (-20.90,  -1.84),
+    '13_cross_nws':  ( 27.42, -15.53),
+    '14_se_mid':     (  0.00,  15.00),
+    '15_wmid_smid':  ( 25.50, -31.55),
 }
 MAP_XY = {
+    '01_road':         ((-110,  85), (-15, 15)),
+    '02_north_forest': ((-110,  85), (-10, 50)),
+    '03_south':        ((-110,  85), (-50,  5)),
     '04_nw_se': ((-100, 75), (-45, 42)),
     '05_ne_sw': ((-100, 75), (-45, 42)),
     '06_nw_ne': ((-100, 75), (-45, 42)),
     '07_se_sw': ((-100, 75), (-45, 42)),
     '08_nw_sw': ((-110, -70), (-45, 42)),
     '09_se_ne': ((50, 80), (-45, 42)),
+    '10_nmid_smid':  ((-35,  35), (-40, 40)),
+    '11_nw_mid':     ((-100, -10), (-25, 45)),
+    '12_ne_mid':     ((-30,  75), (-15, 45)),
+    '13_cross_nws':  ((-40,  40), (-25, 30)),
+    '14_se_mid':     ((-15,  75), (-45, 25)),
+    '15_wmid_smid':  ((-75,  40), (-40, 20)),
 }
 
 

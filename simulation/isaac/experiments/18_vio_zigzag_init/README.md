@@ -1,4 +1,4 @@
-# exp 18: VIO offline with zigzag IMU initialization - SUCCESS! 🎉
+# exp 18: VIO offline with zigzag IMU initialization - success
 
 Make ORB-SLAM3 RGBD-Inertial SLAM produce a usable trajectory by fixing
 the IMU initialization problem from exp 17.

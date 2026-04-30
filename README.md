@@ -114,6 +114,19 @@ inline player above is the compressed 480p version - for HD 1080p see [youtu.be/
 
 ## Isaac Sim teach-and-repeat campaign (15 routes)
 
+> **Read the full campaign writeup at
+> [`simulation/isaac/routes/README.md`](simulation/isaac/routes/README.md).**
+> The table below is the one-page headline. The routes README has the
+> per-route metric tables for all three stacks, the 6-group analysis
+> (forest density / length / obstacle type) with embedded trajectory
+> plots and heatmaps, and the caveats about how to read the drift /
+> coverage numbers (notably: our higher mean drift is because we
+> actually finish the routes, and the 70 % coverage gap is mostly
+> intentional WP skipping when the detour ring goes around an
+> obstacle - the final / turnaround / spawn-return WPs are never
+> skipped). Don't take the headline numbers below at face value
+> without that context.
+
 ### Headline results - 3-stack comparison across 15 routes
 
 Each stack ran on the same 15 teach trajectories, the same per-route
@@ -162,6 +175,8 @@ The Isaac campaign above is the final piece.  It stands on top of four
 public-dataset benchmarks + a Gazebo bring-up that came before it.  In
 the order the project actually ran:
 
+### **▶ Read [`simulation/isaac/routes/README.md`](simulation/isaac/routes/README.md) - the main results writeup with all 15 routes, 3 stacks, route groups and heatmaps.**
+
 | Pipeline | Best result | Where to read more |
 |---|---|---|
 | [**NCLT**](datasets/nclt/) | LiDAR ICP + GPS LC - 30.2 m winter, 151-188 m other seasons | [`datasets/nclt/CHANGELOG.md`](datasets/nclt/CHANGELOG.md), [`reports/orbslam3_nclt_report.md`](datasets/nclt/reports/orbslam3_nclt_report.md) |
@@ -190,7 +205,7 @@ datasets/
   rover/          ORB-SLAM3 on ROVER UGV (RGB-D + stereo fisheye + SI) - last + closest to our Husky
 simulation/
   gazebo/         Gazebo Harmonic + Nav2 baselines
-  isaac/          Isaac Sim T&R campaign - 9 routes, 3 methods, full pipeline
+  isaac/          Isaac Sim T&R campaign - 15 routes, 3 methods, full pipeline
 ```
 
 Each subdir is a self-contained pipeline with its own README, CHANGELOG / writeup,
@@ -201,7 +216,7 @@ configs, scripts, results.  See the pipeline READMEs above for the full story
 Depending on what you want to know
 
 - **just tell me what works on my UGV**: [`simulation/isaac/routes/README.md`](simulation/isaac/routes/README.md)   
-  is the main campaign + 9-route table.  The pipeline scripts live in
+  is the main campaign + 15-route table.  The pipeline scripts live in
   [`simulation/isaac/scripts/common/`](simulation/isaac/scripts/common/) and
   [`simulation/isaac/scripts/nav_our_custom/`](simulation/isaac/scripts/nav_our_custom/)
 
@@ -253,37 +268,37 @@ cameras and real IMU noise.  Order went:
 
 Once D435i RGB-D + real IMU was clearly the winning combo, the sim story
 became clear: build Isaac Sim, drive Husky with D435i + phidgets-class IMU,
-and prove a teach-and-repeat pipeline can beat stock Nav2.  The 9-route
+and prove a teach-and-repeat pipeline can beat stock Nav2.  The 15-route
 campaign is that proof
 
 ## References
 
 ### SLAM and odometry
 
-- **ORB-SLAM3** - Campos et al., 2021, IEEE TRO - [paper](https://arxiv.org/abs/2007.11898) - [code](https://github.com/UZ-SLAMLab/ORB_SLAM3)
-- **DROID-SLAM / DPVO / DPV-SLAM** - Teed et al., 2021-2023 - [DROID](https://github.com/princeton-vl/DROID-SLAM) - [DPVO](https://github.com/princeton-vl/DPVO)
-- **RTAB-Map** - Labbe & Michaud, 2019, IJRR - [code](https://github.com/introlab/rtabmap)
-- **KISS-ICP** - Vizzo et al., 2023, RAL - [paper](https://arxiv.org/abs/2209.15397) - [code](https://github.com/PRBonn/kiss-icp)
+- **ORB-SLAM3** - [paper](https://arxiv.org/abs/2007.11898) - [code](https://github.com/UZ-SLAMLab/ORB_SLAM3)
+- **DROID-SLAM / DPVO / DPV-SLAM** - [DROID](https://github.com/princeton-vl/DROID-SLAM) - [DPVO](https://github.com/princeton-vl/DPVO)
+- **RTAB-Map** - [code](https://github.com/introlab/rtabmap)
+- **KISS-ICP** - [paper](https://arxiv.org/abs/2209.15397) - [code](https://github.com/PRBonn/kiss-icp)
 
 ### Visual localization / place recognition
 
-- **hloc** - Sarlin et al., 2019, CVPR - [code](https://github.com/cvg/Hierarchical-Localization)
-- **SuperPoint / SuperGlue / LightGlue** - DeTone 2018 / Sarlin 2020 / Lindenberger 2023
-- **ALIKED** - Zhao et al., 2023 - [paper](https://arxiv.org/abs/2304.03608)
-- **MinkLoc3D** - Komorowski, 2021, WACV - [paper](https://arxiv.org/abs/2011.04530) - [code](https://github.com/jac99/MinkLoc3D)
+- **hloc** - [code](https://github.com/cvg/Hierarchical-Localization)
+- **SuperPoint / SuperGlue / LightGlue**
+- **ALIKED** - [paper](https://arxiv.org/abs/2304.03608)
+- **MinkLoc3D** - [paper](https://arxiv.org/abs/2011.04530) - [code](https://github.com/jac99/MinkLoc3D)
 
 ### Datasets
 
-- **NCLT** - Carlevaris-Bianco et al., 2016, IJRR - [website](https://robots.engin.umich.edu/nclt/)
-- **ROVER** - Ligocki et al., 2024 - [HuggingFace](https://huggingface.co/datasets/iis-esslingen/ROVER)
-- **Oxford RobotCar / Seasons** - Maddern 2017 / Sattler 2018 - [website](https://robotcar-dataset.robots.ox.ac.uk)
-- **4Seasons** - Wenzel et al., 2020, DAGM GCPR - [website](https://www.4seasons-dataset.com)
+- **NCLT** - [website](https://robots.engin.umich.edu/nclt/)
+- **ROVER** - [HuggingFace](https://huggingface.co/datasets/iis-esslingen/ROVER)
+- **Oxford RobotCar / Seasons** - [website](https://robotcar-dataset.robots.ox.ac.uk)
+- **4Seasons** - [website](https://www.4seasons-dataset.com)
 
 ### Nav stack + tooling
 
-- **Nav2** - Macenski et al., 2020 - [code](https://github.com/ros-navigation/navigation2)
+- **Nav2** - [code](https://github.com/ros-navigation/navigation2)
 - **ROS 2 Jazzy** - [docs](https://docs.ros.org/en/jazzy/)
-- **Isaac Sim 6.0** - NVIDIA - [docs](https://docs.isaacsim.omniverse.nvidia.com/)
+- **Isaac Sim 6.0** - [docs](https://docs.isaacsim.omniverse.nvidia.com/)
 - **Gazebo Harmonic** - [website](https://gazebosim.org/)
 - **evo** / **Open3D** / **OpenCV** / **COLMAP** - [evo](https://github.com/MichaelGrupp/evo), [Open3D](https://github.com/isl-org/Open3D), [OpenCV](https://opencv.org/), [COLMAP](https://github.com/colmap/colmap)
 

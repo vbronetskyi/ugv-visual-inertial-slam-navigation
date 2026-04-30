@@ -53,8 +53,8 @@ teach-and-repeat pipeline on our own robot
 ## 4.  the T&R campaign (the main thesis result)
 
 9. [`simulation/isaac/routes/README.md`](../simulation/isaac/routes/README.md) - the
-   9-route teach-and-repeat campaign.  results per route, baselines, the
-   3 thesis metrics
+   15-route teach-and-repeat campaign.  results per route, baselines, the
+   3 thesis metrics, route groups (G1-G6) + heatmaps
 
 10. [`simulation/isaac/experiments/74_pure_stock_nav2_baseline/README.md`](../simulation/isaac/experiments/74_pure_stock_nav2_baseline/README.md) -
     the stock Nav2 baseline.  shows what a default Nav2 config does

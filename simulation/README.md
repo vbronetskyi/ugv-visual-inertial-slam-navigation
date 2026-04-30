@@ -60,7 +60,7 @@ simulation/
 - dataset (Kaggle): [kaggle.com/datasets/vbronet/isaac-tr-forest-visual-inertial](https://www.kaggle.com/datasets/vbronet/isaac-tr-forest-visual-inertial)
 
 the Kaggle dataset packages the 30 sensor bags used in the Isaac Sim
-campaign — 15 routes x 2 phases (teach + repeat-with-obstacles), about
+campaign - 15 routes x 2 phases (teach + repeat-with-obstacles), about
 38 GB total. each bag carries 10 Hz RGB + aligned depth, 200 Hz
 synthetic IMU, 50 Hz wheel odometry, and 10 Hz ground-truth pose, plus
 the per-route teach landmarks and occupancy maps. anyone can rerun the
@@ -79,7 +79,7 @@ analysis without re-running the simulator.
 
 - [`README.md`](README.md) - this file.  gazebo vs isaac overview
 - [`gazebo/`](gazebo/) - Gazebo Harmonic + ROS 2 + Nav2 early experiments (3 experiments)
-- [`isaac/`](isaac/) - Isaac Sim main thesis campaign (79 experiments + 9-route T&R campaign)
+- [`isaac/`](isaac/) - Isaac Sim main thesis campaign (79 experiments + 15-route T&R campaign)
 
 see the two pipeline READMEs for details: [`gazebo/README.md`](gazebo/README.md), [`isaac/README.md`](isaac/README.md)
 

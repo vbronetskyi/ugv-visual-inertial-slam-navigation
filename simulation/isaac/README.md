@@ -129,14 +129,15 @@ trees, shrubs, fallen logs and rocks. dense canopy, limited visibility.
 **south forest** - goes south into the forest (down to y=-40). manually
 driven to ensure realistic path selection.
 
-these three were extended into the 9-route campaign in `routes/`.  GT
-trajectories for all 9 are plotted in
+these three were extended into the 15-route campaign in `routes/`.  GT
+trajectories for the original 9 are plotted in
 [`results/final/04_teach_gt_9routes.png`](results/final/04_teach_gt_9routes.png)
+(routes 10-15 added later, see [`routes/README.md`](routes/README.md))
 
 ## slam evaluation
 
 orb-slam3 RGB-D was characterised on the three legacy routes under two
-drive modes (kinematic vs PhysX) before the 9-route campaign
+drive modes (kinematic vs PhysX) before the 15-route campaign
 
 ### kinematic drive results (original)
 
@@ -211,7 +212,7 @@ final pipeline replaces reactive dodging with a teach phase that records
 landmarks + a reference path, and uses anchor correction at repeat time
 to keep SLAM locked to that path even during detours.  see
 [`results/final/README.md`](results/final/README.md) for the final
-pipeline + 9-route campaign results
+pipeline + 15-route campaign results
 
 collision objects: standing trees (r=0.7m), shrubs (r=0.4m), fallen trees
 (9 points along trunk, r=0.6m), rocks (r=0.8m), houses (r=6.0m).

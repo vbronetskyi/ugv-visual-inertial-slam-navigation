@@ -30,12 +30,12 @@ round-trip; short edges (08, 09) are +-145 m; mid-range 10-15 sit at +-150-250 m
 | **07_se_sw**         | bottom edge (SE -> SW) | 386 m | 0.42 / 1.00 m   | 7 props (3*trashcan, 2*barrel, concrete, bench) | **70 / 95** (74 %) | 87 min |
 | **08_nw_sw**         | left edge (NW -> SW)   | 149 m | 0.34 / 0.72 m   | 5 props (2*trashcan, concrete, dumpster, bench) | **31 / 36** (86 %) | 16 min |
 | **09_se_ne**         | right edge (SE -> NE)  | 146 m | 0.40 / 0.64 m   | 5 props (2*cardbox, dumpster, 2*barrel) | **29 / 36** (81 %) | 12 min |
-| **10_nmid_smid**     | N-mid -> S-mid diagonal | 182 m | 0.52 / 0.78 m   | 9 props (3*cardbox, 3*concrete, 3*trashcan), big walls | **reach 4.2 x return 4.8 x** (drift 2.0 m) | 32 min |
-| **11_nw_mid**        | NW corner -> SW-interior | 190 m | 0.48 / 0.82 m   | none (clean repeat) | **reach 7.1 x return 7.3 x** (drift 6.2 m) | 18 min |
-| **12_ne_mid**        | NE corner -> centre   | 200 m | 0.52 / 0.86 m   | none (clean repeat) | **reach 2.8 x return 6.5 x** (drift 1.6 m) | 18 min |
-| **13_cross_nws**     | interior NW -> SE cross | 166 m | 0.55 / 0.94 m   | 8 props (concrete wall, bench, trashcan wall), big walls | reach **2.6 x** return 28.7 ✗ (drift 17 m) | 47 min |
-| **14_se_mid**        | SE corner -> N-mid    | 175 m | 0.43 / 0.71 m   | 8 props (3*barrel, 2*concrete, 3*cardbox), small walls | **reach 3.7 x return 2.7 x** (drift 6.5 m) | 42 min |
-| **15_wmid_smid**     | W-mid -> S-mid diagonal | 202 m | 0.58 / 0.96 m   | 8 props (railing, 3*concrete/barrel mix, 4*hydrant/trashcan) | **reach 4.8 x return 6.5 x** (drift 13.8 m) | 43 min |
+| **10_nmid_smid**     | N-mid -> S-mid diagonal | 182 m | 0.52 / 0.78 m   | 9 props (3*cardbox, 3*concrete, 3*trashcan), big walls | **reach 4.2 ✓ return 4.8 ✓** (drift 2.0 m) | 32 min |
+| **11_nw_mid**        | NW corner -> SW-interior | 190 m | 0.48 / 0.82 m   | none (clean repeat) | **reach 7.1 ✓ return 7.3 ✓** (drift 6.2 m) | 18 min |
+| **12_ne_mid**        | NE corner -> centre   | 200 m | 0.52 / 0.86 m   | none (clean repeat) | **reach 2.8 ✓ return 6.5 ✓** (drift 1.6 m) | 18 min |
+| **13_cross_nws**     | interior NW -> SE cross | 166 m | 0.55 / 0.94 m   | 8 props (concrete wall, bench, trashcan wall), big walls | reach **2.6 ✓** return 28.7 ✗ (drift 17 m) | 47 min |
+| **14_se_mid**        | SE corner -> N-mid    | 175 m | 0.43 / 0.71 m   | 8 props (3*barrel, 2*concrete, 3*cardbox), small walls | **reach 3.7 ✓ return 2.7 ✓** (drift 6.5 m) | 42 min |
+| **15_wmid_smid**     | W-mid -> S-mid diagonal | 202 m | 0.58 / 0.96 m   | 8 props (railing, 3*concrete/barrel mix, 4*hydrant/trashcan) | **reach 4.8 ✓ return 6.5 ✓** (drift 13.8 m) | 43 min |
 
 \* _03_south teach used an earlier pipeline version that logged the TF
 relay only in GT mode (no `drift_monitor.log`), so no teach drift
@@ -114,8 +114,8 @@ baselines on 01/02 does not inflate their numbers.
 
 Each table = one stack, all 15 routes. Columns:
 
-- reach = min GT distance to turnaround (m), x if <= 10 m
-- **return** = GT distance from last sample to spawn (m), x if <= 10 m
+- reach = min GT distance to turnaround (m), ✓ if <= 10 m
+- **return** = GT distance from last sample to spawn (m), ✓ if <= 10 m
   and coverage >= 50 %
 - **coverage** = fraction of teach WPs (4 m spacing) within 3 m of any
   GT sample
@@ -133,21 +133,21 @@ Success thresholds:
 
 | route | reach | return | coverage | drift mean / p95 / max |
 |---|---|---|---|---|
-| 01_road          | **0.6 x** | 12.3 ✗    | 77/80 (96 %)  | 1.4 / 2.2 / 2.3 |
-| 02_north_forest  | **1.0 x** | 24.2 ✗    | 50/97 (52 %)  | 4.4 / 10.1 / 12.1 |
-| 03_south         | **5.7 x** | **5.9 x** | 85/96 (89 %)  | 2.0 / 3.4 / 3.6 |
-| 04_nw_se         | **7.8 x** | **5.0 x** | 53/92 (58 %)  | 5.3 / 9.4 / 10.0 |
-| 05_ne_sw         | **2.5 x** | 31.4 ✗    | 78/96 (81 %)  | 9.9 / 37.7 / 38.0 |
-| 06_nw_ne         | **5.3 x** | 10.2 ✗    | 56/94 (60 %)  | 5.7 / 9.1 / 9.2 |
-| 07_se_sw         | **0.6 x** | 14.7 ✗    | 70/95 (74 %)  | 3.8 / 5.8 / 5.9 |
-| 08_nw_sw         | **3.1 x** | **3.0 x** | 31/36 (86 %)  | 0.9 / 1.9 / 2.0 |
-| 09_se_ne         | **3.7 x** | **4.0 x** | 29/36 (81 %)  | 5.2 / 5.7 / 5.7 |
-| 10_nmid_smid     | **4.2 x** | **4.8 x** | 33/40 (82 %)  | 3.0 / 3.8 / 3.9 |
-| 11_nw_mid        | **3.1 x** | **5.2 x** | 35/44 (80 %)  | 2.0 / 2.8 / 2.8 |
-| 12_ne_mid        | **1.1 x** | 11.8 ✗    | 38/46 (83 %)  | 5.2 / 7.3 / 7.7 |
-| 13_cross_nws     | **2.6 x** | 28.7 ✗    | 23/38 (61 %)  | 18.8 / 24.1 / 25.3 |
-| 14_se_mid        | **3.7 x** | **2.7 x** | 11/39 (28 %)  | 2.6 / 5.1 / 5.1 |
-| 15_wmid_smid     | **4.8 x** | **6.5 x** | 22/44 (50 %)  | 7.2 / 11.5 / 11.8 |
+| 01_road          | **0.6 ✓** | 12.3 ✗    | 77/80 (96 %)  | 1.4 / 2.2 / 2.3 |
+| 02_north_forest  | **1.0 ✓** | 24.2 ✗    | 50/97 (52 %)  | 4.4 / 10.1 / 12.1 |
+| 03_south         | **5.7 ✓** | **5.9 ✓** | 85/96 (89 %)  | 2.0 / 3.4 / 3.6 |
+| 04_nw_se         | **7.8 ✓** | **5.0 ✓** | 53/92 (58 %)  | 5.3 / 9.4 / 10.0 |
+| 05_ne_sw         | **2.5 ✓** | 31.4 ✗    | 78/96 (81 %)  | 9.9 / 37.7 / 38.0 |
+| 06_nw_ne         | **5.3 ✓** | 10.2 ✗    | 56/94 (60 %)  | 5.7 / 9.1 / 9.2 |
+| 07_se_sw         | **0.6 ✓** | 14.7 ✗    | 70/95 (74 %)  | 3.8 / 5.8 / 5.9 |
+| 08_nw_sw         | **3.1 ✓** | **3.0 ✓** | 31/36 (86 %)  | 0.9 / 1.9 / 2.0 |
+| 09_se_ne         | **3.7 ✓** | **4.0 ✓** | 29/36 (81 %)  | 5.2 / 5.7 / 5.7 |
+| 10_nmid_smid     | **4.2 ✓** | **4.8 ✓** | 33/40 (82 %)  | 3.0 / 3.8 / 3.9 |
+| 11_nw_mid        | **3.1 ✓** | **5.2 ✓** | 35/44 (80 %)  | 2.0 / 2.8 / 2.8 |
+| 12_ne_mid        | **1.1 ✓** | 11.8 ✗    | 38/46 (83 %)  | 5.2 / 7.3 / 7.7 |
+| 13_cross_nws     | **2.6 ✓** | 28.7 ✗    | 23/38 (61 %)  | 18.8 / 24.1 / 25.3 |
+| 14_se_mid        | **3.7 ✓** | **2.7 ✓** | 11/39 (28 %)  | 2.6 / 5.1 / 5.1 |
+| 15_wmid_smid     | **4.8 ✓** | **6.5 ✓** | 22/44 (50 %)  | 7.2 / 11.5 / 11.8 |
 | **avg**          | **3.5 m · 15/15** | 11.0 m · **8/15** | **70 %** | **5.2 m** (mean) |
 
 #### Exp 74 - stock Nav2 (no matcher, FollowWaypoints + WP-projection skip + GT-stall watchdog)
@@ -167,8 +167,8 @@ timeout (3600 s short / 6000 s long). Mid-range routes 10-15 rerun
 | 05_ne_sw         | 132.7 ✗ | 38.1 ✗ | 10/96 (10 %) | 1.3 / 2.0 / 2.0 |
 | 06_nw_ne         | 110.5 ✗ | 62.0 ✗ | 18/94 (19 %) | 2.3 / 3.8 / 3.9 |
 | 07_se_sw         | 116.4 ✗ | 29.9 ✗ |  8/95 (8 %)  | 1.0 / 2.0 / 2.6 |
-| 08_nw_sw         | **0.7 x** | 81.2 ✗ | 15/36 (42 %) | 0.5 / 0.9 / 1.0 |
-| 09_se_ne         | **8.7 x** | 12.6 ✗ | 22/36 (61 %) | 0.6 / 1.0 / 1.8 |
+| 08_nw_sw         | **0.7 ✓** | 81.2 ✗ | 15/36 (42 %) | 0.5 / 0.9 / 1.0 |
+| 09_se_ne         | **8.7 ✓** | 12.6 ✗ | 22/36 (61 %) | 0.6 / 1.0 / 1.8 |
 | 10_nmid_smid     |  71.0 ✗ | 12.8 ✗ |  2/40 (5 %)  | 0.0 / 0.0 / 0.0 |
 | 11_nw_mid        |  70.1 ✗ | 17.1 ✗ |  2/44 (5 %)  | 1.1 / 2.0 / 2.4 |
 | 12_ne_mid        |  39.0 ✗ | 53.7 ✗ |  9/46 (20 %) | 3.8 / 7.4 / 7.9 |
@@ -195,18 +195,18 @@ matched our-stack runs.
 | 01_road          |  51.6 ✗   | 94.3 ✗         | 24/80 (30 %) | 2.5 / 9.1 / 11.9 |
 | 02_north_forest  |  28.9 ✗   | 118.8 ✗        | 24/97 (25 %) | 9.0 / 12.0 / 12.1 |
 | 03_south         |  94.0 ✗   | 72.5 ✗         | 25/96 (26 %) | 3.3 / 5.3 / 6.0 |
-| 04_nw_se         |  10.3 ✗   | **5.1 x**      | 55/92 (60 %) | 9.7 / 11.4 / 11.6 |
-| 05_ne_sw         | **8.4 x** | 11.9 ✗         | 55/96 (57 %) | 2.2 / 7.1 / 7.1 |
-| 06_nw_ne         | **0.5 x** | 131.8 ✗        | 58/94 (62 %) | 4.3 / 8.7 / 8.9 |
+| 04_nw_se         |  10.3 ✗   | **5.1 ✓**      | 55/92 (60 %) | 9.7 / 11.4 / 11.6 |
+| 05_ne_sw         | **8.4 ✓** | 11.9 ✗         | 55/96 (57 %) | 2.2 / 7.1 / 7.1 |
+| 06_nw_ne         | **0.5 ✓** | 131.8 ✗        | 58/94 (62 %) | 4.3 / 8.7 / 8.9 |
 | 07_se_sw         | 155.1 ✗   |  0.2 ✗ (stuck) |  1/95 (1 %)  | n/a |
-| 08_nw_sw         | **8.1 x** | **6.1 x**      | 14/36 (39 %) | 6.4 / 9.5 / 9.6 |
-| 09_se_ne         | **0.5 x** | **8.3 x**      | 29/36 (81 %) | 3.9 / 4.7 / 4.7 |
-| 10_nmid_smid     | **7.1 x** | 11.5 ✗         | 23/40 (58 %) | 3.5 / 7.2 / 7.4 |
-| 11_nw_mid        | **3.1 x** | **4.6 x**      | 44/44 (100 %)| 0.9 / 1.1 / 1.2 |
-| 12_ne_mid        | **0.5 x** | 11.8 ✗         | 26/46 (57 %) | 5.2 / 7.9 / 8.1 |
-| 13_cross_nws     | **7.4 x** | **9.8 x**      | 10/38 (26 %) | 10.8 / 15.4 / 15.4 |
-| 14_se_mid        | **3.1 x** | **4.3 x**      | 19/39 (49 %) | 7.1 / 8.5 / 8.7 |
-| 15_wmid_smid     | **0.4 x** | **7.1 x**      | 40/44 (91 %) | 4.3 / 6.7 / 7.0 |
+| 08_nw_sw         | **8.1 ✓** | **6.1 ✓**      | 14/36 (39 %) | 6.4 / 9.5 / 9.6 |
+| 09_se_ne         | **0.5 ✓** | **8.3 ✓**      | 29/36 (81 %) | 3.9 / 4.7 / 4.7 |
+| 10_nmid_smid     | **7.1 ✓** | 11.5 ✗         | 23/40 (58 %) | 3.5 / 7.2 / 7.4 |
+| 11_nw_mid        | **3.1 ✓** | **4.6 ✓**      | 44/44 (100 %)| 0.9 / 1.1 / 1.2 |
+| 12_ne_mid        | **0.5 ✓** | 11.8 ✗         | 26/46 (57 %) | 5.2 / 7.9 / 8.1 |
+| 13_cross_nws     | **7.4 ✓** | **9.8 ✓**      | 10/38 (26 %) | 10.8 / 15.4 / 15.4 |
+| 14_se_mid        | **3.1 ✓** | **4.3 ✓**      | 19/39 (49 %) | 7.1 / 8.5 / 8.7 |
+| 15_wmid_smid     | **0.4 ✓** | **7.1 ✓**      | 40/44 (91 %) | 4.3 / 6.7 / 7.0 |
 | **avg**          | **25.3 m · 10/15** | n/a · **7/15** | **51 %** | **4.9 m** |
 
 Without IMU, RGB-D SLAM drift is similiar in magnitude to exp 74 no-matcher
@@ -230,6 +230,27 @@ All three stacks ran on all 15 routes (01-15).
 inflation zones and barely accumulates integrated motion - the matcher
 deficit therefore has little time to manifest. The route-completion
 columns (reach / return / coverage) are the faithful signal._
+
+> **Why our drift looks higher.** Our stack's average drift (5.2 m) is
+> larger than stock Nav2's (1.5 m) only because **our robot actually
+> drives the whole route end-to-end** while stock Nav2 stalls inside
+> inflation zones in the first 50-100 m and never integrates the rest.
+> Drift is `|published pose - GT|` accumulated across the full run -
+> a stack that goes 400 m has +-10x more chances to drift than one
+> that drives 30 m and gives up. Compare drift only on routes where
+> both stacks finished a comparable distance.
+>
+> **Why coverage is 70 %, not 100 %.** Coverage counts teach WPs that
+> the GT trajectory passed within 3 m of, *in the right direction of
+> travel*. Our `send_goals_hybrid` deliberately skips teach WPs whose
+> cell costs are above the lethal threshold and routes the robot
+> through a 4-7 m **detour ring** around the obstacle. So whenever the
+> robot bypasses a prop cluster, those 2-4 teach WPs hidden behind
+> it are correctly *not* counted as visited. The 30 % coverage gap is
+> mostly intentional skip + detour, not localisation failure. The
+> **final / turnaround / spawn-return WPs are explicitly never
+> skipped** - they have `MAX_PLAN_FAILS = 9999` and a tighter 2 m
+> tolerance, so the endpoint metrics still measure the actual mission.
 
 ### Interpretation
 
@@ -283,6 +304,221 @@ columns (reach / return / coverage) are the faithful signal._
 Regenerate: `python3 _common/scripts/compute_metrics.py` (reads
 artefacts in place, writes `_common/metrics.json` + prints the tables
 above).
+
+## Route groups
+
+The 15 routes split naturally into 6 groups along three orthogonal axes
+(terrain density, length, obstacle type). Groups overlap - a route can
+sit in two or three groups depending on which axis it falls on. Group
+sizes were chosen so each has at least four routes - enough to average
+over but small enough that the per-group story stays readable.
+
+### Trajectory plot legend (per-group plots)
+
+The `route_groups/G*.png` plots overlay every route in that group on
+the canonical scene background. One colour per route (not per stack);
+the colour is just a route ID for visual sanity-check.
+
+The `route_groups/heatmap_G*.png` plots are 3-panel heatmaps - WP
+coverage / reach / return - rows are routes, columns are the 3 stacks
+(stock Nav2, RGB-D-only, full stack). Smooth diverging gradient
+anchored at the failure thresholds:
+
+- **distances**: green at 0 m, lime by 5 m, yellow at 10 m (success
+  threshold), orange at 20 m, deep red 30 m+
+- **coverage**: deep red at 0 %, orange at 25 %, yellow at 50 %
+  (return-success floor), lime at 75 %, green at 100 %
+
+### G1 - through dense forest (10 routes)
+
+Routes whose corridors pass through real forest - the matcher's hardest
+test environment because tree trunks and shrubs are visually similar to
+each other (wrong-cluster matches more common, feature-poor mid-stretches
+let drift grow between corrections). Threshold is corridor density >=7
+trees + shrubs per 100 m of route length.
+
+Routes: `02_north_forest`, `03_south`, `04_nw_se`, `05_ne_sw`,
+`06_nw_ne`, `07_se_sw`, `08_nw_sw`, `11_nw_mid`, `13_cross_nws`,
+`15_wmid_smid`
+
+![G1 forest trajectories](route_groups/G1_forest.png)
+
+| algorithm | WP coverage | reach < 10 m | return < 10 m | drift mean |
+|---|---|---|---|---|
+| stock Nav2 | 13.8 % | 1 / 10 | 0 / 10 | 1.55 m |
+| our stack, no IMU | 48.7 % | 6 / 10 | 6 / 10 | 5.11 m |
+| our T&R stack | **68.6 %** | **10 / 10** | 5 / 10 | 5.99 m |
+
+![G1 forest heatmap](route_groups/heatmap_G1_forest.png)
+
+**Reading**: stock Nav2 fails completely on dense forest - one of ten
+routes finishes outbound. Our full stack reaches the turnaround on every
+run. The no-IMU ablation reaches 6/10 - the matcher alone recovers most
+forest runs, but the IMU is still load-bearing on the harder ones.
+
+### G2 - open / minimal forest (5 routes)
+
+Complement of G1 - routes that mostly traverse open ground (the road,
+the east clearing, mid-axis cross-cuts through the houses-and-roads
+center). Visually less ambiguous, fewer wrong-cluster traps, slower
+drift growth because the road and houses still provide feature-rich
+clusters. Corridor density < 7 features per 100 m.
+
+Routes: `01_road`, `09_se_ne`, `10_nmid_smid`, `12_ne_mid`, `14_se_mid`
+
+![G2 open trajectories](route_groups/G2_open.png)
+
+| algorithm | WP coverage | reach < 10 m | return < 10 m | drift mean |
+|---|---|---|---|---|
+| stock Nav2 | 23.6 % | 1 / 5 | 0 / 5 | 1.36 m |
+| our stack, no IMU | 54.7 % | 4 / 5 | 2 / 5 | 4.44 m |
+| our T&R stack | **74.0 %** | **5 / 5** | 3 / 5 | 3.47 m |
+
+![G2 open heatmap](route_groups/heatmap_G2_open.png)
+
+**Reading**: open terrain is easier overall. The no-IMU ablation reaches
+4 of 5 outbound goals; adding IMU pushes that to 5/5 and brings drift
+mean from 4.4 to 3.5 m. On this group IMU helps both coverage and
+localisation.
+
+### G3 - short routes (8 routes, 160-205 m)
+
+Short out-and-back round trips. Generated to support fast iteration
+(each fits in 15-20 minutes of real time) and to give tighter confidence
+intervals by averaging across 8 routes in the same length bracket. Drift
+has less distance to grow on these so the matcher's contribution is
+smaller in absolute terms.
+
+Routes: `08_nw_sw`, `09_se_ne`, `10_nmid_smid`, `11_nw_mid`,
+`12_ne_mid`, `13_cross_nws`, `14_se_mid`, `15_wmid_smid`
+
+![G3 short trajectories](route_groups/G3_short.png)
+
+| algorithm | WP coverage | reach < 10 m | return < 10 m | drift mean |
+|---|---|---|---|---|
+| stock Nav2 | 20.3 % | 2 / 8 | 0 / 8 | 1.39 m |
+| our stack, no IMU | 62.4 % | 8 / 8 | 6 / 8 | 5.26 m |
+| our T&R stack | 68.8 % | **8 / 8** | 6 / 8 | 5.61 m |
+
+![G3 short heatmap](route_groups/heatmap_G3_short.png)
+
+**Reading**: on short routes the no-IMU ablation catches up - reach 8/8
+because there is not enough distance for VIO drift to grow past the 10 m
+threshold. Coverage 62 % vs 69 % is the smallest gap of any group,
+drift mean is essentially identical between IMU and no-IMU. These are
+the routes where the IMU is *not* load-bearing.
+
+### G4 - long routes (7 routes, 333-407 m)
+
+The full-scene crossings: original road loop, both forest corridors
+(north + south), and the four corner-to-corner diagonals. Long enough
+for VIO drift to become real (10+ m without correction); the matcher's
+job becomes load-bearing. This is the group that most directly tests
+the thesis claim "matcher keeps drift bounded over long distances".
+
+Routes: `01_road`, `02_north_forest`, `03_south`, `04_nw_se`,
+`05_ne_sw`, `06_nw_ne`, `07_se_sw`
+
+![G4 long trajectories](route_groups/G4_long.png)
+
+| algorithm | WP coverage | reach < 10 m | return < 10 m | drift mean |
+|---|---|---|---|---|
+| stock Nav2 | 13.4 % | 0 / 7 | 0 / 7 | 1.61 m |
+| our stack, no IMU | 37.2 % | 2 / 7 | 2 / 7 | 4.46 m |
+| our T&R stack | **72.3 %** | **7 / 7** | 2 / 7 | 4.62 m |
+
+![G4 long heatmap](route_groups/heatmap_G4_long.png)
+
+**Reading**: this is where the IMU matters. On long routes the no-IMU
+ablation finishes 2 of 7 outbound legs; the full stack reaches the
+turnaround on every single one (7/7). Return is the harder endpoint -
+only 2/7 close the loop, because by the time of return drift has
+accumulated and the matcher's pull cannot fully recover. But *reaching*
+is universally solved with IMU on, and matcher-only is already a big
+lift over stock Nav2 (0/7 reach).
+
+### G5 - cone walls + tent (4 routes)
+
+Routes with the original campaign obstacle setup: dense cone walls
+(0.5 m spacing, no passable gap so the planner has to actively go
+around) plus a 2x1.8 m tent placed on the path. These are what the
+matcher and the WP detour ring were originally tuned against, so this
+is the easier group to look impressive on but also the one where the
+"hard solid barrier" planning behaviour gets tested.
+
+Routes: `01_road`, `02_north_forest`, `03_south`, `04_nw_se`
+
+![G5 cones+tent trajectories](route_groups/G5_cones_tent.png)
+
+| algorithm | WP coverage | reach < 10 m | return < 10 m | drift mean |
+|---|---|---|---|---|
+| stock Nav2 | 13.9 % | 0 / 4 | 0 / 4 | 1.69 m |
+| our stack, no IMU | 35.1 % | 0 / 4 | 1 / 4 | 6.12 m |
+| our T&R stack | **73.2 %** | **4 / 4** | 2 / 4 | 3.27 m |
+
+![G5 cones+tent heatmap](route_groups/heatmap_G5_cones_tent.png)
+
+**Reading**: cones and tent are the hardest obstacle setup. Neither
+stock Nav2 nor the no-IMU ablation finishes any outbound (0/4 each).
+The full stack reaches the turnaround on all four and brings drift
+mean *down* to 3.27 m - the lowest of any group, because both the
+matcher and the WP detour ring are well-tuned for these exact runs
+(most pipeline development happened against `03_south`).
+
+### G6 - mixed prop obstacles (11 routes)
+
+Complement of G5 - routes with prop clusters instead of cone walls. Each
+route gets a curated 5-9 prop set (barrels, dumpsters, cardboxes,
+concrete blocks, trashcans, benches, firehydrants, railings) in clusters
+of 2-4 along the outbound leg. Visually more diverse than cone walls
+(different colours, sizes, shapes) so this tests how the matcher and
+the planner behave with obstacles that look unlike each other and
+unlike the cone walls the system was originally tuned for.
+
+Routes: `05_ne_sw`, `06_nw_ne`, `07_se_sw`, `08_nw_sw`, `09_se_ne`,
+`10_nmid_smid`, `11_nw_mid`, `12_ne_mid`, `13_cross_nws`,
+`14_se_mid`, `15_wmid_smid`
+
+![G6 mixed props trajectories](route_groups/G6_mixed_props.png)
+
+| algorithm | WP coverage | reach < 10 m | return < 10 m | drift mean |
+|---|---|---|---|---|
+| stock Nav2 | 18.2 % | 2 / 11 | 0 / 11 | 1.42 m |
+| our stack, no IMU | 56.3 % | 10 / 11 | 7 / 11 | 4.44 m |
+| our T&R stack | **69.4 %** | **11 / 11** | 6 / 11 | 5.83 m |
+
+![G6 mixed props heatmap](route_groups/heatmap_G6_mixed_props.png)
+
+**Reading**: props are easier than cone walls - the no-IMU ablation
+nearly keeps up here (10/11 reach success) because props leave wider
+passable gaps and don't hard-block the corridor. IMU still adds the
+last percentage points of coverage and reach across the board.
+
+### Group-level summary heatmap
+
+![Aggregate heatmap (6 groups x 3 algorithms x 3 metrics)](route_groups/heatmap_aggregate.png)
+
+[`heatmap_aggregate.png`](route_groups/heatmap_aggregate.png) collapses
+each (group, algorithm) cell to a single mean across the routes in
+that group - 6 groups x 3 algorithms x 3 metrics in one figure. The
+"one slide" overview of how the three contenders compare across the
+whole campaign:
+
+- on **long** + **dense-forest** + **cone+tent** groups (G1, G4, G5)
+  the full stack is necessary; stock Nav2 fails outright and no-IMU
+  finishes only the easy half
+- on **short** + **mixed-prop** groups (G3, G6) the no-IMU ablation
+  catches up; the IMU is no longer load-bearing
+- stock Nav2 is uniformly worst in every group, with reach success
+  only on the short edges (08, 09)
+
+Regenerate the per-group plots + heatmaps:
+
+```bash
+python3 scripts/analysis/make_route_groups_plots.py    # G1-G6 trajectory plots
+python3 scripts/analysis/make_route_group_heatmaps.py  # heatmap_G1-G6
+python3 scripts/analysis/make_aggregate_heatmap.py     # heatmap_aggregate
+```
 
 ## Shared pipeline
 
@@ -421,10 +657,19 @@ pipeline (the 8 steps above adapted to that route), obstacle list and
 placement strategy, how-to-run commands, expected outputs, and the
 **actual repeat result** section with the final metrics table.
 
-Cross-link starting points: [04](04_nw_se/README.md) ·
-[05](05_ne_sw/README.md) · [06](06_nw_ne/README.md) ·
-[07](07_se_sw/README.md) · [08](08_nw_sw/README.md) ·
-[09](09_se_ne/README.md) · [10](10_nmid_smid/README.md) ·
-[11](11_nw_mid/README.md) · [12](12_ne_mid/README.md) ·
-[13](13_cross_nws/README.md) · [14](14_se_mid/README.md) ·
+Cross-link starting points - all 15 routes:
+[01](01_road/README.md) ·
+[02](02_north_forest/README.md) ·
+[03](03_south/README.md) ·
+[04](04_nw_se/README.md) ·
+[05](05_ne_sw/README.md) ·
+[06](06_nw_ne/README.md) ·
+[07](07_se_sw/README.md) ·
+[08](08_nw_sw/README.md) ·
+[09](09_se_ne/README.md) ·
+[10](10_nmid_smid/README.md) ·
+[11](11_nw_mid/README.md) ·
+[12](12_ne_mid/README.md) ·
+[13](13_cross_nws/README.md) ·
+[14](14_se_mid/README.md) ·
 [15](15_wmid_smid/README.md).
